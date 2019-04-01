@@ -1,0 +1,6 @@
+framework module Pods_WAPY {
+  umbrella header "Pods-WAPY-umbrella.h"
+
+  export *
+  module * { export * }
+}

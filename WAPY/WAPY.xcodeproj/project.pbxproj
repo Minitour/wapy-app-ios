@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		287FB0C9A8EE129395B88F9C /* Pods_WAPY.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6AA6244EA7B927B929794A /* Pods_WAPY.framework */; };
+		9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A1105224FF59D00CD11AE /* RoomMapController.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
 		9D9751092242B75300896BDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D9751072242B75300896BDA /* Main.storyboard */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A6AA6244EA7B927B929794A /* Pods_WAPY.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WAPY.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D3A1105224FF59D00CD11AE /* RoomMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMapController.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D9751052242B75300896BDA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +26,8 @@
 		9D97510A2242B75500896BDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D97510D2242B75500896BDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D97510F2242B75500896BDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A664701F5847AE6F89E2528F /* Pods-WAPY.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WAPY.debug.xcconfig"; path = "Target Support Files/Pods-WAPY/Pods-WAPY.debug.xcconfig"; sourceTree = "<group>"; };
+		EF985D42B680045B3596835A /* Pods-WAPY.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WAPY.release.xcconfig"; path = "Target Support Files/Pods-WAPY/Pods-WAPY.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +35,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				287FB0C9A8EE129395B88F9C /* Pods_WAPY.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1841E8510ECC765693FFED89 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4A6AA6244EA7B927B929794A /* Pods_WAPY.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9D3A1104224FF58E00CD11AE /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9D3A1105224FF59D00CD11AE /* RoomMapController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		9D9750F72242B75300896BDA = {
 			isa = PBXGroup;
 			children = (
 				9D9751022242B75300896BDA /* WAPY */,
 				9D9751012242B75300896BDA /* Products */,
+				D84BF5A1374AD9AC283D25BF /* Pods */,
+				1841E8510ECC765693FFED89 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,6 +79,7 @@
 		9D9751022242B75300896BDA /* WAPY */ = {
 			isa = PBXGroup;
 			children = (
+				9D3A1104224FF58E00CD11AE /* Controllers */,
 				9D9751032242B75300896BDA /* AppDelegate.swift */,
 				9D9751052242B75300896BDA /* ViewController.swift */,
 				9D9751072242B75300896BDA /* Main.storyboard */,
@@ -64,6 +90,15 @@
 			path = WAPY;
 			sourceTree = "<group>";
 		};
+		D84BF5A1374AD9AC283D25BF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A664701F5847AE6F89E2528F /* Pods-WAPY.debug.xcconfig */,
+				EF985D42B680045B3596835A /* Pods-WAPY.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,6 +106,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9D9751122242B75500896BDA /* Build configuration list for PBXNativeTarget "WAPY" */;
 			buildPhases = (
+				BBDF2C454EB549B1024E2F9D /* [CP] Check Pods Manifest.lock */,
 				9D9750FC2242B75300896BDA /* Sources */,
 				9D9750FD2242B75300896BDA /* Frameworks */,
 				9D9750FE2242B75300896BDA /* Resources */,
@@ -130,12 +166,38 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		BBDF2C454EB549B1024E2F9D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WAPY-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9D9750FC2242B75300896BDA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				9D9751062242B75300896BDA /* ViewController.swift in Sources */,
+				9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */,
 				9D9751042242B75300896BDA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,17 +342,21 @@
 		};
 		9D9751132242B75500896BDA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A664701F5847AE6F89E2528F /* Pods-WAPY.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 35DWKWL79J;
+				DEVELOPMENT_TEAM = KFJ83RX747;
 				INFOPLIST_FILE = WAPY/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.wapy.WAPY;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -298,17 +364,21 @@
 		};
 		9D9751142242B75500896BDA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EF985D42B680045B3596835A /* Pods-WAPY.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 35DWKWL79J;
+				DEVELOPMENT_TEAM = KFJ83RX747;
 				INFOPLIST_FILE = WAPY/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.wapy.WAPY;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
