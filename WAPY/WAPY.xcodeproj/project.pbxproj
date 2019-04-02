@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		287FB0C9A8EE129395B88F9C /* Pods_WAPY.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6AA6244EA7B927B929794A /* Pods_WAPY.framework */; };
+		9D1AB41E2253FFE400D41F4F /* SceneKit Scene.scn in Resources */ = {isa = PBXBuildFile; fileRef = 9D1AB41D2253FFE400D41F4F /* SceneKit Scene.scn */; };
 		9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A1105224FF59D00CD11AE /* RoomMapController.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		4A6AA6244EA7B927B929794A /* Pods_WAPY.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WAPY.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D1AB41D2253FFE400D41F4F /* SceneKit Scene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "SceneKit Scene.scn"; sourceTree = "<group>"; };
 		9D3A1105224FF59D00CD11AE /* RoomMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMapController.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				9D97510A2242B75500896BDA /* Assets.xcassets */,
 				9D97510C2242B75500896BDA /* LaunchScreen.storyboard */,
 				9D97510F2242B75500896BDA /* Info.plist */,
+				9D1AB41D2253FFE400D41F4F /* SceneKit Scene.scn */,
 			);
 			path = WAPY;
 			sourceTree = "<group>";
@@ -158,6 +161,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D1AB41E2253FFE400D41F4F /* SceneKit Scene.scn in Resources */,
 				9D97510E2242B75500896BDA /* LaunchScreen.storyboard in Resources */,
 				9D97510B2242B75500896BDA /* Assets.xcassets in Resources */,
 				9D9751092242B75300896BDA /* Main.storyboard in Resources */,
