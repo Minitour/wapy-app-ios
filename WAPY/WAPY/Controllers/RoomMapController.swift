@@ -56,34 +56,63 @@ public class RoomMapController: UIViewController {
 
 extension RoomMapController: ARSCNViewDelegate {
 
+    func widthForHeight(_ height: CGFloat) -> CGFloat{
+        return height * sin(30.0) / sin(60.0) / 2
+    }
+
     public func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         if let objectAnchor = anchor as? ARObjectAnchor {
-            let pyramid = SCNPyramid(width: 0.1, height: 0.2, length: 0.1)
+
+
+            let height: CGFloat = 1.0
+            let width = widthForHeight(height)
+
+            let pyramidHighLight = SCNPyramid(width: width, height: height, length: width)
+            let pyramidGeo = SCNPyramid(width: width, height: height, length: width)
+
             let reflectiveMaterial = SCNMaterial()
             reflectiveMaterial.lightingModel = .physicallyBased
-            reflectiveMaterial.metalness.contents = 1.0
-            reflectiveMaterial.roughness.contents = 0.2
+            reflectiveMaterial.metalness.contents = 0.0
+            reflectiveMaterial.roughness.contents = 1.0
+            reflectiveMaterial.diffuse.contents = UIColor.blue
+            reflectiveMaterial.transparency = 0.1
 
-            pyramid.firstMaterial? = reflectiveMaterial
-            pyramid.firstMaterial?.isDoubleSided = true
 
-            //
+            let outlineMaterial = SCNMaterial()
+            outlineMaterial.fillMode = .lines
+            outlineMaterial.metalness.contents = 0.0
+            outlineMaterial.roughness.contents = 1.0
+
+
+            pyramidHighLight.firstMaterial? = outlineMaterial
+
+            pyramidGeo.firstMaterial? = reflectiveMaterial
+            pyramidGeo.firstMaterial?.isDoubleSided = true
+
             guard let name = objectAnchor.referenceObject.name, name == "box" else { return }
 
             print("detected box")
 
-            let pyramidNode = SCNNode(geometry: pyramid)
+            let pyramidNode = SCNNode(geometry: pyramidGeo)
+            let highlightNode = SCNNode(geometry: pyramidHighLight)
 
-            let width = objectAnchor.referenceObject.extent.z
+
+            let objWidth = objectAnchor.referenceObject.extent.z
 
             // set position to pyramid node to be the center of the detected object.
             pyramidNode.position = SCNVector3(objectAnchor.referenceObject.center.x,
                                               objectAnchor.referenceObject.center.y,
-                                              objectAnchor.referenceObject.center.z + Float(pyramid.height) + width / 2.0)
+                                              objectAnchor.referenceObject.center.z
+                                                + Float(pyramidGeo.height) + objWidth / 2.0)
 
             pyramidNode.eulerAngles = SCNVector3(-Float.pi / 2.0, 0.0, 0.0)
 
+            highlightNode.position = pyramidNode.position
+            highlightNode.eulerAngles = pyramidNode.eulerAngles
+
+
             node.addChildNode(pyramidNode)
+            node.addChildNode(highlightNode)
         }
     }
 }
