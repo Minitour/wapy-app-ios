@@ -6,5 +6,6 @@ target 'WAPY' do
   use_frameworks!
 
   # Pods for WAPY
-
+  pod 'FlexibleSteppedProgressBar', :git => 'https://github.com/Minitour/FlexibleSteppedProgressBar.git', :branch => 'master'
+  pod 'PKHUD', '~> 5.0'
 end

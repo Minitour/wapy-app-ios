@@ -1,3 +1,29 @@
-PODFILE CHECKSUM: 2bfd4bf9a26134360e087c19b59dd291f2bf74ec
+PODS:
+  - FlexibleSteppedProgressBar (0.5.0)
+  - PKHUD (5.2.1)
+
+DEPENDENCIES:
+  - FlexibleSteppedProgressBar (from `https://github.com/Minitour/FlexibleSteppedProgressBar.git`, branch `master`)
+  - PKHUD (~> 5.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - PKHUD
+
+EXTERNAL SOURCES:
+  FlexibleSteppedProgressBar:
+    :branch: master
+    :git: https://github.com/Minitour/FlexibleSteppedProgressBar.git
+
+CHECKOUT OPTIONS:
+  FlexibleSteppedProgressBar:
+    :commit: cd3c0a0c31ccd242698b51d381a11092aaa3e464
+    :git: https://github.com/Minitour/FlexibleSteppedProgressBar.git
+
+SPEC CHECKSUMS:
+  FlexibleSteppedProgressBar: 04f3108109bbcd42c3c4ab02b79b41a7335e77aa
+  PKHUD: 4e6162c4c39ac367c6934e9855c6b4762ee16256
+
+PODFILE CHECKSUM: 6f1c7f1a72b4b8f5344a1b88cd1362d86ac89e1e
 
 COCOAPODS: 1.6.1

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		287FB0C9A8EE129395B88F9C /* Pods_WAPY.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6AA6244EA7B927B929794A /* Pods_WAPY.framework */; };
 		9D1AB41E2253FFE400D41F4F /* SceneKit Scene.scn in Resources */ = {isa = PBXBuildFile; fileRef = 9D1AB41D2253FFE400D41F4F /* SceneKit Scene.scn */; };
+		9D1AB4282257F38100D41F4F /* GlassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB4272257F38100D41F4F /* GlassButton.swift */; };
 		9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A1105224FF59D00CD11AE /* RoomMapController.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		4A6AA6244EA7B927B929794A /* Pods_WAPY.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WAPY.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D1AB41D2253FFE400D41F4F /* SceneKit Scene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "SceneKit Scene.scn"; sourceTree = "<group>"; };
+		9D1AB4272257F38100D41F4F /* GlassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassButton.swift; sourceTree = "<group>"; };
 		9D3A1105224FF59D00CD11AE /* RoomMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMapController.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +54,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9D1AB4262257F37500D41F4F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9D1AB4272257F38100D41F4F /* GlassButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		9D3A1104224FF58E00CD11AE /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +91,7 @@
 		9D9751022242B75300896BDA /* WAPY */ = {
 			isa = PBXGroup;
 			children = (
+				9D1AB4262257F37500D41F4F /* Views */,
 				9D3A1104224FF58E00CD11AE /* Controllers */,
 				9D9751032242B75300896BDA /* AppDelegate.swift */,
 				9D9751052242B75300896BDA /* ViewController.swift */,
@@ -113,6 +124,7 @@
 				9D9750FC2242B75300896BDA /* Sources */,
 				9D9750FD2242B75300896BDA /* Frameworks */,
 				9D9750FE2242B75300896BDA /* Resources */,
+				B1ED4E3262A7E44BB14791C1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -171,6 +183,30 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		B1ED4E3262A7E44BB14791C1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WAPY/Pods-WAPY-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FlexibleSteppedProgressBar/FlexibleSteppedProgressBar.framework",
+				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexibleSteppedProgressBar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WAPY/Pods-WAPY-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BBDF2C454EB549B1024E2F9D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -202,6 +238,7 @@
 			files = (
 				9D9751062242B75300896BDA /* ViewController.swift in Sources */,
 				9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */,
+				9D1AB4282257F38100D41F4F /* GlassButton.swift in Sources */,
 				9D9751042242B75300896BDA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

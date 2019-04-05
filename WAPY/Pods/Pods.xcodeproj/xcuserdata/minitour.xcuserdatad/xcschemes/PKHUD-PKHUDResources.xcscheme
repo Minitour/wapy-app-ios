@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "47A48E481F57414A43CC1C34DC1D247C"
-               BuildableName = "Pods_WAPY.framework"
-               BlueprintName = "Pods-WAPY"
+               BlueprintIdentifier = "9480427EE661E1D6FF6047F6D31801C6"
+               BuildableName = "PKHUDResources.bundle"
+               BlueprintName = "PKHUD-PKHUDResources"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "47A48E481F57414A43CC1C34DC1D247C"
-            BuildableName = "Pods_WAPY.framework"
-            BlueprintName = "Pods-WAPY"
+            BlueprintIdentifier = "9480427EE661E1D6FF6047F6D31801C6"
+            BuildableName = "PKHUDResources.bundle"
+            BlueprintName = "PKHUD-PKHUDResources"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
