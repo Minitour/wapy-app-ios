@@ -10,6 +10,9 @@
 		287FB0C9A8EE129395B88F9C /* Pods_WAPY.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6AA6244EA7B927B929794A /* Pods_WAPY.framework */; };
 		9D1AB41E2253FFE400D41F4F /* SceneKit Scene.scn in Resources */ = {isa = PBXBuildFile; fileRef = 9D1AB41D2253FFE400D41F4F /* SceneKit Scene.scn */; };
 		9D1AB4282257F38100D41F4F /* GlassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB4272257F38100D41F4F /* GlassButton.swift */; };
+		9D1AB42D2258C06E00D41F4F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB42C2258C06E00D41F4F /* Task.swift */; };
+		9D1AB42F2258C0AF00D41F4F /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB42E2258C0AF00D41F4F /* TaskManager.swift */; };
+		9D1AB4312258E99000D41F4F /* SystemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB4302258E99000D41F4F /* SystemButton.swift */; };
 		9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A1105224FF59D00CD11AE /* RoomMapController.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
@@ -22,6 +25,9 @@
 		4A6AA6244EA7B927B929794A /* Pods_WAPY.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WAPY.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D1AB41D2253FFE400D41F4F /* SceneKit Scene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "SceneKit Scene.scn"; sourceTree = "<group>"; };
 		9D1AB4272257F38100D41F4F /* GlassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassButton.swift; sourceTree = "<group>"; };
+		9D1AB42C2258C06E00D41F4F /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		9D1AB42E2258C0AF00D41F4F /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
+		9D1AB4302258E99000D41F4F /* SystemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemButton.swift; sourceTree = "<group>"; };
 		9D3A1105224FF59D00CD11AE /* RoomMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMapController.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -58,8 +64,18 @@
 			isa = PBXGroup;
 			children = (
 				9D1AB4272257F38100D41F4F /* GlassButton.swift */,
+				9D1AB4302258E99000D41F4F /* SystemButton.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		9D1AB42B2258C05F00D41F4F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9D1AB42C2258C06E00D41F4F /* Task.swift */,
+				9D1AB42E2258C0AF00D41F4F /* TaskManager.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		9D3A1104224FF58E00CD11AE /* Controllers */ = {
@@ -91,6 +107,7 @@
 		9D9751022242B75300896BDA /* WAPY */ = {
 			isa = PBXGroup;
 			children = (
+				9D1AB42B2258C05F00D41F4F /* Models */,
 				9D1AB4262257F37500D41F4F /* Views */,
 				9D3A1104224FF58E00CD11AE /* Controllers */,
 				9D9751032242B75300896BDA /* AppDelegate.swift */,
@@ -236,8 +253,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D1AB4312258E99000D41F4F /* SystemButton.swift in Sources */,
+				9D1AB42F2258C0AF00D41F4F /* TaskManager.swift in Sources */,
 				9D9751062242B75300896BDA /* ViewController.swift in Sources */,
 				9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */,
+				9D1AB42D2258C06E00D41F4F /* Task.swift in Sources */,
 				9D1AB4282257F38100D41F4F /* GlassButton.swift in Sources */,
 				9D9751042242B75300896BDA /* AppDelegate.swift in Sources */,
 			);

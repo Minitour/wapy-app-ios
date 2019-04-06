@@ -8,4 +8,5 @@ target 'WAPY' do
   # Pods for WAPY
   pod 'FlexibleSteppedProgressBar', :git => 'https://github.com/Minitour/FlexibleSteppedProgressBar.git', :branch => 'master'
   pod 'PKHUD', '~> 5.0'
+  pod 'AZTabBar'
 end

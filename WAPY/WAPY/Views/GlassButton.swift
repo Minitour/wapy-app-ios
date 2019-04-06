@@ -27,7 +27,7 @@ class GlassButton: UIButton{
     }
 
     func setup() {
-        backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.6048834098)
+        backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 0.9)
         layer.cornerRadius = 5
         layer.masksToBounds = true
     }
