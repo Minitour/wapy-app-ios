@@ -12,10 +12,11 @@ extension UIButton{
 
     class func systemButton(withTitle title: String = "Button") -> UIButton {
         let button = UIButton(type: .system)
-        button.backgroundColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
+        button.backgroundColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.tintColor = .white
+        button.setTitle(title, for: [])
         return button
     }
 }

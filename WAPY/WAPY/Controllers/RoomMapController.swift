@@ -94,7 +94,7 @@ public class RoomMapController: UIViewController {
         resetButton = GlassButton()
         infoButton = GlassButton()
         progressBar = FlexibleSteppedProgressBar()
-        nextButton = UIButton.systemButton(withTitle: "Next")
+        nextButton = .systemButton(withTitle: "Next")
 
         self.view.addSubview(sceneView)
         self.view.addSubview(resetButton)
@@ -108,7 +108,7 @@ public class RoomMapController: UIViewController {
         resetButton.translatesAutoresizingMaskIntoConstraints = false
         infoButton.translatesAutoresizingMaskIntoConstraints = false
         progressBar.translatesAutoresizingMaskIntoConstraints = false
-
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
 
         // auto layout
         NSLayoutConstraint.activate([
@@ -133,7 +133,14 @@ public class RoomMapController: UIViewController {
             sceneView.topAnchor.constraint(equalTo: view.topAnchor),
             sceneView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             sceneView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            sceneView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            sceneView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            // setup button
+            nextButton.heightAnchor.constraint(equalToConstant: 44.0),
+            nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: padding * 2),
+            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding * 2),
+            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -padding * 2)
+
         ])
 
         // more customizations
@@ -172,6 +179,7 @@ public class RoomMapController: UIViewController {
 
         resetButton.addTarget(self, action: #selector(didSelectReset(_:)), for: .touchUpInside)
         infoButton.addTarget(self, action: #selector(didSelectInfo(_:)), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(didSelectNext(_:)), for: .touchUpInside)
 
         // if task exists load it into the view.
         if let task = taskManager.current() {
@@ -198,6 +206,10 @@ public class RoomMapController: UIViewController {
     }
 
     @objc func didSelectInfo(_ sender: UIButton) {
+
+    }
+
+    @objc func didSelectNext(_ sender: UIButton) {
 
     }
 }
@@ -345,10 +357,6 @@ extension RoomMapController: ARSCNViewDelegate {
         node.addChildNode(pyramidNode)
         node.addChildNode(highlightNode)
     }
-}
-
-extension RoomMapController: ARSessionDelegate {
-
 }
 
 extension RoomMapController: FlexibleSteppedProgressBarDelegate {
