@@ -26,6 +26,7 @@ public struct TaskManager {
         tasks.append(task)
     }
 
+    @discardableResult
     public mutating func didCompleteTask() -> Task? {
         currentIndex += 1
         if currentIndex >= tasks.count {

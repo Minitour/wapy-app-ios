@@ -9,6 +9,7 @@
 import UIKit
 import ARKit
 import FlexibleSteppedProgressBar
+import PKHUD
 
 public class RoomMapController: UIViewController {
 
@@ -35,12 +36,18 @@ public class RoomMapController: UIViewController {
     /// The next button
     var nextButton: UIButton!
 
+    /// A label which displays the instructions for the user.
+    var messageLabel: UILabel!
+
     // MARK: - State
+
     var currentStep: Int = 0
 
     var numberOfPlanesFound: Int = 0 {
         didSet{
-
+            if currentStep == 0 {
+                onDataChanged()
+            }
         }
     }
 
@@ -65,6 +72,9 @@ public class RoomMapController: UIViewController {
         didSet{
             // observer for later use
             print("is visable: \(objectVisable)")
+            if currentStep == 1 {
+                onDataChanged()
+            }
         }
     }
 
@@ -95,12 +105,15 @@ public class RoomMapController: UIViewController {
         infoButton = GlassButton()
         progressBar = FlexibleSteppedProgressBar()
         nextButton = .systemButton(withTitle: "Next")
+        messageLabel = PaddingLabel()
+
 
         self.view.addSubview(sceneView)
         self.view.addSubview(resetButton)
         self.view.addSubview(infoButton)
         self.view.addSubview(progressBar)
         self.view.addSubview(nextButton)
+        self.view.addSubview(messageLabel)
 
 
         // disable auto resizing mask
@@ -109,6 +122,7 @@ public class RoomMapController: UIViewController {
         infoButton.translatesAutoresizingMaskIntoConstraints = false
         progressBar.translatesAutoresizingMaskIntoConstraints = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
 
         // auto layout
         NSLayoutConstraint.activate([
@@ -139,8 +153,12 @@ public class RoomMapController: UIViewController {
             nextButton.heightAnchor.constraint(equalToConstant: 44.0),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: padding * 2),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding * 2),
-            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -padding * 2)
+            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -padding * 2),
 
+            // setup message label
+            messageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: padding),
+            messageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -padding),
+            messageLabel.bottomAnchor.constraint(equalTo: nextButton.topAnchor,constant: -padding)
         ])
 
         // more customizations
@@ -169,6 +187,13 @@ public class RoomMapController: UIViewController {
         resetButton.tintColor = .white
         infoButton.setImage(#imageLiteral(resourceName: "baseline_help_outline_black_36pt"), for: [])
         resetButton.setImage(#imageLiteral(resourceName: "baseline_replay_black_36pt"), for: [])
+
+        messageLabel.numberOfLines = 0
+        messageLabel.lineBreakMode = .byWordWrapping
+        messageLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+        messageLabel.textColor = .white
+        messageLabel.layer.cornerRadius = 3.0
+        messageLabel.layer.masksToBounds = true
 
     }
 
@@ -212,6 +237,66 @@ public class RoomMapController: UIViewController {
     @objc func didSelectNext(_ sender: UIButton) {
 
     }
+
+
+    /// This function is called when data is changed in the enviorment
+    func onDataChanged() {
+        guard let currentTask = self.taskManager.current() else { return }
+
+        let message: String = currentTask.info
+        var completion: Float = 0
+
+        if self.currentStep == 0 {
+            // currently we are looking for new planes
+            completion = Float(self.numberOfPlanesFound) / 10
+        }
+
+        if self.currentStep == 1 {
+            completion = objectVisable ? 1.0 : 0.0
+
+            if objectVisable {
+                if let referenceObject = self.refObject,
+                    let node = self.refNode {
+                    // add pyramid and stuff
+                    renderCameraFOV(ref: referenceObject, node: node)
+
+                    // set to nil to avoid adding the object twice.
+                    self.refObject = nil
+                }
+            }
+        }
+
+        showMessage(message, completion: completion)
+        updateProgress(completion)
+
+
+    }
+
+    func updateProgress(_ completion: Float){
+        if completion >= 1.0 {
+            self.taskManager.didCompleteTask()
+            self.currentStep += 1
+            onDataChanged()
+            DispatchQueue.main.async {
+                HUD.flash(.success, delay: 1.0)
+                self.progressBar.currentIndex += 1
+            }
+        }
+    }
+
+
+    /// Called when its time to update the message on the label.
+    ///
+    /// - Parameters:
+    ///   - message: The message to show
+    ///   - completion: The progress
+    func showMessage(_ message: String?, completion: Float) {
+        guard let message = message else { return }
+        let completed = Int(completion * 100)
+        DispatchQueue.main.async { [unowned self] in
+            self.messageLabel.text = "\(message) \n\nProgress: \(completed)%"
+        }
+    }
 }
 
 extension RoomMapController: ARSCNViewDelegate {
@@ -251,7 +336,7 @@ extension RoomMapController: ARSCNViewDelegate {
             self.refNode = node
             self.refObject = objectAnchor.referenceObject
 
-            renderCameraFOV(ref: objectAnchor.referenceObject, node: node)
+
 
         }
     }
@@ -333,6 +418,7 @@ extension RoomMapController: ARSCNViewDelegate {
 
         // apply material to pyramids
         pyramidHighLight.firstMaterial? = outlineMaterial
+        pyramidHighLight.firstMaterial?.isDoubleSided = true
         pyramidGeo.firstMaterial? = transparentMaterial
         pyramidGeo.firstMaterial?.isDoubleSided = true
 

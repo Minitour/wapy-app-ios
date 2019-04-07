@@ -13,6 +13,7 @@
 		9D1AB42D2258C06E00D41F4F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB42C2258C06E00D41F4F /* Task.swift */; };
 		9D1AB42F2258C0AF00D41F4F /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB42E2258C0AF00D41F4F /* TaskManager.swift */; };
 		9D1AB4312258E99000D41F4F /* SystemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB4302258E99000D41F4F /* SystemButton.swift */; };
+		9D1AB435225A94D800D41F4F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB434225A94D800D41F4F /* PaddingLabel.swift */; };
 		9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A1105224FF59D00CD11AE /* RoomMapController.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
@@ -28,6 +29,7 @@
 		9D1AB42C2258C06E00D41F4F /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		9D1AB42E2258C0AF00D41F4F /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		9D1AB4302258E99000D41F4F /* SystemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemButton.swift; sourceTree = "<group>"; };
+		9D1AB434225A94D800D41F4F /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		9D3A1105224FF59D00CD11AE /* RoomMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMapController.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			children = (
 				9D1AB42C2258C06E00D41F4F /* Task.swift */,
 				9D1AB42E2258C0AF00D41F4F /* TaskManager.swift */,
+				9D1AB434225A94D800D41F4F /* PaddingLabel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				9D1AB42F2258C0AF00D41F4F /* TaskManager.swift in Sources */,
 				9D9751062242B75300896BDA /* ViewController.swift in Sources */,
 				9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */,
+				9D1AB435225A94D800D41F4F /* PaddingLabel.swift in Sources */,
 				9D1AB42D2258C06E00D41F4F /* Task.swift in Sources */,
 				9D1AB4282257F38100D41F4F /* GlassButton.swift in Sources */,
 				9D9751042242B75300896BDA /* AppDelegate.swift in Sources */,
