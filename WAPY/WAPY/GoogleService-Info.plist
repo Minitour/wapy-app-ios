@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>417744984701-6oead7jgmq2e7l6c1h54aa8cog4i4eq1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.417744984701-6oead7jgmq2e7l6c1h54aa8cog4i4eq1</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBNaYimrFMEASCCS6KbTfK3NTlX_pfSs_c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>417744984701</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>me.wapy.WAPY</string>
+	<key>PROJECT_ID</key>
+	<string>wapy-15dac</string>
+	<key>STORAGE_BUCKET</key>
+	<string>wapy-15dac.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:417744984701:ios:52fe886400b824b7</string>
+	<key>DATABASE_URL</key>
+	<string>https://wapy-15dac.firebaseio.com</string>
+</dict>
+</plist>

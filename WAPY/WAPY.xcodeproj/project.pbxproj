@@ -15,6 +15,15 @@
 		9D1AB4312258E99000D41F4F /* SystemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB4302258E99000D41F4F /* SystemButton.swift */; };
 		9D1AB435225A94D800D41F4F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB434225A94D800D41F4F /* PaddingLabel.swift */; };
 		9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A1105224FF59D00CD11AE /* RoomMapController.swift */; };
+		9D4E49362260AC02009F57D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D4E49352260AC02009F57D5 /* GoogleService-Info.plist */; };
+		9D4E493A2260B282009F57D5 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49392260B282009F57D5 /* Box.swift */; };
+		9D4E493C2260B41E009F57D5 /* Point3d.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E493B2260B41E009F57D5 /* Point3d.swift */; };
+		9D4E493E2260B458009F57D5 /* TrackableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E493D2260B458009F57D5 /* TrackableObject.swift */; };
+		9D4E49402260B4B5009F57D5 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E493F2260B4B5009F57D5 /* Window.swift */; };
+		9D4E49422260B501009F57D5 /* CameraRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49412260B501009F57D5 /* CameraRef.swift */; };
+		9D4E49442260B63F009F57D5 /* MapModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49432260B63F009F57D5 /* MapModelObject.swift */; };
+		9D4E49472260D223009F57D5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49462260D223009F57D5 /* LoginViewController.swift */; };
+		9D4E494B2260D243009F57D5 /* GuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E494A2260D243009F57D5 /* GuestViewController.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
 		9D9751092242B75300896BDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D9751072242B75300896BDA /* Main.storyboard */; };
@@ -31,6 +40,15 @@
 		9D1AB4302258E99000D41F4F /* SystemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemButton.swift; sourceTree = "<group>"; };
 		9D1AB434225A94D800D41F4F /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		9D3A1105224FF59D00CD11AE /* RoomMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMapController.swift; sourceTree = "<group>"; };
+		9D4E49352260AC02009F57D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9D4E49392260B282009F57D5 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
+		9D4E493B2260B41E009F57D5 /* Point3d.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3d.swift; sourceTree = "<group>"; };
+		9D4E493D2260B458009F57D5 /* TrackableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackableObject.swift; sourceTree = "<group>"; };
+		9D4E493F2260B4B5009F57D5 /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
+		9D4E49412260B501009F57D5 /* CameraRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRef.swift; sourceTree = "<group>"; };
+		9D4E49432260B63F009F57D5 /* MapModelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModelObject.swift; sourceTree = "<group>"; };
+		9D4E49462260D223009F57D5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		9D4E494A2260D243009F57D5 /* GuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestViewController.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D9751052242B75300896BDA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,9 +92,8 @@
 		9D1AB42B2258C05F00D41F4F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9D1AB42C2258C06E00D41F4F /* Task.swift */,
-				9D1AB42E2258C0AF00D41F4F /* TaskManager.swift */,
-				9D1AB434225A94D800D41F4F /* PaddingLabel.swift */,
+				9D4E49502260E4F4009F57D5 /* AR */,
+				9D4E49382260B255009F57D5 /* Firestore */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -84,9 +101,74 @@
 		9D3A1104224FF58E00CD11AE /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9D4E494C2260E4B1009F57D5 /* Home */,
+				9D4E49452260D214009F57D5 /* Guest */,
 				9D3A1105224FF59D00CD11AE /* RoomMapController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9D4E49382260B255009F57D5 /* Firestore */ = {
+			isa = PBXGroup;
+			children = (
+				9D4E49392260B282009F57D5 /* Box.swift */,
+				9D4E493F2260B4B5009F57D5 /* Window.swift */,
+				9D4E493B2260B41E009F57D5 /* Point3d.swift */,
+				9D4E493D2260B458009F57D5 /* TrackableObject.swift */,
+				9D4E49432260B63F009F57D5 /* MapModelObject.swift */,
+				9D4E49412260B501009F57D5 /* CameraRef.swift */,
+			);
+			path = Firestore;
+			sourceTree = "<group>";
+		};
+		9D4E49452260D214009F57D5 /* Guest */ = {
+			isa = PBXGroup;
+			children = (
+				9D4E49462260D223009F57D5 /* LoginViewController.swift */,
+				9D4E494A2260D243009F57D5 /* GuestViewController.swift */,
+			);
+			path = Guest;
+			sourceTree = "<group>";
+		};
+		9D4E494C2260E4B1009F57D5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				9D4E494F2260E4E9009F57D5 /* Profile */,
+				9D4E494E2260E4C6009F57D5 /* Products */,
+				9D4E494D2260E4B7009F57D5 /* Stores */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		9D4E494D2260E4B7009F57D5 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		9D4E494E2260E4C6009F57D5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Products;
+			sourceTree = "<group>";
+		};
+		9D4E494F2260E4E9009F57D5 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		9D4E49502260E4F4009F57D5 /* AR */ = {
+			isa = PBXGroup;
+			children = (
+				9D1AB42C2258C06E00D41F4F /* Task.swift */,
+				9D1AB42E2258C0AF00D41F4F /* TaskManager.swift */,
+				9D1AB434225A94D800D41F4F /* PaddingLabel.swift */,
+			);
+			path = AR;
 			sourceTree = "<group>";
 		};
 		9D9750F72242B75300896BDA = {
@@ -119,6 +201,7 @@
 				9D97510A2242B75500896BDA /* Assets.xcassets */,
 				9D97510C2242B75500896BDA /* LaunchScreen.storyboard */,
 				9D97510F2242B75500896BDA /* Info.plist */,
+				9D4E49352260AC02009F57D5 /* GoogleService-Info.plist */,
 				9D1AB41D2253FFE400D41F4F /* SceneKit Scene.scn */,
 			);
 			path = WAPY;
@@ -195,6 +278,7 @@
 			files = (
 				9D1AB41E2253FFE400D41F4F /* SceneKit Scene.scn in Resources */,
 				9D97510E2242B75500896BDA /* LaunchScreen.storyboard in Resources */,
+				9D4E49362260AC02009F57D5 /* GoogleService-Info.plist in Resources */,
 				9D97510B2242B75500896BDA /* Assets.xcassets in Resources */,
 				9D9751092242B75300896BDA /* Main.storyboard in Resources */,
 			);
@@ -212,15 +296,39 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-WAPY/Pods-WAPY-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AZDialogView/AZDialogView.framework",
+				"${BUILT_PRODUCTS_DIR}/AZTabBar/AZTabBar.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/EasyNotificationBadge/EasyNotificationBadge.framework",
+				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FlexibleSteppedProgressBar/FlexibleSteppedProgressBar.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AZDialogView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AZTabBar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyNotificationBadge.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexibleSteppedProgressBar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -257,13 +365,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D1AB4312258E99000D41F4F /* SystemButton.swift in Sources */,
+				9D4E49442260B63F009F57D5 /* MapModelObject.swift in Sources */,
+				9D4E493E2260B458009F57D5 /* TrackableObject.swift in Sources */,
+				9D4E49472260D223009F57D5 /* LoginViewController.swift in Sources */,
 				9D1AB42F2258C0AF00D41F4F /* TaskManager.swift in Sources */,
+				9D4E49422260B501009F57D5 /* CameraRef.swift in Sources */,
 				9D9751062242B75300896BDA /* ViewController.swift in Sources */,
 				9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */,
 				9D1AB435225A94D800D41F4F /* PaddingLabel.swift in Sources */,
+				9D4E493C2260B41E009F57D5 /* Point3d.swift in Sources */,
 				9D1AB42D2258C06E00D41F4F /* Task.swift in Sources */,
+				9D4E494B2260D243009F57D5 /* GuestViewController.swift in Sources */,
 				9D1AB4282257F38100D41F4F /* GlassButton.swift in Sources */,
 				9D9751042242B75300896BDA /* AppDelegate.swift in Sources */,
+				9D4E493A2260B282009F57D5 /* Box.swift in Sources */,
+				9D4E49402260B4B5009F57D5 /* Window.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

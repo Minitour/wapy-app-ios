@@ -41,7 +41,7 @@ public class RoomMapController: UIViewController {
 
     // MARK: - State
 
-    var currentStep: Int = 0
+    var currentStep: Int = 1
 
     var numberOfPlanesFound: Int = 0 {
         didSet{
@@ -315,7 +315,7 @@ extension RoomMapController: ARSCNViewDelegate {
 
         if let objectAnchor = anchor as? ARObjectAnchor {
 
-            guard let name = objectAnchor.referenceObject.name, name == "box" else { return }
+            guard let name = objectAnchor.referenceObject.name, name == "box2" else { return }
             print("detected box")
 
             // create geometry

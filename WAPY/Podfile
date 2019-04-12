@@ -9,4 +9,9 @@ target 'WAPY' do
   pod 'FlexibleSteppedProgressBar', :git => 'https://github.com/Minitour/FlexibleSteppedProgressBar.git', :branch => 'master'
   pod 'PKHUD', '~> 5.0'
   pod 'AZTabBar'
+  pod 'AZDialogView'
+  pod 'Firebase/Core'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Auth'
+  pod 'Eureka'
 end

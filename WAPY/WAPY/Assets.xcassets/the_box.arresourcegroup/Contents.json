@@ -6,6 +6,9 @@
   "resources" : [
     {
       "filename" : "box.arobject"
+    },
+    {
+      "filename" : "box2.arobject"
     }
   ]
 }
