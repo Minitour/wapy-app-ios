@@ -66,7 +66,6 @@ import CoreGraphics
     open var lastStateOuterCircleStrokeColor: UIColor!
     open var lastStateCenterColor: UIColor!
     open var centerLayerTextColor: UIColor!
-    open var centerLayerUnselectedTextColor: UIColor!
     open var centerLayerDarkBackgroundTextColor: UIColor = UIColor.white
     
     open var useLastState: Bool = false {
@@ -288,10 +287,6 @@ import CoreGraphics
         if centerLayerTextColor == nil {
             centerLayerTextColor = stepTextColor
         }
-
-        if centerLayerUnselectedTextColor == nil {
-            centerLayerUnselectedTextColor = stepTextColor
-        }
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(FlexibleSteppedProgressBar.gestureAction(_:)))
         let swipeGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(FlexibleSteppedProgressBar.gestureAction(_:)))
@@ -451,12 +446,7 @@ import CoreGraphics
             if i == currentIndex || i == completedTillIndex {
                 textLayer.foregroundColor = centerLayerDarkBackgroundTextColor.cgColor
             } else {
-                // another condition
-                if i < currentIndex {
-                    textLayer.foregroundColor = centerLayerTextColor?.cgColor
-                } else {
-                    textLayer.foregroundColor = centerLayerUnselectedTextColor?.cgColor
-                }
+                textLayer.foregroundColor = centerLayerTextColor?.cgColor
             }
             
             if let text = self.delegate?.progressBar?(self, textAtIndex: i, position: FlexibleSteppedProgressBarTextLocation.center) {

@@ -8,8 +8,14 @@
 
 import UIKit
 import Firebase
+import AZTabBar
 
 class ViewController: UIViewController {
+
+    var didSetupViews = false
+
+    var tabBar: AZTabBarController!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,43 +27,19 @@ class ViewController: UIViewController {
 //        objects.append(TrackableObject(id: "second object", r: 0.3, position: Point3d(x: 0.0, y: 0.0, z: 0.0)))
 //        let mmo = MapModelObject(window: window, camera: box, objects: objects)
 //        let camera = CameraRef(mmo: mmo, owner_uid: "some owner id", version: "1.3.2", ipv6: "some mac address")
-//
-//        let db = Firestore.firestore()
-//        db.collection("cameras").getDocuments { (snpsht, err) in
-//            guard let snpsht = snpsht else {
-//                print(err)
-//                return
-//            }
-//
-//            for doc in snpsht.documents {
-//                print(doc.data())
-//            }
-//        }
-        //db.collection("cameras").whereField("owner_uid", isEqualTo: "")
+
 
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        showARController()
+    }
+
+    func handleAuth() {
         if let user = Auth.auth().currentUser {
             // show home screen
             print(user.uid)
-            let db = Firestore.firestore()
-            db.collection("").limit(to: <#T##Int#>)
-            db.collection("cameras").whereField("owner_uid", isEqualTo: user.uid).getDocuments { (snpsht, err) in
-                guard let snpsht = snpsht else {
-                    print(err)
-                    return
-                }
-
-                for doc in snpsht.documents {
-                    if let store = doc.data()["store"] as? DocumentReference {
-                        store.getDocument { document, err in
-                            print(document?.data())
-                        }
-                    }
-                }
-            }
         } else {
             // show guest controller
 
@@ -66,6 +48,27 @@ class ViewController: UIViewController {
 
             self.present(navController, animated: true)
         }
+    }
+
+    func setupInterface() {
+        guard !didSetupViews else { return }
+
+        tabBar = .insert(into: self, withTabIcons: [#imageLiteral(resourceName: "baseline_style_black_24pt"),#imageLiteral(resourceName: "baseline_store_black_24pt"),#imageLiteral(resourceName: "baseline_account_circle_black_24pt")])
+
+        tabBar.defaultColor = .lightGray
+        tabBar.selectedColor = #colorLiteral(red: 0.1607843137, green: 0.6862745098, blue: 0.6823529412, alpha: 1)
+        tabBar.selectionIndicatorColor = #colorLiteral(red: 0.1607843137, green: 0.6862745098, blue: 0.6823529412, alpha: 1)
+        tabBar.selectionIndicatorHeight = 2.0
+
+        tabBar.setViewController(UIViewController(), atIndex: 0)
+        tabBar.setViewController(UIViewController(), atIndex: 1)
+        tabBar.setViewController(UIViewController(), atIndex: 2)
+
+        tabBar.setTitle("Products", atIndex: 0)
+        tabBar.setTitle("Stores", atIndex: 1)
+        tabBar.setTitle("Account", atIndex: 2)
+
+        tabBar.animateTabChange = true
     }
 
     func showARController() {

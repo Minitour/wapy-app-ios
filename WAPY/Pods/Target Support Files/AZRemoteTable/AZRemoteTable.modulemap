@@ -1,0 +1,6 @@
+framework module AZRemoteTable {
+  umbrella header "AZRemoteTable-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -24,6 +24,7 @@
 		9D4E49442260B63F009F57D5 /* MapModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49432260B63F009F57D5 /* MapModelObject.swift */; };
 		9D4E49472260D223009F57D5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49462260D223009F57D5 /* LoginViewController.swift */; };
 		9D4E494B2260D243009F57D5 /* GuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E494A2260D243009F57D5 /* GuestViewController.swift */; };
+		9D4E4952226136D5009F57D5 /* StoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E4951226136D5009F57D5 /* StoresViewController.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
 		9D9751092242B75300896BDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D9751072242B75300896BDA /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 		9D4E49432260B63F009F57D5 /* MapModelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModelObject.swift; sourceTree = "<group>"; };
 		9D4E49462260D223009F57D5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9D4E494A2260D243009F57D5 /* GuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestViewController.swift; sourceTree = "<group>"; };
+		9D4E4951226136D5009F57D5 /* StoresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresViewController.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D9751052242B75300896BDA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -101,9 +103,9 @@
 		9D3A1104224FF58E00CD11AE /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9D6DEF9C2263700400C6B5A8 /* AR */,
 				9D4E494C2260E4B1009F57D5 /* Home */,
 				9D4E49452260D214009F57D5 /* Guest */,
-				9D3A1105224FF59D00CD11AE /* RoomMapController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -143,6 +145,7 @@
 		9D4E494D2260E4B7009F57D5 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				9D4E4951226136D5009F57D5 /* StoresViewController.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -167,6 +170,14 @@
 				9D1AB42C2258C06E00D41F4F /* Task.swift */,
 				9D1AB42E2258C0AF00D41F4F /* TaskManager.swift */,
 				9D1AB434225A94D800D41F4F /* PaddingLabel.swift */,
+			);
+			path = AR;
+			sourceTree = "<group>";
+		};
+		9D6DEF9C2263700400C6B5A8 /* AR */ = {
+			isa = PBXGroup;
+			children = (
+				9D3A1105224FF59D00CD11AE /* RoomMapController.swift */,
 			);
 			path = AR;
 			sourceTree = "<group>";
@@ -297,6 +308,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-WAPY/Pods-WAPY-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AZDialogView/AZDialogView.framework",
+				"${BUILT_PRODUCTS_DIR}/AZRemoteTable/AZRemoteTable.framework",
 				"${BUILT_PRODUCTS_DIR}/AZTabBar/AZTabBar.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/EasyNotificationBadge/EasyNotificationBadge.framework",
@@ -316,6 +328,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AZDialogView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AZRemoteTable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AZTabBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyNotificationBadge.framework",
@@ -379,6 +392,7 @@
 				9D1AB4282257F38100D41F4F /* GlassButton.swift in Sources */,
 				9D9751042242B75300896BDA /* AppDelegate.swift in Sources */,
 				9D4E493A2260B282009F57D5 /* Box.swift in Sources */,
+				9D4E4952226136D5009F57D5 /* StoresViewController.swift in Sources */,
 				9D4E49402260B4B5009F57D5 /* Window.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

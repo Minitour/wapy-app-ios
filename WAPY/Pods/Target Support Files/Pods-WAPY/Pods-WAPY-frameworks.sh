@@ -154,6 +154,7 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AZDialogView/AZDialogView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AZRemoteTable/AZRemoteTable.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AZTabBar/AZTabBar.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EasyNotificationBadge/EasyNotificationBadge.framework"
@@ -170,6 +171,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AZDialogView/AZDialogView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AZRemoteTable/AZRemoteTable.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AZTabBar/AZTabBar.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EasyNotificationBadge/EasyNotificationBadge.framework"
