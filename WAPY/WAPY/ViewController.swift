@@ -16,7 +16,6 @@ class ViewController: UIViewController {
 
     var tabBar: AZTabBarController!
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -28,24 +27,28 @@ class ViewController: UIViewController {
 //        let mmo = MapModelObject(window: window, camera: box, objects: objects)
 //        let camera = CameraRef(mmo: mmo, owner_uid: "some owner id", version: "1.3.2", ipv6: "some mac address")
 
-
+        setupInterface()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        showARController()
+        //showARController()
+
+        if !didSetupViews {
+            showCalibrationController() // remove later
+            handleAuth()
+        }
     }
 
     func handleAuth() {
         if let user = Auth.auth().currentUser {
             // show home screen
             print(user.uid)
+            normalLoad()
         } else {
             // show guest controller
-
             let guestController = GuestViewController()
             let navController = UINavigationController(rootViewController: guestController)
-
             self.present(navController, animated: true)
         }
     }
@@ -59,16 +62,18 @@ class ViewController: UIViewController {
         tabBar.selectedColor = #colorLiteral(red: 0.1607843137, green: 0.6862745098, blue: 0.6823529412, alpha: 1)
         tabBar.selectionIndicatorColor = #colorLiteral(red: 0.1607843137, green: 0.6862745098, blue: 0.6823529412, alpha: 1)
         tabBar.selectionIndicatorHeight = 2.0
-
-        tabBar.setViewController(UIViewController(), atIndex: 0)
-        tabBar.setViewController(UIViewController(), atIndex: 1)
-        tabBar.setViewController(UIViewController(), atIndex: 2)
-
         tabBar.setTitle("Products", atIndex: 0)
         tabBar.setTitle("Stores", atIndex: 1)
         tabBar.setTitle("Account", atIndex: 2)
 
         tabBar.animateTabChange = true
+    }
+
+    func normalLoad() {
+        tabBar.setViewController(UIViewController(), atIndex: 0)
+        tabBar.setViewController(UIViewController(), atIndex: 1)
+        tabBar.setViewController(UIViewController(), atIndex: 2)
+        didSetupViews = true
     }
 
     func showARController() {
@@ -96,6 +101,13 @@ class ViewController: UIViewController {
         controller.taskManager.addTask(task5)
 
         present(controller, animated: true, completion: nil)
+    }
+
+    func showCalibrationController() {
+        let controller = ConnectController()
+        let navController = UINavigationController(rootViewController: controller)
+
+        self.present(navController, animated: true, completion: nil)
     }
 }
 

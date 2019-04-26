@@ -44,7 +44,27 @@ extension CBPeripheral {
 
 public typealias CalibrationServiceAction = (CalibrationService) -> Void
 
+/**
+ # How to add a new characteristic:
+
+ 1) Add to the enum with valid UUID.
+ 2) Add a reference in Characteristics section.
+ 3) Add in didDiscoverCharacteristicsFor.
+
+ ## If READ characteristic:
+ 1) Add a variable which stores the data and add observers to it. (I.E: wifiData)
+ 2) Add an open function which makes the initial read call. (I.E getBoxInfo)
+ 3) implement reading logic at `didUpdateValueFor`.
+
+ ## If WRITE characteristic:
+ For write all you simply have to do is add a wraping function which receives the value and call:
+ ```swift
+ wapyPeripheral.write(_, to:)
+ ```
+ */
 open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+
+    public static let shared = CalibrationService()
 
     // MARK:-  field properties
 
@@ -85,7 +105,7 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
     /// The current characteristic we are reading from or writing to.
     fileprivate var activeCharacteristic: CBCharacteristic?
 
-    fileprivate var isBluetoothAvailable: Bool = false {
+    open fileprivate(set) var isBluetoothAvailable: Bool = false {
         didSet{
             if isBluetoothAvailable {
                 onBluetoothAvailable?(self)
@@ -169,16 +189,18 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
         wapyPeripheral.write(str, to: token)
     }
 
-    open func updateNetwork(bssid: String, password: String, completion: CalibrationServiceAction? = nil) {
+    open func updateNetwork(bssid: String, password: String?, completion: CalibrationServiceAction? = nil) {
         writeCompletion = completion
         activeCharacteristic = ssid
-        let str = "{\"bssid\":\"\(bssid)\",\"password\":\"\(password)\"}"
+        let passwordValue = password == nil ? "null" : "\"\(password!)\""
+        let str = "{\"bssid\":\"\(bssid)\",\"password\":\(passwordValue)}"
         wapyPeripheral.write(str, to: ssid)
     }
 
     /// Call to scan for peripherals
     open func scan() throws {
         guard isBluetoothAvailable else { throw WapyError.bluetoothNotAvailable }
+        if centralManager.isScanning { return }
         centralManager.scanForPeripherals(withServices: nil)
     }
 
@@ -319,7 +341,6 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
         } catch {
             return false
         }
-
         return true
     }
 }

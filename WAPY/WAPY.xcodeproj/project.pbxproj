@@ -26,6 +26,9 @@
 		9D4E494B2260D243009F57D5 /* GuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E494A2260D243009F57D5 /* GuestViewController.swift */; };
 		9D4E4952226136D5009F57D5 /* StoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E4951226136D5009F57D5 /* StoresViewController.swift */; };
 		9D611C76227221120089B3F5 /* CalibrationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C75227221120089B3F5 /* CalibrationService.swift */; };
+		9D611C7922722A740089B3F5 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C7822722A740089B3F5 /* API.swift */; };
+		9D611C7C227247400089B3F5 /* SelectNetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C7B227247400089B3F5 /* SelectNetworkController.swift */; };
+		9D611C7E2272475B0089B3F5 /* ConnectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C7D2272475B0089B3F5 /* ConnectController.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
 		9D9751092242B75300896BDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D9751072242B75300896BDA /* Main.storyboard */; };
@@ -54,6 +57,9 @@
 		9D4E494A2260D243009F57D5 /* GuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestViewController.swift; sourceTree = "<group>"; };
 		9D4E4951226136D5009F57D5 /* StoresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresViewController.swift; sourceTree = "<group>"; };
 		9D611C75227221120089B3F5 /* CalibrationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationService.swift; sourceTree = "<group>"; };
+		9D611C7822722A740089B3F5 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		9D611C7B227247400089B3F5 /* SelectNetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNetworkController.swift; sourceTree = "<group>"; };
+		9D611C7D2272475B0089B3F5 /* ConnectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectController.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D9751052242B75300896BDA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +104,7 @@
 		9D1AB42B2258C05F00D41F4F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9D611C77227224AC0089B3F5 /* CloudFunctions */,
 				9D4E49502260E4F4009F57D5 /* AR */,
 				9D4E49382260B255009F57D5 /* Firestore */,
 			);
@@ -183,8 +190,18 @@
 			isa = PBXGroup;
 			children = (
 				9D611C75227221120089B3F5 /* CalibrationService.swift */,
+				9D611C7B227247400089B3F5 /* SelectNetworkController.swift */,
+				9D611C7D2272475B0089B3F5 /* ConnectController.swift */,
 			);
 			path = Calibration;
+			sourceTree = "<group>";
+		};
+		9D611C77227224AC0089B3F5 /* CloudFunctions */ = {
+			isa = PBXGroup;
+			children = (
+				9D611C7822722A740089B3F5 /* API.swift */,
+			);
+			path = CloudFunctions;
 			sourceTree = "<group>";
 		};
 		9D6DEF9C2263700400C6B5A8 /* AR */ = {
@@ -324,7 +341,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-WAPY/Pods-WAPY-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-WAPY/Pods-WAPY-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AZDialogView/AZDialogView.framework",
 				"${BUILT_PRODUCTS_DIR}/AZRemoteTable/AZRemoteTable.framework",
 				"${BUILT_PRODUCTS_DIR}/AZTabBar/AZTabBar.framework",
@@ -361,7 +378,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WAPY/Pods-WAPY-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WAPY/Pods-WAPY-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BBDF2C454EB549B1024E2F9D /* [CP] Check Pods Manifest.lock */ = {
@@ -390,6 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D1AB4312258E99000D41F4F /* SystemButton.swift in Sources */,
+				9D611C7922722A740089B3F5 /* API.swift in Sources */,
 				9D4E49442260B63F009F57D5 /* MapModelObject.swift in Sources */,
 				9D611C76227221120089B3F5 /* CalibrationService.swift in Sources */,
 				9D4E493E2260B458009F57D5 /* TrackableObject.swift in Sources */,
@@ -399,6 +417,7 @@
 				9D9751062242B75300896BDA /* ViewController.swift in Sources */,
 				9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */,
 				9D1AB435225A94D800D41F4F /* PaddingLabel.swift in Sources */,
+				9D611C7E2272475B0089B3F5 /* ConnectController.swift in Sources */,
 				9D4E493C2260B41E009F57D5 /* Point3d.swift in Sources */,
 				9D1AB42D2258C06E00D41F4F /* Task.swift in Sources */,
 				9D4E494B2260D243009F57D5 /* GuestViewController.swift in Sources */,
@@ -406,6 +425,7 @@
 				9D9751042242B75300896BDA /* AppDelegate.swift in Sources */,
 				9D4E493A2260B282009F57D5 /* Box.swift in Sources */,
 				9D4E4952226136D5009F57D5 /* StoresViewController.swift in Sources */,
+				9D611C7C227247400089B3F5 /* SelectNetworkController.swift in Sources */,
 				9D4E49402260B4B5009F57D5 /* Window.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -550,7 +570,7 @@
 		};
 		9D9751132242B75500896BDA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2FAD0CD00971B4A32A2261C9 /* Pods-WAPY.debug.xcconfig */;
+			baseConfigurationReference = A664701F5847AE6F89E2528F /* Pods-WAPY.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -572,7 +592,7 @@
 		};
 		9D9751142242B75500896BDA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB1A45F4AD81DBB55F4AAFD3 /* Pods-WAPY.release.xcconfig */;
+			baseConfigurationReference = EF985D42B680045B3596835A /* Pods-WAPY.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

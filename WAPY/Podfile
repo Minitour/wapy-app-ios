@@ -14,5 +14,6 @@ target 'WAPY' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
+  pod 'Firebase/Functions'
   pod 'Eureka'
 end
