@@ -10,6 +10,12 @@ import UIKit
 import ARKit
 import FlexibleSteppedProgressBar
 import PKHUD
+import AZDialogView
+
+
+public protocol RoomMapControllerDelegate: class {
+    func didFinishCalibration(_ controller: RoomMapController, products: [TrackableObject], cameraObject: Box)
+}
 
 enum CalibrationPhase: Int {
     case plane
@@ -26,6 +32,32 @@ public class RoomMapController: UIViewController {
     }
 
     var taskManager: TaskManager = TaskManager()
+
+    /// The AR Config
+    var sessionConfig: ARWorldTrackingConfiguration {
+        let config = ARWorldTrackingConfiguration()
+        config.isAutoFocusEnabled = true
+        config.planeDetection = [.horizontal,.vertical]
+        config.environmentTexturing = .automatic
+        guard let referenceObjects = ARReferenceObject
+            .referenceObjects(inGroupNamed: "the_box", bundle: nil) else {
+                fatalError("Missing expected asset catalog resources.")
+        }
+        config.detectionObjects = referenceObjects
+        return config
+    }
+
+    open weak var delegate: RoomMapControllerDelegate?
+
+    // MARK: - Constants
+
+    let numberOfPlanesNeeded: Int = 1
+
+    let padding: CGFloat = 16.0
+
+    let buttonHeight: CGFloat = 55.0
+
+    let progressBarHeight: CGFloat = 40.0
 
     // MARK: - Views
 
@@ -55,12 +87,20 @@ public class RoomMapController: UIViewController {
             // did step change
             if currentStep == 2 {
                 DispatchQueue.main.async {
+                   self.nextButton.isEnabled = false
                    self.nextButton.isHidden = false
+                }
+            }
+
+            if currentStep == 3 {
+                DispatchQueue.main.async {
+                    self.nextButton.setTitle("Finish", for: [])
                 }
             }
         }
     }
 
+    /// Number of detected planes so far.
     var numberOfPlanesFound: Int = 0 {
         didSet{
             if currentStep == 0 {
@@ -69,16 +109,35 @@ public class RoomMapController: UIViewController {
         }
     }
 
+    /// Has the camera been detected
     var cameraDetected: Bool = false
 
-    var numberOfProducts: Int = 0
+    /// The number of products currently tracked
+    var numberOfProducts: Int {
+        return trackedProducts.count
+    }
 
     // MARK: - Tracked variables
 
-    // the start location
+    // ---------------------------------------------------------------
+    // PRODUCT TRACKING
+
+    /// the start location, used when adding a product
     var startLocation: SCNVector3?
 
+    /// the cylinder geomtry of the product being added.
     var tempProductGeometry: SCNCylinder?
+
+    /// The currently tracked products
+    var trackedProducts: [String : TrackableObject] = [:]
+
+    /// The current selected product id
+    var currentSelectedProductId: String?
+
+
+
+    // ---------------------------------------------------------------
+    // CAMERA TRACKING
 
     /// The camera object that was detected.
     var refObject: ARReferenceObject?
@@ -88,6 +147,8 @@ public class RoomMapController: UIViewController {
 
     /// reference use to check if the box is in the POV of the camera.
     var detectionNode: SCNNode?
+
+    var didSetFOV: Bool = false
 
     /// A variable which tells us if the 3d object is currently visible to the user.
     var objectVisable: Bool = false {
@@ -100,23 +161,6 @@ public class RoomMapController: UIViewController {
         }
     }
 
-    /// The AR Config
-    var sessionConfig: ARWorldTrackingConfiguration {
-        let config = ARWorldTrackingConfiguration()
-        config.isAutoFocusEnabled = true
-        config.planeDetection = [.horizontal,.vertical]
-        config.environmentTexturing = .automatic
-        guard let referenceObjects = ARReferenceObject
-            .referenceObjects(inGroupNamed: "the_box", bundle: nil) else {
-            fatalError("Missing expected asset catalog resources.")
-        }
-        config.detectionObjects = referenceObjects
-        return config
-    }
-
-    let padding: CGFloat = 16.0
-    let buttonHeight: CGFloat = 55.0
-    let progressBarHeight: CGFloat = 40.0
 
     public override func loadView() {
         super.loadView()
@@ -186,7 +230,7 @@ public class RoomMapController: UIViewController {
         sceneView.delegate = self
 
         progressBar.delegate = self
-        progressBar.numberOfPoints = 6
+        progressBar.numberOfPoints = taskManager.tasks.count
         progressBar.lineHeight = 9
         progressBar.radius = 15
         progressBar.progressRadius = 20
@@ -250,15 +294,29 @@ public class RoomMapController: UIViewController {
     }
 
     @objc func didSelectReset(_ sender: UIButton) {
+        // TODO: reset current step
 
+        // IF last step show full reset dialog.
     }
 
     @objc func didSelectInfo(_ sender: UIButton) {
-
+        // TODO: show help dialog
     }
 
     @objc func didSelectNext(_ sender: UIButton) {
-        onDataChanged()
+        if currentStep == 2 {
+            onDataChanged()
+            return
+        }
+
+        if currentStep == 3 {
+            // TODO: show summary dialog
+            let result = normalizedData(cameraCenter: refNode!.worldPosition, euler: refNode!.eulerAngles)
+            let objects = result.0
+            let box = result.1
+            delegate?.didFinishCalibration(self, products: objects, cameraObject: box)
+            onDataChanged()
+        }
     }
 
     /// Function called when frame update. This is a background thread function.
@@ -282,20 +340,46 @@ public class RoomMapController: UIViewController {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
 
         guard let pos = sceneView.session.currentFrame?.camera.transform else { return }
-        let location = SCNVector3(pos.columns.3.x, pos.columns.3.y, pos.columns.3.z)
+        let cameraPosition = SCNVector3(pos.columns.3.x, pos.columns.3.y, pos.columns.3.z)
 
         // on touch begun
         if sender.state == .began {
+            
             if currentStep == 2 {
-                startLocation = location
 
-                var translation = matrix_identity_float4x4
-                translation.columns.3.z = -0.05
-                let transform = simd.simd_mul(pos, translation)
+                let location = sender.location(in: sceneView)
+                let hitResults = sceneView.hitTest(location, options: [:])
 
-                // add anchor to scene
-                let tempAnchor = ARAnchor(name: "product_node", transform: transform)
-                sceneView.session.add(anchor: tempAnchor)
+                var nodeName: String?
+
+                if hitResults.count > 0 {
+                    // retrieved the first clicked object
+                    let tappedPiece = hitResults[0].node
+                    nodeName = tappedPiece.name
+                }
+
+                // if not product node, start marking a new node.
+                if nodeName == nil {
+                    startLocation = cameraPosition
+
+                    var translation = matrix_identity_float4x4
+                    translation.columns.3.z = -0.05
+                    let transform = simd.simd_mul(pos, translation)
+
+                    // add anchor to scene
+                    let tempAnchor = ARAnchor(name: "product_node", transform: transform)
+                    sceneView.session.add(anchor: tempAnchor)
+                }
+
+                // if a product node
+                if let name = nodeName, name.contains("product_node") {
+                    // product node tapped:
+                    guard let obj = trackedProducts[name] else { return }
+                    print(obj.dictionary!)
+
+                    // open action dialog
+                    manageNode(name: name, trackable: obj, node: hitResults[0].node)
+                }
             }
         }
 
@@ -304,12 +388,11 @@ public class RoomMapController: UIViewController {
 
             if currentStep == 2 {
                 if let startLocaiton = self.startLocation {
-                    let radius = (startLocaiton - location).length()
+                    let radius = (startLocaiton - cameraPosition).length()
                     let obj = TrackableObject(id: UUID().uuidString,
                                     r: radius,
                                     position: Point3d(x: startLocaiton.x, y: startLocaiton.y, z: startLocaiton.z))
-                    print(obj.dictionary)
-                    numberOfProducts += 1
+                    self.addTrackableProduct(obj,nodeId: "product_node_\(numberOfProducts)")
 
                 }
                 startLocation = nil
@@ -328,7 +411,7 @@ public class RoomMapController: UIViewController {
         // step 0 is the step in which we detect planes.
         if self.currentStep == 0 {
             // currently we are looking for new planes
-            completion = Float(self.numberOfPlanesFound) / 10
+            completion = Float(self.numberOfPlanesFound) / Float(numberOfPlanesNeeded)
         }
 
         // step 1 is the step in which we detect the camera object.
@@ -337,20 +420,22 @@ public class RoomMapController: UIViewController {
 
             if objectVisable {
                 if let referenceObject = self.refObject,
-                    let node = self.refNode {
+                    let node = self.refNode,
+                    !didSetFOV {
                     // add pyramid and stuff
                     renderCameraFOV(ref: referenceObject, node: node)
 
                     // set to nil to avoid adding the object twice.
-                    self.refObject = nil
+                    //self.refObject = nil
+                    didSetFOV = true
                 }
             }
         }
 
         // step 2 is the step in which we add objects
         if self.currentStep == 2 {
-            // evaluation logic
-            completion = numberOfProducts > 3 ? 1.0 : 0.0
+            // must add at least 2 products
+            completion = numberOfProducts > 1 ? 1.0 : 0.0
         }
 
         showMessage(message, completion: completion)
@@ -370,7 +455,9 @@ public class RoomMapController: UIViewController {
             onDataChanged()
             DispatchQueue.main.async {
                 HUD.flash(.success, delay: 1.0)
-                self.progressBar.currentIndex += 1
+                if self.taskManager.tasks.count - 1 != self.progressBar.currentIndex {
+                    self.progressBar.currentIndex += 1
+                }
             }
         }
     }
@@ -388,6 +475,79 @@ public class RoomMapController: UIViewController {
             self.messageLabel.text = "\(message) \n\nProgress: \(completed)%"
         }
     }
+
+
+    /// Add a trackable object to the dictionary
+    func addTrackableProduct(_ product: TrackableObject, nodeId: String) {
+        self.trackedProducts[nodeId] = product
+
+        if self.trackedProducts.count > 1 {
+            self.nextButton.isEnabled = true
+        }
+    }
+
+    /// Remove a trackable project
+    func removeProduct(nodeId: String) {
+        self.trackedProducts.removeValue(forKey: nodeId)
+        self.nextButton.isEnabled = self.trackedProducts.count > 1
+    }
+
+    /// called when a node is tapped
+    func manageNode(name: String, trackable: TrackableObject, node: SCNNode) {
+        node.geometry?.firstMaterial?.emission.contents = UIColor.yellow
+
+        //TODO: design dialog
+
+        let dialog = AZDialogViewController(title: "Edit Product")
+        dialog.blurBackground = false
+
+        dialog.addAction(AZDialogAction(title: "Select Product") { [unowned self] dialog in
+            self.currentSelectedProductId = name
+            dialog.dismiss(animated: true) {
+                self.showProductSelectionController()
+            }
+        })
+
+        dialog.addAction(AZDialogAction(title: "Delete Product") {[unowned self] dialog in
+            self.removeProduct(nodeId: name)
+            node.parent?.removeFromParentNode()
+            dialog.dismiss()
+        })
+        dialog.show(in: self)
+    }
+
+    /// Show the product selection controller
+    func showProductSelectionController() {
+        let controller = ProductSelectionController()
+        controller.delegate = self
+
+        let navController = UINavigationController(rootViewController: controller)
+        navController.modalPresentationStyle = .overCurrentContext
+        self.present(navController, animated: true, completion: nil)
+    }
+
+    /// normalizes the data
+    func normalizedData(cameraCenter: SCNVector3, euler: SCNVector3) -> ([TrackableObject], Box) {
+        var objects = [TrackableObject]()
+
+        trackedProducts.forEach { objects.append($1) }
+
+        // transform data
+        for object in objects {
+            object.position.x = transformValue(shiftSize: cameraCenter.z, originalValue: object.position.z)
+            object.position.y = transformValue(shiftSize: cameraCenter.y, originalValue: object.position.y)
+            object.position.z = transformValue(shiftSize: cameraCenter.x, originalValue: object.position.x)
+        }
+
+        let boxEuler = Point3d(x: euler.x, y: euler.y, z: euler.z)
+        let box = Box(euler: boxEuler)
+
+        return (objects,box)
+    }
+
+    func transformValue(shiftSize: Float, originalValue: Float)-> Float {
+        return originalValue + (shiftSize > 0 ? -shiftSize : shiftSize)
+    }
 }
 
 extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
@@ -400,21 +560,20 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
     public func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
 
         if let name = anchor.name, name == "product_node" {
-            print("product_node")
+            print(name)
             let cylinder = SCNCylinder(radius: 0.1, height: 0.001)//SCNBox(width: 0.001, height: 0.001, length: 0.001, chamferRadius: 0.0)
             let transparentMaterial = SCNMaterial()
             transparentMaterial.lightingModel = .physicallyBased
             transparentMaterial.metalness.contents = 0.3
             transparentMaterial.roughness.contents = 1.0
-            transparentMaterial.diffuse.contents = UIColor.random
+            transparentMaterial.diffuse.contents = #imageLiteral(resourceName: "Image")
             transparentMaterial.transparency = 0.5
-
+            transparentMaterial.isDoubleSided = true
             cylinder.firstMaterial? = transparentMaterial
-            cylinder.firstMaterial?.isDoubleSided = true
-
 
             self.tempProductGeometry = cylinder
             let productNode = SCNNode(geometry: cylinder)
+            productNode.name = "product_node_\(numberOfProducts)"
             productNode.eulerAngles = SCNVector3(-Float.pi / 2.0, 0.0, 0.0)
             node.addChildNode(productNode)
             return
@@ -607,4 +766,25 @@ extension UIColor {
         return UIColor(rgb: Int(CGFloat(arc4random()) / CGFloat(UINT32_MAX) * 0xFFFFFF))
     }
 
+}
+
+extension RoomMapController: ProductSelectionControllerDelegate {
+    public func didSelectProduct(_ controller: ProductSelectionController, product: Product) {
+
+
+        guard let productNodeId = currentSelectedProductId,
+            let trackableObject = trackedProducts[productNodeId],
+            let id = product.id else { return }
+
+        trackableObject.id = id
+
+        currentSelectedProductId = nil
+        controller.dismiss(animated: true, completion: nil)
+    }
+
+    public func didCancelSelection(_ controller: ProductSelectionController) {
+        controller.dismiss(animated: true, completion: nil)
+
+        currentSelectedProductId = nil
+    }
 }

@@ -8,10 +8,7 @@
 
 import Foundation
 
-struct MapModelObject: Codable {
-
-    /// The window object.
-    var window: Window
+public struct MapModelObject: Codable {
 
     /// The camera box which contains it's euler angles.
     var camera: Box

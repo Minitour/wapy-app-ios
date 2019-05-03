@@ -35,7 +35,8 @@ class ViewController: UIViewController {
         //showARController()
 
         if !didSetupViews {
-            showCalibrationController() // remove later
+            //showCalibrationController() // remove later
+            //showARController()
             handleAuth()
         }
     }
@@ -72,7 +73,15 @@ class ViewController: UIViewController {
     func normalLoad() {
         tabBar.setViewController(UIViewController(), atIndex: 0)
         tabBar.setViewController(UIViewController(), atIndex: 1)
-        tabBar.setViewController(UIViewController(), atIndex: 2)
+        //tabBar.setViewController(UIViewController(), atIndex: 2)
+
+        tabBar.setAction(atIndex: 2) { [unowned self] in
+            let controller = ConnectController()
+            let navController = UINavigationController(rootViewController: controller)
+
+            self.present(navController, animated: true, completion: nil)
+        }
+
         didSetupViews = true
     }
 
@@ -84,10 +93,7 @@ class ViewController: UIViewController {
         let task2 = Task(info: "Find the camera", details: "Please look at the camera until you are prompted to continue.", completed: false)
 
         // mark the products
-        let task3 = Task(info: "Mark your products", details: "Go up to your products with your device. Get really close as if your device is physically touching the item and then click on the \"Mark\" button.", completed: false)
-
-        // mark the window
-        let task4 = Task(info: "Mark your window", details: "Go up to the most upper right corner of your window and click the \"Mark Start\" button, then proceed into going to the lowest left corner of the window and click the \"Mark End\" button. While scanning you will see a line drawn across the edge.", completed: false)
+        let task3 = Task(info: "Mark your products", details: "Go up to your product with your phone. Get really close as if your device is physically touching the item and then touch and hold the screen, then slowly bring your phone back and forward to mark the radius. After creating the circle tap it to identify your product.", completed: false)
 
         // review everything
         let task5 = Task(info: "Review", details: "Go ahead and look around to see if this is everything you wanted. After this you cannot make any modifications.", completed: false)
@@ -97,7 +103,7 @@ class ViewController: UIViewController {
         controller.taskManager.addTask(task1)
         controller.taskManager.addTask(task2)
         controller.taskManager.addTask(task3)
-        controller.taskManager.addTask(task4)
+        //controller.taskManager.addTask(task4)
         controller.taskManager.addTask(task5)
 
         present(controller, animated: true, completion: nil)

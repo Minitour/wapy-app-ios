@@ -19,6 +19,7 @@ enum WapyCharacteristic: String {
     case wifi = "307fd0967cd34a159fa05cfdbca97342"
     case token = "a33c9d54e26e42e8ad99b58293e4249a"
     case ssid = "62221e9cfea145de865c8d718dd6a98f"
+    case cameraId = "3367142e91d445128ac6e64bb57ae9c8"
     case read = "0aadbf253f94452d82c9ce3f045ee51f"
     case write = "805b0d5b00d9427c84517441c22b46ca"
     case unknown = ""
@@ -95,6 +96,9 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
 
     /// The ssid is a write characteristic with which we provided the box the WiFi credentials.
     fileprivate var ssid: CBCharacteristic!
+
+    /// used to update the calibartion service with the id that firebase provided.
+    fileprivate var cameraId: CBCharacteristic!
 
     /// The read characteristic is a write only with which we update the current read offset when reading large amounts of data.
     fileprivate var read: CBCharacteristic!
@@ -179,6 +183,14 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
         // Then it will invoke didWriteValueFor, which will invoke a read request on the wifi characterisitc.
         // It will then enter a loop which keeps making a read request and a write request
         updateReadOffset(0)
+    }
+
+    open func updateCameraId(_ id: String, completion: CalibrationServiceAction? = nil) {
+        writeCompletion = completion
+        activeCharacteristic = cameraId
+
+        let str = "{\"camera_id\":\"\(id)\"}"
+        wapyPeripheral.write(str, to: cameraId)
     }
 
     open func updateToken(_ tokenValue: String, completion: CalibrationServiceAction? = nil){
@@ -331,6 +343,8 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
                 self.token = characteristic
             case .ssid:
                 self.ssid = characteristic
+            case .cameraId:
+                self.cameraId = characteristic
             }
         }
     }

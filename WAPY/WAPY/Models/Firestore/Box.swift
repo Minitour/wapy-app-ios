@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct Box: Codable {
+public struct Box: Codable {
     var euler: Point3d
 }

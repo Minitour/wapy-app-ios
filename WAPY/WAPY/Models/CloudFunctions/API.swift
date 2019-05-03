@@ -12,6 +12,7 @@ import FirebaseAuth
 
 public typealias GenerateTokenResponse = (String?, Error?) -> Void
 public typealias UpdateAccountResponse = (Bool, Error?) -> Void
+public typealias CreateCameraResponse = (String?, Error?) -> Void
 
 open class API {
     public static let shared = API()
@@ -44,6 +45,35 @@ open class API {
             }
 
             response(true,nil)
+        }
+    }
+
+    open func createCamera(name: String?, storeId: String?, version: String, mmo: MapModelObject?, response: @escaping CreateCameraResponse) {
+
+        var data = [String: Any]()
+
+        if let storeId = storeId { data["storeId"] = storeId }
+        data["version"] = version
+        data["name"] = name
+
+        if let mmoDict = mmo?.dictionary {
+            data["mmo"] = mmoDict
+        }
+        
+        functions.httpsCallable("createCamera").call(data) { (result, error) in
+            let id = result?.value["generatedId"] as? String
+            response(id,error)
+        }
+    }
+
+
+    open func updateCamera() {
+
+    }
+
+    open func getCamera(id: String) {
+        functions.httpsCallable("getCamera").call(["cameraId" : id]) { (result, error) in
+            //TODO: complete handl
         }
     }
 }

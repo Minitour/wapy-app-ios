@@ -92,7 +92,8 @@ public class SelectNetworkController: UIViewController {
             self.service.updateNetwork(bssid: network.bssid!,password: textField.text){ service in
                 DispatchQueue.main.async {
                     dialog.dismiss(animated: true) {
-                        self.dismiss(animated: true, completion: nil)
+                        let createBoxController = CreateBoxController()
+                        self.navigationController?.pushViewController(createBoxController, animated: true)
                     }
                 }
             }

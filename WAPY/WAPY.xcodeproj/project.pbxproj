@@ -15,6 +15,7 @@
 		9D1AB4312258E99000D41F4F /* SystemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB4302258E99000D41F4F /* SystemButton.swift */; };
 		9D1AB435225A94D800D41F4F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB434225A94D800D41F4F /* PaddingLabel.swift */; };
 		9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A1105224FF59D00CD11AE /* RoomMapController.swift */; };
+		9D428574227CA4A800C96EE9 /* CreateBoxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D428573227CA4A800C96EE9 /* CreateBoxController.swift */; };
 		9D4E49362260AC02009F57D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D4E49352260AC02009F57D5 /* GoogleService-Info.plist */; };
 		9D4E493A2260B282009F57D5 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49392260B282009F57D5 /* Box.swift */; };
 		9D4E493C2260B41E009F57D5 /* Point3d.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E493B2260B41E009F57D5 /* Point3d.swift */; };
@@ -29,6 +30,11 @@
 		9D611C7922722A740089B3F5 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C7822722A740089B3F5 /* API.swift */; };
 		9D611C7C227247400089B3F5 /* SelectNetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C7B227247400089B3F5 /* SelectNetworkController.swift */; };
 		9D611C7E2272475B0089B3F5 /* ConnectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C7D2272475B0089B3F5 /* ConnectController.swift */; };
+		9D611C85227C5EC40089B3F5 /* ProductSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C84227C5EC40089B3F5 /* ProductSelectionController.swift */; };
+		9D611C87227C5FA50089B3F5 /* ProductRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C86227C5FA50089B3F5 /* ProductRemoteDataSource.swift */; };
+		9D611C8A227C5FF30089B3F5 /* ProductRemoteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C89227C5FF30089B3F5 /* ProductRemoteDelegate.swift */; };
+		9D611C8C227C621A0089B3F5 /* ProductItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C8B227C621A0089B3F5 /* ProductItemCell.swift */; };
+		9D611C8E227C64970089B3F5 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C8D227C64970089B3F5 /* Product.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
 		9D9751092242B75300896BDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D9751072242B75300896BDA /* Main.storyboard */; };
@@ -46,6 +52,7 @@
 		9D1AB4302258E99000D41F4F /* SystemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemButton.swift; sourceTree = "<group>"; };
 		9D1AB434225A94D800D41F4F /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		9D3A1105224FF59D00CD11AE /* RoomMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMapController.swift; sourceTree = "<group>"; };
+		9D428573227CA4A800C96EE9 /* CreateBoxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBoxController.swift; sourceTree = "<group>"; };
 		9D4E49352260AC02009F57D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9D4E49392260B282009F57D5 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		9D4E493B2260B41E009F57D5 /* Point3d.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3d.swift; sourceTree = "<group>"; };
@@ -60,6 +67,11 @@
 		9D611C7822722A740089B3F5 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		9D611C7B227247400089B3F5 /* SelectNetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNetworkController.swift; sourceTree = "<group>"; };
 		9D611C7D2272475B0089B3F5 /* ConnectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectController.swift; sourceTree = "<group>"; };
+		9D611C84227C5EC40089B3F5 /* ProductSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSelectionController.swift; sourceTree = "<group>"; };
+		9D611C86227C5FA50089B3F5 /* ProductRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRemoteDataSource.swift; sourceTree = "<group>"; };
+		9D611C89227C5FF30089B3F5 /* ProductRemoteDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRemoteDelegate.swift; sourceTree = "<group>"; };
+		9D611C8B227C621A0089B3F5 /* ProductItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductItemCell.swift; sourceTree = "<group>"; };
+		9D611C8D227C64970089B3F5 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D9751052242B75300896BDA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +116,7 @@
 		9D1AB42B2258C05F00D41F4F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9D428575227CA8A100C96EE9 /* BLE */,
 				9D611C77227224AC0089B3F5 /* CloudFunctions */,
 				9D4E49502260E4F4009F57D5 /* AR */,
 				9D4E49382260B255009F57D5 /* Firestore */,
@@ -122,6 +135,13 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		9D428575227CA8A100C96EE9 /* BLE */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BLE;
+			sourceTree = "<group>";
+		};
 		9D4E49382260B255009F57D5 /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +151,7 @@
 				9D4E493D2260B458009F57D5 /* TrackableObject.swift */,
 				9D4E49432260B63F009F57D5 /* MapModelObject.swift */,
 				9D4E49412260B501009F57D5 /* CameraRef.swift */,
+				9D611C8D227C64970089B3F5 /* Product.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -165,6 +186,10 @@
 		9D4E494E2260E4C6009F57D5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				9D611C84227C5EC40089B3F5 /* ProductSelectionController.swift */,
+				9D611C86227C5FA50089B3F5 /* ProductRemoteDataSource.swift */,
+				9D611C89227C5FF30089B3F5 /* ProductRemoteDelegate.swift */,
+				9D611C8B227C621A0089B3F5 /* ProductItemCell.swift */,
 			);
 			path = Products;
 			sourceTree = "<group>";
@@ -192,6 +217,7 @@
 				9D611C75227221120089B3F5 /* CalibrationService.swift */,
 				9D611C7B227247400089B3F5 /* SelectNetworkController.swift */,
 				9D611C7D2272475B0089B3F5 /* ConnectController.swift */,
+				9D428573227CA4A800C96EE9 /* CreateBoxController.swift */,
 			);
 			path = Calibration;
 			sourceTree = "<group>";
@@ -409,8 +435,11 @@
 				9D1AB4312258E99000D41F4F /* SystemButton.swift in Sources */,
 				9D611C7922722A740089B3F5 /* API.swift in Sources */,
 				9D4E49442260B63F009F57D5 /* MapModelObject.swift in Sources */,
+				9D611C87227C5FA50089B3F5 /* ProductRemoteDataSource.swift in Sources */,
 				9D611C76227221120089B3F5 /* CalibrationService.swift in Sources */,
 				9D4E493E2260B458009F57D5 /* TrackableObject.swift in Sources */,
+				9D611C8C227C621A0089B3F5 /* ProductItemCell.swift in Sources */,
+				9D611C8A227C5FF30089B3F5 /* ProductRemoteDelegate.swift in Sources */,
 				9D4E49472260D223009F57D5 /* LoginViewController.swift in Sources */,
 				9D1AB42F2258C0AF00D41F4F /* TaskManager.swift in Sources */,
 				9D4E49422260B501009F57D5 /* CameraRef.swift in Sources */,
@@ -420,6 +449,8 @@
 				9D611C7E2272475B0089B3F5 /* ConnectController.swift in Sources */,
 				9D4E493C2260B41E009F57D5 /* Point3d.swift in Sources */,
 				9D1AB42D2258C06E00D41F4F /* Task.swift in Sources */,
+				9D611C85227C5EC40089B3F5 /* ProductSelectionController.swift in Sources */,
+				9D428574227CA4A800C96EE9 /* CreateBoxController.swift in Sources */,
 				9D4E494B2260D243009F57D5 /* GuestViewController.swift in Sources */,
 				9D1AB4282257F38100D41F4F /* GlassButton.swift in Sources */,
 				9D9751042242B75300896BDA /* AppDelegate.swift in Sources */,
@@ -427,6 +458,7 @@
 				9D4E4952226136D5009F57D5 /* StoresViewController.swift in Sources */,
 				9D611C7C227247400089B3F5 /* SelectNetworkController.swift in Sources */,
 				9D4E49402260B4B5009F57D5 /* Window.swift in Sources */,
+				9D611C8E227C64970089B3F5 /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

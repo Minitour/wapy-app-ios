@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <VariablesViewState
    version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "RoomMapController.normalizedData(cameraCenter:euler:):RoomMapController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "RoomMapController.handleTap(_:):RoomMapController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "RoomMapController.didSelectNext(_:):RoomMapController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.refNode?.position">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
 </VariablesViewState>

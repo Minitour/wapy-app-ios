@@ -25,4 +25,8 @@ public class StoresViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }
