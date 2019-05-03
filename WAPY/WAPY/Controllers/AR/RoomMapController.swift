@@ -51,7 +51,7 @@ public class RoomMapController: UIViewController {
 
     // MARK: - Constants
 
-    let numberOfPlanesNeeded: Int = 1
+    let numberOfPlanesNeeded: Int = 5
 
     let padding: CGFloat = 16.0
 
@@ -534,9 +534,16 @@ public class RoomMapController: UIViewController {
 
         // transform data
         for object in objects {
-            object.position.x = transformValue(shiftSize: cameraCenter.z, originalValue: object.position.z)
+            object.position.x = transformValue(shiftSize: cameraCenter.x, originalValue: object.position.x)
             object.position.y = transformValue(shiftSize: cameraCenter.y, originalValue: object.position.y)
-            object.position.z = transformValue(shiftSize: cameraCenter.x, originalValue: object.position.x)
+            object.position.z = transformValue(shiftSize: cameraCenter.z, originalValue: object.position.z)
+
+            let xVal = object.position.x
+            let zVal = object.position.z
+
+            object.position.x = zVal
+            object.position.z = xVal
+
         }
 
         let boxEuler = Point3d(x: euler.x, y: euler.y, z: euler.z)

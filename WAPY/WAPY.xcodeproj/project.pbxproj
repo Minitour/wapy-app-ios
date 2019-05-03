@@ -16,6 +16,7 @@
 		9D1AB435225A94D800D41F4F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB434225A94D800D41F4F /* PaddingLabel.swift */; };
 		9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A1105224FF59D00CD11AE /* RoomMapController.swift */; };
 		9D428574227CA4A800C96EE9 /* CreateBoxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D428573227CA4A800C96EE9 /* CreateBoxController.swift */; };
+		9D428577227CE90100C96EE9 /* RoomImageCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D428576227CE90100C96EE9 /* RoomImageCaptureController.swift */; };
 		9D4E49362260AC02009F57D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D4E49352260AC02009F57D5 /* GoogleService-Info.plist */; };
 		9D4E493A2260B282009F57D5 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49392260B282009F57D5 /* Box.swift */; };
 		9D4E493C2260B41E009F57D5 /* Point3d.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E493B2260B41E009F57D5 /* Point3d.swift */; };
@@ -53,6 +54,7 @@
 		9D1AB434225A94D800D41F4F /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		9D3A1105224FF59D00CD11AE /* RoomMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMapController.swift; sourceTree = "<group>"; };
 		9D428573227CA4A800C96EE9 /* CreateBoxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBoxController.swift; sourceTree = "<group>"; };
+		9D428576227CE90100C96EE9 /* RoomImageCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomImageCaptureController.swift; sourceTree = "<group>"; };
 		9D4E49352260AC02009F57D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9D4E49392260B282009F57D5 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		9D4E493B2260B41E009F57D5 /* Point3d.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3d.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				9D3A1105224FF59D00CD11AE /* RoomMapController.swift */,
+				9D428576227CE90100C96EE9 /* RoomImageCaptureController.swift */,
 			);
 			path = AR;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				9D611C87227C5FA50089B3F5 /* ProductRemoteDataSource.swift in Sources */,
 				9D611C76227221120089B3F5 /* CalibrationService.swift in Sources */,
 				9D4E493E2260B458009F57D5 /* TrackableObject.swift in Sources */,
+				9D428577227CE90100C96EE9 /* RoomImageCaptureController.swift in Sources */,
 				9D611C8C227C621A0089B3F5 /* ProductItemCell.swift in Sources */,
 				9D611C8A227C5FF30089B3F5 /* ProductRemoteDelegate.swift in Sources */,
 				9D4E49472260D223009F57D5 /* LoginViewController.swift in Sources */,

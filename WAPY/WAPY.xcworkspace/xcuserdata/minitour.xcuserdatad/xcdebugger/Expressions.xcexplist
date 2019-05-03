@@ -3,18 +3,16 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "RoomMapController.normalizedData(cameraCenter:euler:):RoomMapController.swift">
-      </ContextState>
-      <ContextState
          contextName = "RoomMapController.handleTap(_:):RoomMapController.swift">
       </ContextState>
       <ContextState
+         contextName = "RoomMapController.normalizedData(cameraCenter:euler:):RoomMapController.swift">
+      </ContextState>
+      <ContextState
          contextName = "RoomMapController.didSelectNext(_:):RoomMapController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.refNode?.position">
-            </PersistentString>
-         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in API.createCamera(storeId:version:mmo:response:):API.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
