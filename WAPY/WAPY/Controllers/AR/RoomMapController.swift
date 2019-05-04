@@ -534,15 +534,16 @@ public class RoomMapController: UIViewController {
 
         // transform data
         for object in objects {
-            object.position.x = transformValue(shiftSize: cameraCenter.x, originalValue: object.position.x)
-            object.position.y = transformValue(shiftSize: cameraCenter.y, originalValue: object.position.y)
-            object.position.z = transformValue(shiftSize: cameraCenter.z, originalValue: object.position.z)
+            let x = transformValue(shiftSize: cameraCenter.x, originalValue: object.position.x)
+            let y = transformValue(shiftSize: cameraCenter.y, originalValue: object.position.y)
+            let z = transformValue(shiftSize: cameraCenter.z, originalValue: object.position.z)
 
-            let xVal = object.position.x
-            let zVal = object.position.z
+            print("before")
+            print(object.position)
+            object.position = Point3d(x: x, y: y, z: z)
 
-            object.position.x = zVal
-            object.position.z = xVal
+            print("after")
+            print(object.position)
 
         }
 
@@ -553,7 +554,7 @@ public class RoomMapController: UIViewController {
     }
 
     func transformValue(shiftSize: Float, originalValue: Float)-> Float {
-        return originalValue + (shiftSize > 0 ? -shiftSize : shiftSize)
+        return originalValue - shiftSize
     }
 }
 

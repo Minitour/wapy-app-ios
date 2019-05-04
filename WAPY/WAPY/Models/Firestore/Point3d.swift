@@ -8,8 +8,19 @@
 
 import Foundation
 
-struct Point3d: Codable {
+class Point3d: Codable {
     var x: Float
     var y: Float
     var z: Float
+
+    init(x: Float, y: Float, z: Float) {
+        self.x = x
+        self.y = y
+        self.z = z
+    }
+
+}
+
+extension Point3d: CustomStringConvertible {
+    public var description: String { return "\(x),\(y),\(z)" }
 }
