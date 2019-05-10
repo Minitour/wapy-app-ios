@@ -9,10 +9,14 @@
 import Foundation
 import FirebaseFunctions
 import FirebaseAuth
+import FirebaseStorage
 
 public typealias GenerateTokenResponse = (String?, Error?) -> Void
 public typealias UpdateAccountResponse = (Bool, Error?) -> Void
 public typealias CreateCameraResponse = (String?, Error?) -> Void
+public typealias GetStoresResponse = ([Store], Error?) -> Void
+
+public typealias UploadResponse = (URL?, Error?) -> Void
 
 open class API {
     public static let shared = API()
@@ -38,7 +42,7 @@ open class API {
     }
 
     open func updateAccount(data: [String: Any], response: @escaping UpdateAccountResponse) {
-        functions.httpsCallable("updateAccount").call { (result, error) in
+        functions.httpsCallable("updateAccount").call(data) { (result, error) in
             guard result != nil else {
                 response(false,error)
                 return
@@ -76,6 +80,42 @@ open class API {
             //TODO: complete handl
         }
     }
+
+    open func getStores(response: @escaping GetStoresResponse) {
+        functions.httpsCallable("getStores").call { (result, error) in
+            guard let data = result?.data as? [String : Any] else { return }
+            guard let stores = data["data"] as? Array<Dictionary<String,Any>> else { return }
+
+            var resArr = [Store]()
+            for store in stores {
+                resArr.append(Store(id: store["id"] as? String,
+                                    name: store["name"] as? String,
+                                    image: store["image"] as? String,
+                                    ownerId: store["owner_uid"] as? String))
+            }
+            response(resArr,nil)
+        }
+    }
+
+    open func upload(image: UIImage, response: @escaping UploadResponse) {
+        guard let data = image.pngData() else { return }
+        upload(file: data, withExtension: "png", response: response)
+    }
+
+    open func upload(file: Data, withExtension fileExt: String, response: @escaping UploadResponse) {
+        let storage = Storage.storage()
+        guard let user = Auth.auth().currentUser else { return }
+
+        let storageRef = storage.reference()
+        let fileRef = storageRef.child("\(user.uid)/\(UUID().uuidString).\(fileExt)")
+
+        fileRef.putData(file, metadata: nil) { (metadata, error) in
+            fileRef.downloadURL { (url, err) in
+                response(url,err)
+            }
+        }
+    }
+    
 }
 
 extension HTTPSCallableResult {

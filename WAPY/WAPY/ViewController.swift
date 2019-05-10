@@ -36,7 +36,7 @@ class ViewController: UIViewController {
 
         if !didSetupViews {
             //showCalibrationController() // remove later
-            showARController()
+            //showARController()
             handleAuth()
         }
     }
@@ -72,7 +72,7 @@ class ViewController: UIViewController {
 
     func normalLoad() {
         tabBar.setViewController(UIViewController(), atIndex: 0)
-        tabBar.setViewController(UIViewController(), atIndex: 1)
+        tabBar.setViewController(StoresViewController(), atIndex: 1)
         //tabBar.setViewController(UIViewController(), atIndex: 2)
 
         tabBar.setAction(atIndex: 2) { [unowned self] in
@@ -103,7 +103,6 @@ class ViewController: UIViewController {
         controller.taskManager.addTask(task1)
         controller.taskManager.addTask(task2)
         controller.taskManager.addTask(task3)
-        //controller.taskManager.addTask(task4)
         controller.taskManager.addTask(task5)
 
         present(controller, animated: true, completion: nil)

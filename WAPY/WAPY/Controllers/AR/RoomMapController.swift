@@ -540,7 +540,7 @@ public class RoomMapController: UIViewController {
 
             print("before")
             print(object.position)
-            object.position = Point3d(x: x, y: y, z: z)
+            object.position = Point3d(x: z, y: y, z: x)
 
             print("after")
             print(object.position)

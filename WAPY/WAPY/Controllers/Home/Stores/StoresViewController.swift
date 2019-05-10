@@ -9,7 +9,10 @@
 import UIKit
 
 public class StoresViewController: UIViewController {
+
     var tableView: UITableView!
+    fileprivate lazy var remoteDelegate = StoresRemoteDelegate()
+    fileprivate lazy var remoteDataSource = StoresRemoteDataSource()
 
     public override func loadView() {
         super.loadView()
@@ -24,9 +27,15 @@ public class StoresViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+
+        tableView.register(StoreItemCell.self, forCellReuseIdentifier: "cell")
+        tableView.separatorStyle = .none
     }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = remoteDelegate
+        tableView.dataSource = remoteDataSource
+        tableView.remote.load()
     }
 }

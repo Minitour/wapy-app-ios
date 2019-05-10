@@ -33,14 +33,31 @@ public class LoginViewController: FormViewController {
         super.viewDidLoad()
         title = self.isLogin ? "Login" : "Register"
 
+        let section = Section()
+
         form +++
-        Section()
+        section
+
+        if !isLogin {
+            // show name row
+            section
+            <<<
+            NameRow("name") {
+                $0.placeholder = "Your name"
+            }
+        }
+
+        section
         <<< EmailRow("email") {
             $0.placeholder = "Email"
         }
+
+        section
         <<< PasswordRow("password"){
             $0.placeholder = "Password"
         }
+
+        form
         +++
         Section()
         <<< ButtonRow()
@@ -58,7 +75,10 @@ public class LoginViewController: FormViewController {
             if self.isLogin {
                 Auth.auth().signIn(withEmail: email, password: password,completion: self.callback)
             } else {
-                Auth.auth().createUser(withEmail: email, password: password, completion: self.callback)
+                Auth.auth().createUser(withEmail: email, password: password) { (res, err) in
+                    let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                    changeRequest?.photoURL
+                }
             }
 
         }

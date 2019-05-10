@@ -15,6 +15,8 @@ target 'WAPY' do
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
   pod 'Firebase/Functions'
+  pod 'Firebase/Storage'
   pod 'Eureka'
+  pod 'ImageRow'
   pod 'Kingfisher'
 end
