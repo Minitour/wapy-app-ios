@@ -9,18 +9,7 @@
 import Foundation
 import UIKit
 
-struct Network: Codable {
-    var mac: String?
-    var bssid: String?
-    var ssid: String?
-    var channel: Int?
-    var frequency: Int?
-    var signal_level: Float?
-    var quality: Int?
-    var security: String?
-    var security_flags: String?
-    var mode: String?
-}
+
 
 public class ConnectController: UIViewController {
 

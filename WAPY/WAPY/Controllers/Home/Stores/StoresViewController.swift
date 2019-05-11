@@ -11,8 +11,8 @@ import UIKit
 public class StoresViewController: UIViewController {
 
     var tableView: UITableView!
-    fileprivate lazy var remoteDelegate = StoresRemoteDelegate()
-    fileprivate lazy var remoteDataSource = StoresRemoteDataSource()
+    internal lazy var remoteDelegate = StoresRemoteDelegate()
+    internal lazy var remoteDataSource = StoresRemoteDataSource()
 
     public override func loadView() {
         super.loadView()

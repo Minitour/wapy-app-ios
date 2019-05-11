@@ -36,7 +36,7 @@ class ViewController: UIViewController {
 
         if !didSetupViews {
             //showCalibrationController() // remove later
-            //showARController()
+            showARController()
             handleAuth()
         }
     }
@@ -71,7 +71,7 @@ class ViewController: UIViewController {
     }
 
     func normalLoad() {
-        tabBar.setViewController(UIViewController(), atIndex: 0)
+        tabBar.setViewController(ProductsViewController(), atIndex: 0)
         tabBar.setViewController(StoresViewController(), atIndex: 1)
         //tabBar.setViewController(UIViewController(), atIndex: 2)
 

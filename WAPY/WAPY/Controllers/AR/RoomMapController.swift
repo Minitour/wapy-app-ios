@@ -8,6 +8,7 @@
 
 import UIKit
 import ARKit
+import VideoToolbox
 import FlexibleSteppedProgressBar
 import PKHUD
 import AZDialogView
@@ -112,6 +113,8 @@ public class RoomMapController: UIViewController {
     /// Has the camera been detected
     var cameraDetected: Bool = false
 
+    var autoCounter: Int = 0
+
     /// The number of products currently tracked
     var numberOfProducts: Int {
         return trackedProducts.count
@@ -161,9 +164,18 @@ public class RoomMapController: UIViewController {
         }
     }
 
+    var centerPoint: CGPoint?
+
+    var povNode: SCNNode?{
+        didSet{
+
+        }
+    }
+
 
     public override func loadView() {
         super.loadView()
+        self.centerPoint = view.center
         // init views
         sceneView = ARSCNView()
         resetButton = GlassButton()
@@ -392,7 +404,8 @@ public class RoomMapController: UIViewController {
                     let obj = TrackableObject(id: UUID().uuidString,
                                     r: radius,
                                     position: Point3d(x: startLocaiton.x, y: startLocaiton.y, z: startLocaiton.z))
-                    self.addTrackableProduct(obj,nodeId: "product_node_\(numberOfProducts)")
+                    self.addTrackableProduct(obj,nodeId: "product_node_\(autoCounter)")
+                    autoCounter += 1
 
                 }
                 startLocation = nil
@@ -581,7 +594,7 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
 
             self.tempProductGeometry = cylinder
             let productNode = SCNNode(geometry: cylinder)
-            productNode.name = "product_node_\(numberOfProducts)"
+            productNode.name = "product_node_\(autoCounter)"
             productNode.eulerAngles = SCNVector3(-Float.pi / 2.0, 0.0, 0.0)
             node.addChildNode(productNode)
             return
@@ -602,11 +615,12 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
 
             // apply transparent material
             let material = SCNMaterial()
-            material.transparency = 0.0
+            material.transparency = 0.5
             cube.firstMaterial = material
 
             // add child node
             let detectionNode = SCNNode(geometry: cube)
+            detectionNode.name = "BOX"
             node.addChildNode(detectionNode)
 
             // setup references
@@ -647,9 +661,30 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
         }
     }
 
+
+
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
 
+        let result = isCameraFacingBox()
+        switch result {
+
+        case .success(let pixelBuffer):
+            let image = UIImage(pixelBuffer: pixelBuffer)
+            print(image)
+        case .invalidOrientation:
+            print("not a valid orientation")
+        case .boxNotDetectedYet:
+            print("box not detected yet")
+        case .boxNotInCenter:
+            print("Box not in the center")
+        case .notInFrontOfBox:
+            print("not in line of sight")
+        case .error:
+            print("some error")
+        }
+
         if let transform = sceneView.session.currentFrame?.camera.transform {
+
             let location = SCNVector3(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
             didCameraMove(to: location)
         }
@@ -668,6 +703,97 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
 
     }
 
+    enum CameraFacingCheckResult {
+        case success(CVPixelBuffer) // all good
+        case invalidOrientation // the orientation is not in the specified range.
+        case boxNotDetectedYet // The box has not been detected yet
+        case boxNotInCenter // The box is not in the center of the device
+        case notInFrontOfBox // not in the line of sight of the box.
+        case error // generic error
+    }
+
+    func isCameraFacingBox() -> CameraFacingCheckResult {
+
+        if povNode == nil {
+            povNode = sceneView.pointOfView
+
+            let cylinder = SCNCylinder(radius: 0.05, height: 0.001)
+            let transparentMaterial = SCNMaterial()
+            transparentMaterial.lightingModel = .physicallyBased
+            transparentMaterial.metalness.contents = 0.3
+            transparentMaterial.roughness.contents = 1.0
+            transparentMaterial.diffuse.contents = #imageLiteral(resourceName: "Image")
+            transparentMaterial.transparency = 0.5
+            transparentMaterial.isDoubleSided = true
+            cylinder.firstMaterial? = transparentMaterial
+
+            self.tempProductGeometry = cylinder
+            let povCamNode = SCNNode(geometry: cylinder)
+            povCamNode.eulerAngles = SCNVector3(-Float.pi / 2.0, 0.0, 0.0)
+            povCamNode.name = "POV"
+            povNode?.addChildNode(povCamNode)
+        }
+
+        // get center point of device only if box was detected.
+        guard let node = refNode else { return .boxNotDetectedYet}
+
+        guard let frame = sceneView.session.currentFrame else { return .error }
+        
+        let cam = frame.camera
+
+
+
+        let roll = cam.eulerAngles.x * 180 / .pi // value should be between -10 ~ +10
+        let yaw = cam.eulerAngles.z * 180 / .pi // -174 ~ -179 || 0 ~ 5
+
+        // check if we are in the correct rotation
+        guard -10 ... 10 ~= roll && (-179 ... -174 ~= yaw || -5 ... 5 ~= yaw) else { return .invalidOrientation }
+
+
+        guard objectVisable else { return .boxNotInCenter}
+
+
+
+
+
+        // at this point we know that the box node is in the center of our screen.
+
+        // create another hit test to see if the camera (phone) is parallel to the box
+        var translation = matrix_identity_float4x4
+        translation.columns.3.z = -10.0
+        let transform1 = simd.simd_mul(node.simdWorldTransform, translation)
+        translation.columns.3.z = 10.0
+        let transform2 = simd.simd_mul(node.simdWorldTransform, translation)
+
+
+        let startLocation = SCNVector3(transform1.columns.3.x,
+                                       transform1.columns.3.y + 0.2,
+                                       transform1.columns.3.z)
+
+        let endLocation = SCNVector3(transform2.columns.3.x,
+                                     transform2.columns.3.y + 0.2,
+                                     transform2.columns.3.z)
+
+
+        let options: [String: Any] = [
+            SCNHitTestOption.rootNode.rawValue : sceneView.scene.rootNode,
+            SCNHitTestOption.ignoreChildNodes.rawValue : false,
+            SCNHitTestOption.ignoreHiddenNodes.rawValue : false,
+            SCNHitTestOption.backFaceCulling.rawValue : false,
+            SCNHitTestOption.searchMode.rawValue : SCNHitTestSearchMode.all.rawValue,
+            SCNHitTestOption.boundingBoxOnly.rawValue: true
+        ]
+
+        let hitRes = sceneView.scene.rootNode.hitTestWithSegment(from: startLocation,
+                                                                 to: endLocation,
+                                                                 options: options)
+        for hit in hitRes {
+            if hit.node.name == "POV" {
+                return .success(frame.capturedImage)
+            }
+        }
+        return .notInFrontOfBox
+    }
 
     /// Add pyarmids (FOV) to node based on AR Reference Object
     ///
@@ -725,6 +851,7 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
         node.addChildNode(pyramidNode)
         node.addChildNode(highlightNode)
     }
+
 }
 
 extension RoomMapController: FlexibleSteppedProgressBarDelegate {
@@ -794,5 +921,20 @@ extension RoomMapController: ProductSelectionControllerDelegate {
         controller.dismiss(animated: true, completion: nil)
 
         currentSelectedProductId = nil
+    }
+}
+
+
+
+extension UIImage {
+    public convenience init?(pixelBuffer: CVPixelBuffer) {
+        var cgImage: CGImage?
+        VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
+
+        if let cgImage = cgImage {
+            self.init(cgImage: cgImage)
+        } else {
+            return nil
+        }
     }
 }

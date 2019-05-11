@@ -29,7 +29,8 @@ public class StoreItemCell: UITableViewCell {
         storeImage = UIImageView()
         storeName = UILabel()
 
-        storeImage.contentMode = .scaleToFill
+        storeImage.contentMode = .scaleAspectFill
+        storeImage.layer.masksToBounds = true
 
         storeName.font = UIFont.boldSystemFont(ofSize: 24)
 

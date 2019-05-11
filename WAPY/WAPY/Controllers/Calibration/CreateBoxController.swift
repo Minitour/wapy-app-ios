@@ -56,7 +56,7 @@ public class CreateBoxController: FormViewController {
         let task3 = Task(info: "Mark your products", details: "Go up to your product with your phone. Get really close as if your device is physically touching the item and then touch and hold the screen, then slowly bring your phone back and forward to mark the radius. After creating the circle tap it to identify your product.", completed: false)
 
         // review everything
-        let task5 = Task(info: "Review", details: "Go ahead and look around to see if this is everything you wanted. After this you cannot make any modifications.", completed: false)
+        let task4 = Task(info: "Take a picture", details: "Rotate your phone to the left and try to maintain a 90º angle for few seconds while looking at the camera directly.", completed: false)
 
         let controller = RoomMapController()
         controller.delegate = self
@@ -64,7 +64,7 @@ public class CreateBoxController: FormViewController {
         controller.taskManager.addTask(task1)
         controller.taskManager.addTask(task2)
         controller.taskManager.addTask(task3)
-        controller.taskManager.addTask(task5)
+        controller.taskManager.addTask(task4)
 
         present(controller, animated: true, completion: nil)
     }

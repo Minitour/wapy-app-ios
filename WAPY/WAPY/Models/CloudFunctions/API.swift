@@ -15,6 +15,7 @@ public typealias GenerateTokenResponse = (String?, Error?) -> Void
 public typealias UpdateAccountResponse = (Bool, Error?) -> Void
 public typealias CreateCameraResponse = (String?, Error?) -> Void
 public typealias GetStoresResponse = ([Store], Error?) -> Void
+public typealias GetProductsResponse = ([Product], Error?) -> Void
 
 public typealias UploadResponse = (URL?, Error?) -> Void
 
@@ -83,8 +84,12 @@ open class API {
 
     open func getStores(response: @escaping GetStoresResponse) {
         functions.httpsCallable("getStores").call { (result, error) in
-            guard let data = result?.data as? [String : Any] else { return }
-            guard let stores = data["data"] as? Array<Dictionary<String,Any>> else { return }
+            if let error = error {
+                response([],error)
+                return
+            }
+            guard let data = result?.data as? [String : Any] else { response([],nil); return }
+            guard let stores = data["data"] as? Array<Dictionary<String,Any>> else { response([],nil); return }
 
             var resArr = [Store]()
             for store in stores {
@@ -92,6 +97,26 @@ open class API {
                                     name: store["name"] as? String,
                                     image: store["image"] as? String,
                                     ownerId: store["owner_uid"] as? String))
+            }
+            response(resArr,nil)
+        }
+    }
+
+    open func getProducts(response: @escaping GetProductsResponse) {
+        functions.httpsCallable("getProducts").call { (result, error) in
+            if let error = error {
+                response([],error)
+                return
+            }
+            guard let data = result?.data as? [String : Any] else { return }
+            guard let stores = data["data"] as? Array<Dictionary<String,Any>> else { return }
+
+            var resArr = [Product]()
+            for store in stores {
+                let pro = Product(id: store["id"] as? String,
+                                  name: store["name"] as? String,
+                                  image: store["image"] as? String)
+                resArr.append(pro)
             }
             response(resArr,nil)
         }

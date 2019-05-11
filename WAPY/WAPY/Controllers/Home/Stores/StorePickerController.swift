@@ -1,34 +1,34 @@
 //
-//  ProductSelectionController.swift
+//  StorePickerController.swift
 //  WAPY
 //
-//  Created by Antonio Zaitoun on 03/05/2019.
+//  Created by Antonio Zaitoun on 11/05/2019.
 //  Copyright © 2019 Antonio Zaitoun. All rights reserved.
 //
 
 import UIKit
 
-public protocol ProductSelectionControllerDelegate: class {
+public protocol StoreSelectionControllerDelegate: class {
 
     /// called when the product is selected
-    func didSelectProduct(_ controller: ProductSelectionController, product: Product)
+    func didSelectStore(_ controller: StoreSelectionController, store: Store)
 
     /// called when cancel is selected
-    func didCancelSelection(_ controller: ProductSelectionController)
+    func didCancelSelection(_ controller: StoreSelectionController)
 }
 
-public class ProductSelectionController: ProductsViewController{
+public class StoreSelectionController: StoresViewController{
 
-    open weak var delegate: ProductSelectionControllerDelegate?
+    open weak var delegate: StoreSelectionControllerDelegate?
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
 
         self.remoteDelegate.didSelectItem = { [unowned self] product in
-            self.delegate?.didSelectProduct(self, product: product)
+            self.delegate?.didSelectStore(self, store: product)
         }
-        
+
         navigationItem.rightBarButtonItem
             = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didSelectCancel(_:)))
     }

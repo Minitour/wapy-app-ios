@@ -12,6 +12,7 @@ public class ProductItemCell: UITableViewCell {
 
     var productImage: UIImageView!
     var productNameLabel: UILabel!
+    var productDateLabel: UILabel!
 
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,42 +25,69 @@ public class ProductItemCell: UITableViewCell {
 
     func setup() {
 
+        selectionStyle = .none
+
+        let cardView = CardView()
         productImage = UIImageView()
         productNameLabel = UILabel()
+        productDateLabel = UILabel()
 
-        productImage.translatesAutoresizingMaskIntoConstraints = false
-        productNameLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        let v = contentView
-
-        v.addSubview(productImage)
-        NSLayoutConstraint.activate([
-            productImage.topAnchor.constraint(equalTo: v.topAnchor),
-            productImage.bottomAnchor.constraint(equalTo: v.bottomAnchor),
-            productImage.leadingAnchor.constraint(equalTo: v.leadingAnchor),
-            productImage.trailingAnchor.constraint(equalTo: v.trailingAnchor)
-        ])
-
-        v.addSubview(productNameLabel)
-        NSLayoutConstraint.activate([
-            productNameLabel.leadingAnchor.constraint(equalTo: v.leadingAnchor),
-            productNameLabel.trailingAnchor.constraint(equalTo: v.trailingAnchor),
-            productNameLabel.bottomAnchor.constraint(equalTo: v.bottomAnchor),
-            productNameLabel.heightAnchor.constraint(equalToConstant: 60.0)
-        ])
-
-        // apply styles
-
-        productImage.contentMode = .scaleAspectFit
+        productImage.contentMode = .scaleAspectFill
         productImage.layer.masksToBounds = true
 
-        productNameLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        productNameLabel.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 0.6954439029)
-        productNameLabel.textColor = .white
+        productNameLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        productDateLabel.font = UIFont.systemFont(ofSize: 13)
+
+        productDateLabel.textColor = .gray
+
+        cardView.cornerRadius = 15.0
+        cardView.layer.masksToBounds = true
+        cardView.backgroundColor = .white
+
+        // layout store image view
+        cardView.addSubview(productImage)
+        productImage.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            productImage.topAnchor.constraint(equalTo: cardView.topAnchor),
+            productImage.leadingAnchor.constraint(equalTo: cardView.leadingAnchor),
+            productImage.trailingAnchor.constraint(equalTo: cardView.trailingAnchor),
+            productImage.heightAnchor.constraint(equalTo: cardView.heightAnchor,multiplier: 0.7)
+            ])
+
+        // layout store name label
+
+        let stackView = UIStackView(arrangedSubviews: [productNameLabel,productDateLabel])
+        stackView.axis = .vertical
+
+        cardView.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: productImage.bottomAnchor,constant: 8.0),
+            stackView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor,constant: 13.0),
+            stackView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor,constant: -8.0),
+            stackView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor,constant: -8.0)
+            ])
+
+        // layout card view
+        contentView.addSubview(cardView)
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            cardView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 8.0),
+            cardView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8.0),
+            cardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 8.0),
+            cardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -8.0)
+            ])
+
+        contentView.layer.shadowOpacity = 0.5
+        contentView.layer.shadowRadius = 5.0
+        contentView.layer.shadowOffset = CGSize(width: 1, height: 1)
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.masksToBounds = false
     }
 
     public override func prepareForReuse() {
         productImage.image = nil
         productNameLabel.text = nil
+        productDateLabel.text = "some date here"
     }
 }

@@ -8,6 +8,7 @@
 
 import AZRemoteTable
 import UIKit
+import Kingfisher
 
 
 public class ProductRemoteDataSource: AZRemoteTableDataSource {
@@ -35,12 +36,8 @@ public class ProductRemoteDataSource: AZRemoteTableDataSource {
 
         cell.productNameLabel.text = product.name
 
-        if let image = product.image {
-            // get image as url
-            print(image)
-            // use kingfisher
-
-            // set image
+        if let image = product.image, let url = URL(string: image) {
+            cell.productImage.kf.setImage(with: url)
         }
 
         return cell

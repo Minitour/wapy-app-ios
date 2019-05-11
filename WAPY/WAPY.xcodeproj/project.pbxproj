@@ -16,13 +16,15 @@
 		9D1AB435225A94D800D41F4F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1AB434225A94D800D41F4F /* PaddingLabel.swift */; };
 		9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A1105224FF59D00CD11AE /* RoomMapController.swift */; };
 		9D428574227CA4A800C96EE9 /* CreateBoxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D428573227CA4A800C96EE9 /* CreateBoxController.swift */; };
-		9D428577227CE90100C96EE9 /* RoomImageCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D428576227CE90100C96EE9 /* RoomImageCaptureController.swift */; };
 		9D42857A2284418500C96EE9 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4285792284418500C96EE9 /* Store.swift */; };
 		9D42857C22844F3E00C96EE9 /* StoresRemoteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D42857B22844F3E00C96EE9 /* StoresRemoteDelegate.swift */; };
 		9D42857E22844F4900C96EE9 /* StoresRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D42857D22844F4900C96EE9 /* StoresRemoteDataSource.swift */; };
 		9D4285802284517E00C96EE9 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D42857F2284517E00C96EE9 /* CardView.swift */; };
 		9D4285822284519C00C96EE9 /* StoreItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4285812284519C00C96EE9 /* StoreItemCell.swift */; };
 		9D4285842284792000C96EE9 /* ProfilePictureRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4285832284792000C96EE9 /* ProfilePictureRow.swift */; };
+		9D42858622871B7100C96EE9 /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D42858522871B7100C96EE9 /* ProductsViewController.swift */; };
+		9D4285882287244F00C96EE9 /* StorePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4285872287244F00C96EE9 /* StorePickerController.swift */; };
+		9D42858A228724FD00C96EE9 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D428589228724FD00C96EE9 /* Network.swift */; };
 		9D4E49362260AC02009F57D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D4E49352260AC02009F57D5 /* GoogleService-Info.plist */; };
 		9D4E493A2260B282009F57D5 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49392260B282009F57D5 /* Box.swift */; };
 		9D4E493C2260B41E009F57D5 /* Point3d.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E493B2260B41E009F57D5 /* Point3d.swift */; };
@@ -60,13 +62,15 @@
 		9D1AB434225A94D800D41F4F /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		9D3A1105224FF59D00CD11AE /* RoomMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMapController.swift; sourceTree = "<group>"; };
 		9D428573227CA4A800C96EE9 /* CreateBoxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBoxController.swift; sourceTree = "<group>"; };
-		9D428576227CE90100C96EE9 /* RoomImageCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomImageCaptureController.swift; sourceTree = "<group>"; };
 		9D4285792284418500C96EE9 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		9D42857B22844F3E00C96EE9 /* StoresRemoteDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresRemoteDelegate.swift; sourceTree = "<group>"; };
 		9D42857D22844F4900C96EE9 /* StoresRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresRemoteDataSource.swift; sourceTree = "<group>"; };
 		9D42857F2284517E00C96EE9 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		9D4285812284519C00C96EE9 /* StoreItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItemCell.swift; sourceTree = "<group>"; };
 		9D4285832284792000C96EE9 /* ProfilePictureRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureRow.swift; sourceTree = "<group>"; };
+		9D42858522871B7100C96EE9 /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
+		9D4285872287244F00C96EE9 /* StorePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePickerController.swift; sourceTree = "<group>"; };
+		9D428589228724FD00C96EE9 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		9D4E49352260AC02009F57D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9D4E49392260B282009F57D5 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		9D4E493B2260B41E009F57D5 /* Point3d.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3d.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 		9D428575227CA8A100C96EE9 /* BLE */ = {
 			isa = PBXGroup;
 			children = (
+				9D428589228724FD00C96EE9 /* Network.swift */,
 			);
 			path = BLE;
 			sourceTree = "<group>";
@@ -199,6 +204,7 @@
 				9D42857B22844F3E00C96EE9 /* StoresRemoteDelegate.swift */,
 				9D42857D22844F4900C96EE9 /* StoresRemoteDataSource.swift */,
 				9D4285812284519C00C96EE9 /* StoreItemCell.swift */,
+				9D4285872287244F00C96EE9 /* StorePickerController.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -206,6 +212,7 @@
 		9D4E494E2260E4C6009F57D5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				9D42858522871B7100C96EE9 /* ProductsViewController.swift */,
 				9D611C84227C5EC40089B3F5 /* ProductSelectionController.swift */,
 				9D611C86227C5FA50089B3F5 /* ProductRemoteDataSource.swift */,
 				9D611C89227C5FF30089B3F5 /* ProductRemoteDelegate.swift */,
@@ -254,7 +261,6 @@
 			isa = PBXGroup;
 			children = (
 				9D3A1105224FF59D00CD11AE /* RoomMapController.swift */,
-				9D428576227CE90100C96EE9 /* RoomImageCaptureController.swift */,
 			);
 			path = AR;
 			sourceTree = "<group>";
@@ -457,6 +463,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D42858A228724FD00C96EE9 /* Network.swift in Sources */,
 				9D1AB4312258E99000D41F4F /* SystemButton.swift in Sources */,
 				9D611C7922722A740089B3F5 /* API.swift in Sources */,
 				9D42857C22844F3E00C96EE9 /* StoresRemoteDelegate.swift in Sources */,
@@ -464,11 +471,12 @@
 				9D611C87227C5FA50089B3F5 /* ProductRemoteDataSource.swift in Sources */,
 				9D611C76227221120089B3F5 /* CalibrationService.swift in Sources */,
 				9D4E493E2260B458009F57D5 /* TrackableObject.swift in Sources */,
-				9D428577227CE90100C96EE9 /* RoomImageCaptureController.swift in Sources */,
 				9D611C8C227C621A0089B3F5 /* ProductItemCell.swift in Sources */,
+				9D42858622871B7100C96EE9 /* ProductsViewController.swift in Sources */,
 				9D611C8A227C5FF30089B3F5 /* ProductRemoteDelegate.swift in Sources */,
 				9D4E49472260D223009F57D5 /* LoginViewController.swift in Sources */,
 				9D1AB42F2258C0AF00D41F4F /* TaskManager.swift in Sources */,
+				9D4285882287244F00C96EE9 /* StorePickerController.swift in Sources */,
 				9D4E49422260B501009F57D5 /* CameraRef.swift in Sources */,
 				9D9751062242B75300896BDA /* ViewController.swift in Sources */,
 				9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */,

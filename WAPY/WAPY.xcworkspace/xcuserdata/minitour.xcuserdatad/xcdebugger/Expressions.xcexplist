@@ -14,5 +14,13 @@
       <ContextState
          contextName = "closure #1 in API.createCamera(storeId:version:mmo:response:):API.swift">
       </ContextState>
+      <ContextState
+         contextName = "RoomMapController.renderer(_:updateAtTime:):RoomMapController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "node.simdTransform">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

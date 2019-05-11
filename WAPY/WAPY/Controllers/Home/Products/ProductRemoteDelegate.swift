@@ -17,19 +17,21 @@ public class ProductRemoteDelegate: AZRemoteTableDelegate {
     }
 
     public override func tableView(_ tableView: UITableView, didRequestPage page: Int, usingRefreshControl: Bool = false) {
-        let fakeResponse = [
-            Product(id: "1", name: "my first product", image: nil),
-            Product(id: "2", name: "my second product", image: nil),
-            Product(id: "3", name: "my third product", image: nil)
-        ]
 
-        if usingRefreshControl {
-            dataSource?.clearItems()
+        API.shared.getProducts { [unowned self] (products, error) in
+            if error != nil {
+                tableView.remote.notifyError()
+                return
+            }
+
+            if usingRefreshControl {
+                self.dataSource?.clearItems()
+            }
+
+            self.dataSource?.addItems(items: products)
+
+            tableView.remote.notifySuccess(hasMore: false)
         }
-
-        dataSource?.addItems(items: fakeResponse)
-
-        tableView.remote.notifySuccess(hasMore: false)
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
