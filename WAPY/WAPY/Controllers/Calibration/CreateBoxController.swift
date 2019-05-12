@@ -32,7 +32,7 @@ public class CreateBoxController: FormViewController {
             row.title = "Name"
         }
         <<<
-        ButtonRow().cellSetup { cell,row in
+        StoreRow("store_row").cellSetup { cell,row in
             row.title = "Select Store"
         }
         +++
@@ -71,30 +71,42 @@ public class CreateBoxController: FormViewController {
 }
 
 extension CreateBoxController: RoomMapControllerDelegate {
-    public func didFinishCalibration(_ controller: RoomMapController,
-                                     products: [TrackableObject], cameraObject: Box) {
+    public func didFinishCalibration(_ controller: RoomMapController, products: [TrackableObject], cameraObject: Box, capturedImage: UIImage?, heatMapElements: [HeatMapItem]?) {
 
         controller.dismiss(animated: true) {
             self.mmo = MapModelObject(camera: cameraObject, objects: products)
             let name = (self.form.rowBy(tag: "name_row") as? TextRow)?.value
+            let store = (self.form.rowBy(tag: "store_row") as? StoreRow)?.value
             // upload data to firebase
-            API.shared.createCamera(name: name, storeId: nil, version: "0.0.1", mmo: self.mmo) { id, error in
-                // send notify using bluetooth
-                if let id = id {
-                    print("got the id \(id)")
-                    self.service.updateCameraId(id) { service in
 
-                        // dismiss the navigation controller.
-                        self.dismiss(animated: true) {
-                            //do some table reloading stuff
-                        }
-                    }
-                } else {
-                    // TODO: show error
-                    print(error)
+
+            guard let image = capturedImage else { return }
+
+            API.shared.upload(image: image) { (url, err) in
+                API.shared.createCamera(name: name, storeId: store?.id,
+                                        version: "0.0.1",
+                                        mmo: self.mmo,
+                                        heatMapItems: heatMapElements,
+                                        imageUrl: url?.absoluteString) { id, error in
+                                            // send notify using bluetooth
+                                            if let id = id {
+                                                print("got the id \(id)")
+                                                self.service.updateCameraId(id) { service in
+
+                                                    // dismiss the navigation controller.
+                                                    self.dismiss(animated: true) {
+                                                        //do some table reloading stuff
+                                                    }
+                                                }
+                                            } else {
+                                                // TODO: show error
+                                                print(error)
+                                            }
+
                 }
-
             }
+
+
         }
     }
 }

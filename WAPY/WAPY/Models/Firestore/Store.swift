@@ -8,7 +8,11 @@
 
 import Foundation
 
-public class Store: Codable {
+public class Store: Codable,Equatable {
+    public static func == (lhs: Store, rhs: Store) -> Bool {
+        return lhs.id == rhs.id
+    }
+
     var id: String?
     var name: String?
     var image: String?

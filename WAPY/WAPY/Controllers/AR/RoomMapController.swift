@@ -15,7 +15,11 @@ import AZDialogView
 
 
 public protocol RoomMapControllerDelegate: class {
-    func didFinishCalibration(_ controller: RoomMapController, products: [TrackableObject], cameraObject: Box)
+    func didFinishCalibration(_ controller: RoomMapController,
+                              products: [TrackableObject],
+                              cameraObject: Box,
+                              capturedImage: UIImage?,
+                              heatMapElements: [HeatMapItem]?)
 }
 
 enum CalibrationPhase: Int {
@@ -24,6 +28,15 @@ enum CalibrationPhase: Int {
     case product
     case window
     case overview
+}
+
+enum CameraFacingCheckResult {
+    case success(CVPixelBuffer, [String : SCNVector3], CGSize) // all good
+    case invalidOrientation // the orientation is not in the specified range.
+    case boxNotDetectedYet // The box has not been detected yet
+    case boxNotInCenter // The box is not in the center of the device
+    case notInFrontOfBox // not in the line of sight of the box.
+    case error // generic error
 }
 
 public class RoomMapController: UIViewController {
@@ -80,6 +93,8 @@ public class RoomMapController: UIViewController {
     /// A label which displays the instructions for the user.
     var messageLabel: UILabel!
 
+    var secondaryMessageLabel: UILabel!
+
     // MARK: - State
 
     /// The current step. Variable is changed from background threads.
@@ -95,7 +110,7 @@ public class RoomMapController: UIViewController {
 
             if currentStep == 3 {
                 DispatchQueue.main.async {
-                    self.nextButton.setTitle("Finish", for: [])
+                    self.nextButton.isHidden = true
                 }
             }
         }
@@ -164,18 +179,116 @@ public class RoomMapController: UIViewController {
         }
     }
 
-    var centerPoint: CGPoint?
+    var povNode: SCNNode?
 
-    var povNode: SCNNode?{
-        didSet{
+    var heatMapItems: [HeatMapItem]?
 
+    /// A variable which prevents the tracking function from being activated.
+    var trackDeviceForFrameState: Bool = true
+
+    var thumbnailFrameState: CameraFacingCheckResult = .error {
+        didSet {
+            //                let image = UIImage(pixelBuffer: pixelBuffer)
+            //                print(image)
+            switch thumbnailFrameState {
+
+            case .success(let pixelBuffer, let mappingDictionary, let size):
+                // pause tracking
+                trackDeviceForFrameState = false
+                let image = UIImage(pixelBuffer: pixelBuffer)
+
+                DispatchQueue.main.async {
+                    self.showDialogWithImage(image: image)
+                    self.secondaryMessageLabel.isHidden = true
+
+                }
+
+                // show a dialog with the frame to the user with retake and continue choice.
+
+                // if clicked continue, we'll call the `didSelectNext` function.
+
+                // if clicked retake, resume the tracking.
+
+                heatMapItems = []
+
+                for (k,v) in mappingDictionary {
+                    let x1 = v.y
+                    let y1 = v.x
+
+                    let percentageX = x1 / Float(size.height)
+                    let percentageY = y1 / Float(size.width)
+
+
+                    let heatMapItem = HeatMapItem(id: k, x: x1, y: y1,
+                                                  percentageX: percentageX, percentageY: percentageY)
+
+                    heatMapItems?.append(heatMapItem)
+                    
+                }
+
+            case .invalidOrientation:
+                print("not a valid orientation")
+                customMessage("Please rorate your phone to landscape and maintain 90º angle.",isPrimary: true)
+            case .boxNotDetectedYet:
+                print("box not detected yet")
+            case .boxNotInCenter:
+                print("Box not in the center")
+                customMessage("Keep the box in your line of sight!", isPrimary: false)
+            case .notInFrontOfBox:
+                print("not in line of sight")
+                customMessage("The box should be in the center of your screen!", isPrimary: false)
+            case .error:
+                print("some error")
+            }
         }
     }
+
+    /// The image that will be later used for the heat map.
+    var userSelectedFrame: UIImage?
+
+    func showDialogWithImage(image: UIImage?) {
+        let dialog = AZDialogViewController(title: "Would you like to use this image?")
+        dialog.blurBackground = false
+        dialog.customViewSizeRatio = 1.0
+        dialog.buttonInit = GLOBAL_BUTTON_INIT
+        dialog.buttonStyle = GLOBAL_STYLE
+
+        let container = dialog.container
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+
+        container.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: container.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            imageView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: container.trailingAnchor)
+        ])
+
+        imageView.image = image
+
+
+        dialog.addAction(AZDialogAction(title: "Yes") { [unowned self] dialog in
+            dialog.dismiss(animated: true) {
+                self.userSelectedFrame = image
+                self.didSelectNext(self.nextButton)
+            }
+        })
+
+        dialog.addAction(AZDialogAction(title: "Retake") {[unowned self] dialog in
+            dialog.dismiss(animated: true) {
+                self.heatMapItems = nil
+                self.trackDeviceForFrameState = true
+            }
+        })
+        dialog.show(in: self)
+    }
+
 
 
     public override func loadView() {
         super.loadView()
-        self.centerPoint = view.center
         // init views
         sceneView = ARSCNView()
         resetButton = GlassButton()
@@ -183,6 +296,7 @@ public class RoomMapController: UIViewController {
         progressBar = FlexibleSteppedProgressBar()
         nextButton = .systemButton(withTitle: "Next")
         messageLabel = PaddingLabel()
+        secondaryMessageLabel = PaddingLabel()
 
 
         self.view.addSubview(sceneView)
@@ -191,6 +305,8 @@ public class RoomMapController: UIViewController {
         self.view.addSubview(progressBar)
         self.view.addSubview(nextButton)
         self.view.addSubview(messageLabel)
+        self.view.addSubview(secondaryMessageLabel)
+
 
 
         // disable auto resizing mask
@@ -200,6 +316,8 @@ public class RoomMapController: UIViewController {
         progressBar.translatesAutoresizingMaskIntoConstraints = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        secondaryMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+
 
         // auto layout
         NSLayoutConstraint.activate([
@@ -235,7 +353,10 @@ public class RoomMapController: UIViewController {
             // setup message label
             messageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: padding),
             messageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -padding),
-            messageLabel.bottomAnchor.constraint(equalTo: nextButton.topAnchor,constant: -padding)
+            messageLabel.bottomAnchor.constraint(equalTo: nextButton.topAnchor,constant: -padding),
+
+            secondaryMessageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: -padding),
+            secondaryMessageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
 
         // more customizations
@@ -272,10 +393,22 @@ public class RoomMapController: UIViewController {
         messageLabel.layer.cornerRadius = 3.0
         messageLabel.layer.masksToBounds = true
 
+        secondaryMessageLabel.numberOfLines = 0
+        secondaryMessageLabel.lineBreakMode = .byWordWrapping
+        secondaryMessageLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
+        secondaryMessageLabel.textColor = .white
+        secondaryMessageLabel.layer.cornerRadius = 3.0
+        secondaryMessageLabel.layer.masksToBounds = true
+
+        secondaryMessageLabel.text = "Some static text"
+        secondaryMessageLabel.transform = CGAffineTransform(rotationAngle: .pi / 2)
+        secondaryMessageLabel.isHidden = true
+
     }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        print(view.bounds)
         resetButton.rounded = true
         infoButton.rounded = true
 
@@ -322,11 +455,18 @@ public class RoomMapController: UIViewController {
         }
 
         if currentStep == 3 {
-            // TODO: show summary dialog
+            // we are in the last phase and the user clicks the next button:
+
             let result = normalizedData(cameraCenter: refNode!.worldPosition, euler: refNode!.eulerAngles)
             let objects = result.0
             let box = result.1
-            delegate?.didFinishCalibration(self, products: objects, cameraObject: box)
+
+
+
+            delegate?.didFinishCalibration(self, products: objects,
+                                           cameraObject: box,
+                                           capturedImage: userSelectedFrame,
+                                           heatMapElements: self.heatMapItems)
             onDataChanged()
         }
     }
@@ -489,6 +629,21 @@ public class RoomMapController: UIViewController {
         }
     }
 
+    func customMessage(_ message: String?, isPrimary: Bool) {
+        DispatchQueue.main.async { [unowned self] in
+            if isPrimary {
+                self.messageLabel.text = message
+                self.secondaryMessageLabel.isHidden = true
+                self.messageLabel.isHidden = false
+            } else {
+                self.secondaryMessageLabel.text = message
+                self.messageLabel.isHidden = true
+                self.secondaryMessageLabel.isHidden = false
+            }
+
+        }
+    }
+
 
     /// Add a trackable object to the dictionary
     func addTrackableProduct(_ product: TrackableObject, nodeId: String) {
@@ -551,13 +706,8 @@ public class RoomMapController: UIViewController {
             let y = transformValue(shiftSize: cameraCenter.y, originalValue: object.position.y)
             let z = transformValue(shiftSize: cameraCenter.z, originalValue: object.position.z)
 
-            print("before")
-            print(object.position)
+            // we flip the x and z because that's how the camera service expects it to be.
             object.position = Point3d(x: z, y: y, z: x)
-
-            print("after")
-            print(object.position)
-
         }
 
         let boxEuler = Point3d(x: euler.x, y: euler.y, z: euler.z)
@@ -665,22 +815,8 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
 
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
 
-        let result = isCameraFacingBox()
-        switch result {
-
-        case .success(let pixelBuffer):
-            let image = UIImage(pixelBuffer: pixelBuffer)
-            print(image)
-        case .invalidOrientation:
-            print("not a valid orientation")
-        case .boxNotDetectedYet:
-            print("box not detected yet")
-        case .boxNotInCenter:
-            print("Box not in the center")
-        case .notInFrontOfBox:
-            print("not in line of sight")
-        case .error:
-            print("some error")
+        if currentStep == 3, trackDeviceForFrameState {
+            self.thumbnailFrameState = isCameraFacingBox()
         }
 
         if let transform = sceneView.session.currentFrame?.camera.transform {
@@ -703,14 +839,7 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
 
     }
 
-    enum CameraFacingCheckResult {
-        case success(CVPixelBuffer) // all good
-        case invalidOrientation // the orientation is not in the specified range.
-        case boxNotDetectedYet // The box has not been detected yet
-        case boxNotInCenter // The box is not in the center of the device
-        case notInFrontOfBox // not in the line of sight of the box.
-        case error // generic error
-    }
+
 
     func isCameraFacingBox() -> CameraFacingCheckResult {
 
@@ -789,7 +918,25 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
                                                                  options: options)
         for hit in hitRes {
             if hit.node.name == "POV" {
-                return .success(frame.capturedImage)
+                var positionOnImage: [String : SCNVector3] = [:]
+                self.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+                    if let name = node.name, self.trackedProducts.keys.contains(name) {
+                        let pos = self.sceneView.projectPoint(node.presentation.worldPosition)
+                        positionOnImage[name] = pos
+                    }
+                }
+
+                var mappingWithId: [String: SCNVector3] = [:]
+                for (k,v) in positionOnImage {
+                    guard let product = trackedProducts[k] else { continue }
+                    mappingWithId[product.id] = v
+                }
+
+                mappingWithId["CAM"] = self.sceneView.projectPoint(node.presentation.worldPosition)
+
+
+
+                return .success(frame.capturedImage, mappingWithId, cam.imageResolution)
             }
         }
         return .notInFrontOfBox

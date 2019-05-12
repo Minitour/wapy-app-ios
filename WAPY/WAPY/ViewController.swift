@@ -32,11 +32,11 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //showARController()
+
 
         if !didSetupViews {
+//            showARController()
             //showCalibrationController() // remove later
-            showARController()
             handleAuth()
         }
     }
@@ -110,7 +110,9 @@ class ViewController: UIViewController {
 
     func showCalibrationController() {
         let controller = ConnectController()
-        let navController = UINavigationController(rootViewController: controller)
+        let navController = FlexibleNavigationController(rootViewController: controller)
+
+
 
         self.present(navController, animated: true, completion: nil)
     }

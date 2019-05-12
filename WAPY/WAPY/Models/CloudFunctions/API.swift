@@ -53,7 +53,11 @@ open class API {
         }
     }
 
-    open func createCamera(name: String?, storeId: String?, version: String, mmo: MapModelObject?, response: @escaping CreateCameraResponse) {
+    open func createCamera(name: String?, storeId: String?,
+                           version: String, mmo: MapModelObject?,
+                           heatMapItems: [HeatMapItem]?,
+                           imageUrl: String?,
+                           response: @escaping CreateCameraResponse) {
 
         var data = [String: Any]()
 
@@ -63,6 +67,14 @@ open class API {
 
         if let mmoDict = mmo?.dictionary {
             data["mmo"] = mmoDict
+        }
+
+        if let heatMapItems = heatMapItems?.dictionary {
+            data["heatmap"] = heatMapItems
+        }
+
+        if let imageUrl = imageUrl {
+            data["image"] = imageUrl
         }
         
         functions.httpsCallable("createCamera").call(data) { (result, error) in

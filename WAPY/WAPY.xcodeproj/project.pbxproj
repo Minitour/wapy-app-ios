@@ -44,6 +44,12 @@
 		9D611C8A227C5FF30089B3F5 /* ProductRemoteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C89227C5FF30089B3F5 /* ProductRemoteDelegate.swift */; };
 		9D611C8C227C621A0089B3F5 /* ProductItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C8B227C621A0089B3F5 /* ProductItemCell.swift */; };
 		9D611C8E227C64970089B3F5 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D611C8D227C64970089B3F5 /* Product.swift */; };
+		9D694D8722889130002D005C /* StoreRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D8622889130002D005C /* StoreRow.swift */; };
+		9D694D8A22889416002D005C /* FlexibleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D8922889416002D005C /* FlexibleNavigationController.swift */; };
+		9D694D8C2288A128002D005C /* LoadingDialogExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D8B2288A128002D005C /* LoadingDialogExtension.swift */; };
+		9D694D8E2288B847002D005C /* ProgressiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D8D2288B847002D005C /* ProgressiveButton.swift */; };
+		9D694D902288B995002D005C /* UIColor+adjustsBrightness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D8F2288B995002D005C /* UIColor+adjustsBrightness.swift */; };
+		9D694D922288D246002D005C /* HeatMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D912288D246002D005C /* HeatMapItem.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
 		9D9751092242B75300896BDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D9751072242B75300896BDA /* Main.storyboard */; };
@@ -90,6 +96,12 @@
 		9D611C89227C5FF30089B3F5 /* ProductRemoteDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRemoteDelegate.swift; sourceTree = "<group>"; };
 		9D611C8B227C621A0089B3F5 /* ProductItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductItemCell.swift; sourceTree = "<group>"; };
 		9D611C8D227C64970089B3F5 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		9D694D8622889130002D005C /* StoreRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRow.swift; sourceTree = "<group>"; };
+		9D694D8922889416002D005C /* FlexibleNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleNavigationController.swift; sourceTree = "<group>"; };
+		9D694D8B2288A128002D005C /* LoadingDialogExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDialogExtension.swift; sourceTree = "<group>"; };
+		9D694D8D2288B847002D005C /* ProgressiveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressiveButton.swift; sourceTree = "<group>"; };
+		9D694D8F2288B995002D005C /* UIColor+adjustsBrightness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+adjustsBrightness.swift"; sourceTree = "<group>"; };
+		9D694D912288D246002D005C /* HeatMapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatMapItem.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D9751052242B75300896BDA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +141,9 @@
 				9D1AB4302258E99000D41F4F /* SystemButton.swift */,
 				9D42857F2284517E00C96EE9 /* CardView.swift */,
 				9D4285832284792000C96EE9 /* ProfilePictureRow.swift */,
+				9D694D8B2288A128002D005C /* LoadingDialogExtension.swift */,
+				9D694D8D2288B847002D005C /* ProgressiveButton.swift */,
+				9D694D8F2288B995002D005C /* UIColor+adjustsBrightness.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +189,7 @@
 				9D4E49412260B501009F57D5 /* CameraRef.swift */,
 				9D611C8D227C64970089B3F5 /* Product.swift */,
 				9D4285792284418500C96EE9 /* Store.swift */,
+				9D694D912288D246002D005C /* HeatMapItem.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -190,6 +206,7 @@
 		9D4E494C2260E4B1009F57D5 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				9D694D8822889403002D005C /* Generic */,
 				9D4E494F2260E4E9009F57D5 /* Profile */,
 				9D4E494E2260E4C6009F57D5 /* Products */,
 				9D4E494D2260E4B7009F57D5 /* Stores */,
@@ -205,6 +222,7 @@
 				9D42857D22844F4900C96EE9 /* StoresRemoteDataSource.swift */,
 				9D4285812284519C00C96EE9 /* StoreItemCell.swift */,
 				9D4285872287244F00C96EE9 /* StorePickerController.swift */,
+				9D694D8622889130002D005C /* StoreRow.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -255,6 +273,14 @@
 				9D611C7822722A740089B3F5 /* API.swift */,
 			);
 			path = CloudFunctions;
+			sourceTree = "<group>";
+		};
+		9D694D8822889403002D005C /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				9D694D8922889416002D005C /* FlexibleNavigationController.swift */,
+			);
+			path = Generic;
 			sourceTree = "<group>";
 		};
 		9D6DEF9C2263700400C6B5A8 /* AR */ = {
@@ -469,6 +495,8 @@
 				9D42857C22844F3E00C96EE9 /* StoresRemoteDelegate.swift in Sources */,
 				9D4E49442260B63F009F57D5 /* MapModelObject.swift in Sources */,
 				9D611C87227C5FA50089B3F5 /* ProductRemoteDataSource.swift in Sources */,
+				9D694D8A22889416002D005C /* FlexibleNavigationController.swift in Sources */,
+				9D694D922288D246002D005C /* HeatMapItem.swift in Sources */,
 				9D611C76227221120089B3F5 /* CalibrationService.swift in Sources */,
 				9D4E493E2260B458009F57D5 /* TrackableObject.swift in Sources */,
 				9D611C8C227C621A0089B3F5 /* ProductItemCell.swift in Sources */,
@@ -484,13 +512,17 @@
 				9D611C7E2272475B0089B3F5 /* ConnectController.swift in Sources */,
 				9D4E493C2260B41E009F57D5 /* Point3d.swift in Sources */,
 				9D4285822284519C00C96EE9 /* StoreItemCell.swift in Sources */,
+				9D694D8722889130002D005C /* StoreRow.swift in Sources */,
 				9D4285842284792000C96EE9 /* ProfilePictureRow.swift in Sources */,
 				9D1AB42D2258C06E00D41F4F /* Task.swift in Sources */,
+				9D694D902288B995002D005C /* UIColor+adjustsBrightness.swift in Sources */,
 				9D611C85227C5EC40089B3F5 /* ProductSelectionController.swift in Sources */,
 				9D428574227CA4A800C96EE9 /* CreateBoxController.swift in Sources */,
 				9D4E494B2260D243009F57D5 /* GuestViewController.swift in Sources */,
+				9D694D8C2288A128002D005C /* LoadingDialogExtension.swift in Sources */,
 				9D1AB4282257F38100D41F4F /* GlassButton.swift in Sources */,
 				9D42857E22844F4900C96EE9 /* StoresRemoteDataSource.swift in Sources */,
+				9D694D8E2288B847002D005C /* ProgressiveButton.swift in Sources */,
 				9D9751042242B75300896BDA /* AppDelegate.swift in Sources */,
 				9D4E493A2260B282009F57D5 /* Box.swift in Sources */,
 				9D4E4952226136D5009F57D5 /* StoresViewController.swift in Sources */,

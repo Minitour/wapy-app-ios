@@ -10,6 +10,7 @@ import UIKit
 import AZDialogView
 
 public class SelectNetworkController: UIViewController {
+    
     lazy var service = CalibrationService.shared
 
     var networks: [Network]!
@@ -74,6 +75,8 @@ public class SelectNetworkController: UIViewController {
         // show a dialog to connect
         let dialog = AZDialogViewController(title: "Connect to WiFI", message: "What is the password for \(network.ssid!)?")
         let textField = UITextField()
+        dialog.buttonInit = GLOBAL_BUTTON_INIT
+        dialog.buttonStyle = GLOBAL_STYLE
         textField.isSecureTextEntry = true
 
         dialog.customViewSizeRatio = 0.2
@@ -89,7 +92,11 @@ public class SelectNetworkController: UIViewController {
         ])
 
         let connect = AZDialogAction(title: "Connect") { [unowned self,unowned textField] dialog in
-            self.service.updateNetwork(bssid: network.bssid!,password: textField.text){ service in
+
+            let network = network.bssid!
+            let password = textField.text
+            dialog.becomeLoadingDialog()
+            self.service.updateNetwork(bssid: network, password: password){ service in
                 DispatchQueue.main.async {
                     dialog.dismiss(animated: true) {
                         let createBoxController = CreateBoxController()
@@ -104,7 +111,9 @@ public class SelectNetworkController: UIViewController {
         dialog.addAction(connect)
         dialog.cancelEnabled = true
         dialog.cancelButtonStyle = {_,_ in true }
-        dialog.show(in: self)
+        dialog.show(in: self) { (dialog) in
+            textField.becomeFirstResponder()
+        }
     }
 }
 

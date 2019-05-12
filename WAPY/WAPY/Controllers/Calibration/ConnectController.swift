@@ -41,6 +41,8 @@ public class ConnectController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.setNavigationBarHidden(true, animated: false)
+
         updateLabel(text: "Scanning...")
 
         service.onBluetoothAvailable = { service in
@@ -59,7 +61,10 @@ public class ConnectController: UIViewController {
             // did sucessfully connect to the device.
             self.updateLabel(text: "Sending autherization token...")
             API.shared.generateToken { (token, err) in
-                guard let token = token else { return }
+                guard let token = token else {
+                    print(err)
+                    return
+                }
 
                 service.updateToken(token) {[unowned self]  (service) in
                     self.updateLabel(text: "Scanning WiFi...")

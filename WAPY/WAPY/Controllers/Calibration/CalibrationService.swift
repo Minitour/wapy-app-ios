@@ -73,13 +73,7 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
     fileprivate var centralManager: CBCentralManager!
 
     /// The wapy peripheral.
-    fileprivate var wapyPeripheral: CBPeripheral! {
-        didSet{
-            if wapyPeripheral != nil {
-                didConnect?(self)
-            }
-        }
-    }
+    fileprivate var wapyPeripheral: CBPeripheral!
 
     fileprivate var maxLength: Int?
 
@@ -258,6 +252,7 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         peripheral.discoverServices(nil)
         maxLength = peripheral.maximumWriteValueLength(for: .withResponse)
+        didConnect?(self)
     }
 
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
