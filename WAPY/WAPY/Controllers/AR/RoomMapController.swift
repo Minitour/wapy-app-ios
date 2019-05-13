@@ -718,7 +718,7 @@ public class RoomMapController: UIViewController {
             let z = transformValue(shiftSize: cameraCenter.z, originalValue: rotatedObject.z)
 
             // we flip the x and z because that's how the camera service expects it to be.
-            object.position = Point3d(x: z, y: y, z: x)
+            object.position = Point3d(x: x, y: y, z: z)
         }
 
         let boxEuler = Point3d(x: euler.x, y: 0.0, z: euler.z)
