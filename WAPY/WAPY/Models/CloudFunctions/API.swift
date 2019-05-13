@@ -69,8 +69,13 @@ open class API {
             data["mmo"] = mmoDict
         }
 
-        if let heatMapItems = heatMapItems?.dictionary {
-            data["heatmap"] = heatMapItems
+        if let heatMapItems = heatMapItems {
+            var heatMapData = [[String:Any]]()
+            for item in heatMapItems {
+                guard let item = item.dictionary else { continue }
+                heatMapData.append(item)
+            }
+            data["heatmap"] = heatMapData
         }
 
         if let imageUrl = imageUrl {
@@ -135,8 +140,8 @@ open class API {
     }
 
     open func upload(image: UIImage, response: @escaping UploadResponse) {
-        guard let data = image.pngData() else { return }
-        upload(file: data, withExtension: "png", response: response)
+        guard let data = image.jpegData(compressionQuality: 0.5) else { return }
+        upload(file: data, withExtension: "jpeg", response: response)
     }
 
     open func upload(file: Data, withExtension fileExt: String, response: @escaping UploadResponse) {

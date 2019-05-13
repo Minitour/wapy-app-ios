@@ -183,6 +183,8 @@ public class RoomMapController: UIViewController {
 
     var heatMapItems: [HeatMapItem]?
 
+    var viewSize: CGSize = UIScreen.main.bounds.size
+
     /// A variable which prevents the tracking function from being activated.
     var trackDeviceForFrameState: Bool = true
 
@@ -195,7 +197,13 @@ public class RoomMapController: UIViewController {
             case .success(let pixelBuffer, let mappingDictionary, let size):
                 // pause tracking
                 trackDeviceForFrameState = false
-                let image = UIImage(pixelBuffer: pixelBuffer)
+
+                print(size)
+                var image = UIImage(pixelBuffer: pixelBuffer)
+                let width = image?.size.width ?? 0
+                let height = width * size.height / size.width
+
+                image = image?.resizeImage(scaledToFill: CGSize(width: width, height: height))
 
                 DispatchQueue.main.async {
                     self.showDialogWithImage(image: image)
@@ -215,8 +223,8 @@ public class RoomMapController: UIViewController {
                     let x1 = v.y
                     let y1 = v.x
 
-                    let percentageX = x1 / Float(size.height)
-                    let percentageY = y1 / Float(size.width)
+                    let percentageX = x1 / Float(size.width)
+                    let percentageY = y1 / Float(size.height)
 
 
                     let heatMapItem = HeatMapItem(id: k, x: x1, y: y1,
@@ -249,7 +257,7 @@ public class RoomMapController: UIViewController {
     func showDialogWithImage(image: UIImage?) {
         let dialog = AZDialogViewController(title: "Would you like to use this image?")
         dialog.blurBackground = false
-        dialog.customViewSizeRatio = 1.0
+        dialog.customViewSizeRatio = 1.0 / (image?.scale ?? 1.0)
         dialog.buttonInit = GLOBAL_BUTTON_INIT
         dialog.buttonStyle = GLOBAL_STYLE
 
@@ -409,6 +417,7 @@ public class RoomMapController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         print(view.bounds)
+
         resetButton.rounded = true
         infoButton.rounded = true
 
@@ -702,18 +711,28 @@ public class RoomMapController: UIViewController {
 
         // transform data
         for object in objects {
-            let x = transformValue(shiftSize: cameraCenter.x, originalValue: object.position.x)
-            let y = transformValue(shiftSize: cameraCenter.y, originalValue: object.position.y)
-            let z = transformValue(shiftSize: cameraCenter.z, originalValue: object.position.z)
+            let rotatedObject =  rotatePointOnYaw(vector: object.vector, by: euler.y)
+
+            let x = transformValue(shiftSize: cameraCenter.x, originalValue: rotatedObject.x)
+            let y = transformValue(shiftSize: cameraCenter.y, originalValue: rotatedObject.y)
+            let z = transformValue(shiftSize: cameraCenter.z, originalValue: rotatedObject.z)
 
             // we flip the x and z because that's how the camera service expects it to be.
             object.position = Point3d(x: z, y: y, z: x)
         }
 
-        let boxEuler = Point3d(x: euler.x, y: euler.y, z: euler.z)
+        let boxEuler = Point3d(x: euler.x, y: 0.0, z: euler.z)
         let box = Box(euler: boxEuler)
 
         return (objects,box)
+    }
+
+    func rotatePointOnYaw(vector: SCNVector3, by angle: Float) -> SCNVector3 {
+        return SCNVector3(
+            vector.x * cos(-angle) + vector.z * sin(-angle),
+            vector.y,
+            vector.x * -sin(-angle) + vector.z * cos(-angle)
+        )
     }
 
     func transformValue(shiftSize: Float, originalValue: Float)-> Float {
@@ -934,9 +953,9 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
 
                 mappingWithId["CAM"] = self.sceneView.projectPoint(node.presentation.worldPosition)
 
+                let size = CGSize(width: viewSize.height, height: viewSize.width)
 
-
-                return .success(frame.capturedImage, mappingWithId, cam.imageResolution)
+                return .success(frame.capturedImage, mappingWithId, size)
             }
         }
         return .notInFrontOfBox
@@ -1084,4 +1103,18 @@ extension UIImage {
             return nil
         }
     }
+
+    func resizeImage(scaledToFill size: CGSize) -> UIImage? {
+        let scale: CGFloat = max(size.width / (self.size.width), size.height / (self.size.height))
+        let width: CGFloat = (self.size.width) * scale
+        let height: CGFloat = (self.size.height) * scale
+        let imageRect = CGRect(x: (size.width - width) / 2.0, y: (size.height - height) / 2.0, width: width, height: height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        self.draw(in: imageRect)
+        let newImage: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
 }
+
+

@@ -35,8 +35,7 @@ class ViewController: UIViewController {
 
 
         if !didSetupViews {
-//            showARController()
-            //showCalibrationController() // remove later
+            //showARController()
             handleAuth()
         }
     }

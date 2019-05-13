@@ -82,7 +82,10 @@ extension CreateBoxController: RoomMapControllerDelegate {
 
             guard let image = capturedImage else { return }
 
+            // upload image then
             API.shared.upload(image: image) { (url, err) in
+
+                // create camera
                 API.shared.createCamera(name: name, storeId: store?.id,
                                         version: "0.0.1",
                                         mmo: self.mmo,
