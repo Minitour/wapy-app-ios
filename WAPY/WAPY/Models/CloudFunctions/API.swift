@@ -15,7 +15,10 @@ public typealias GenerateTokenResponse = (String?, Error?) -> Void
 public typealias UpdateAccountResponse = (Bool, Error?) -> Void
 public typealias CreateCameraResponse = (String?, Error?) -> Void
 public typealias GetStoresResponse = ([Store], Error?) -> Void
+public typealias CreateStoreResponse = (String?, Error?) -> Void
 public typealias GetProductsResponse = ([Product], Error?) -> Void
+public typealias CreateProductResponse = (String?, Error?) -> Void
+public typealias GetCamerasResponse = ([Camera], Error?) -> Void
 
 public typealias UploadResponse = (URL?, Error?) -> Void
 
@@ -26,6 +29,7 @@ open class API {
     fileprivate init(){}
 
 
+    // MARK: - ACCOUNT
 
     /// Used to generate a sign in token.
     ///
@@ -52,6 +56,8 @@ open class API {
             response(true,nil)
         }
     }
+
+    // MARK: - CAMERAS
 
     open func createCamera(name: String?, storeId: String?,
                            version: String, mmo: MapModelObject?,
@@ -99,6 +105,20 @@ open class API {
         }
     }
 
+    open func getCameras(withStoreId storeId: String,response: @escaping GetCamerasResponse) {
+        functions.httpsCallable("getCameras").call(["storeId" : storeId]) { (result, error) in
+
+            guard let jsonStr = (result?.value["data"] as? [Any])?.jsonStringRepresentation else {
+                response([],nil)
+                return
+            }
+            let cameras = (try? JSONDecoder().decode([Camera].self, from: jsonStr.data(using: .utf8)!)) ??  []
+            response(cameras,error)
+        }
+    }
+
+    // MARK: - STORES
+
     open func getStores(response: @escaping GetStoresResponse) {
         functions.httpsCallable("getStores").call { (result, error) in
             if let error = error {
@@ -116,6 +136,38 @@ open class API {
                                     ownerId: store["owner_uid"] as? String))
             }
             response(resArr,nil)
+        }
+    }
+
+    open func createStore(name:String, image:String, address: String?, response: @escaping CreateStoreResponse) {
+        var data = [String: Any]()
+        data["name"] = name
+        data["image"] = image
+        if let address = address { data["address"] = address }
+
+        functions.httpsCallable("createStore").call(data) { (result, error) in
+            if let error = error {
+                response(nil,error)
+                return
+            }
+            response(result?.value["generatedId"] as? String, nil)
+        }
+    }
+
+    // MARK: - PRODUCTS
+
+    open func createProduct(name:String, image:String, description: String?, response: @escaping CreateProductResponse) {
+        var data = [String: Any]()
+        data["name"] = name
+        data["image"] = image
+        if let description = description { data["description"] = description }
+
+        functions.httpsCallable("createProduct").call(data) { (result, error) in
+            if let error = error {
+                response(nil,error)
+                return
+            }
+            response(result?.value["generatedId"] as? String, nil)
         }
     }
 
@@ -139,8 +191,10 @@ open class API {
         }
     }
 
-    open func upload(image: UIImage, response: @escaping UploadResponse) {
-        guard let data = image.jpegData(compressionQuality: 0.5) else { return }
+    // MARK: - UPLOAD
+
+    open func upload(image: UIImage, withCompressionRate rate: CGFloat = 0.5,response: @escaping UploadResponse) {
+        guard let data = image.jpegData(compressionQuality: rate) else { return }
         upload(file: data, withExtension: "jpeg", response: response)
     }
 

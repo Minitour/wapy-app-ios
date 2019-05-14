@@ -30,7 +30,7 @@
 		9D4E493C2260B41E009F57D5 /* Point3d.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E493B2260B41E009F57D5 /* Point3d.swift */; };
 		9D4E493E2260B458009F57D5 /* TrackableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E493D2260B458009F57D5 /* TrackableObject.swift */; };
 		9D4E49402260B4B5009F57D5 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E493F2260B4B5009F57D5 /* Window.swift */; };
-		9D4E49422260B501009F57D5 /* CameraRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49412260B501009F57D5 /* CameraRef.swift */; };
+		9D4E49422260B501009F57D5 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49412260B501009F57D5 /* Camera.swift */; };
 		9D4E49442260B63F009F57D5 /* MapModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49432260B63F009F57D5 /* MapModelObject.swift */; };
 		9D4E49472260D223009F57D5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49462260D223009F57D5 /* LoginViewController.swift */; };
 		9D4E494B2260D243009F57D5 /* GuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E494A2260D243009F57D5 /* GuestViewController.swift */; };
@@ -50,6 +50,15 @@
 		9D694D8E2288B847002D005C /* ProgressiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D8D2288B847002D005C /* ProgressiveButton.swift */; };
 		9D694D902288B995002D005C /* UIColor+adjustsBrightness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D8F2288B995002D005C /* UIColor+adjustsBrightness.swift */; };
 		9D694D922288D246002D005C /* HeatMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D912288D246002D005C /* HeatMapItem.swift */; };
+		9D694D94228B4A46002D005C /* StoreCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D93228B4A46002D005C /* StoreCreateController.swift */; };
+		9D694D96228B4E33002D005C /* SingleImageViewPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D95228B4E33002D005C /* SingleImageViewPicker.swift */; };
+		9D694D98228B4E8D002D005C /* WYButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D97228B4E8D002D005C /* WYButton.swift */; };
+		9D694D9A228B4EFD002D005C /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D99228B4EFD002D005C /* AppConfig.swift */; };
+		9D694D9C228B57D9002D005C /* ProductCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D9B228B57D9002D005C /* ProductCreateController.swift */; };
+		9D694D9F228B6D2B002D005C /* CameraRemoteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694D9E228B6D2B002D005C /* CameraRemoteDelegate.swift */; };
+		9D694DA2228B6D59002D005C /* CameraRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694DA1228B6D59002D005C /* CameraRemoteDataSource.swift */; };
+		9D694DA4228B6DF6002D005C /* CameraItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694DA3228B6DF6002D005C /* CameraItemCell.swift */; };
+		9D694DA6228B6ECE002D005C /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694DA5228B6ECE002D005C /* StoreViewController.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
 		9D9751092242B75300896BDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D9751072242B75300896BDA /* Main.storyboard */; };
@@ -82,7 +91,7 @@
 		9D4E493B2260B41E009F57D5 /* Point3d.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3d.swift; sourceTree = "<group>"; };
 		9D4E493D2260B458009F57D5 /* TrackableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackableObject.swift; sourceTree = "<group>"; };
 		9D4E493F2260B4B5009F57D5 /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
-		9D4E49412260B501009F57D5 /* CameraRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRef.swift; sourceTree = "<group>"; };
+		9D4E49412260B501009F57D5 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		9D4E49432260B63F009F57D5 /* MapModelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModelObject.swift; sourceTree = "<group>"; };
 		9D4E49462260D223009F57D5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9D4E494A2260D243009F57D5 /* GuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +111,15 @@
 		9D694D8D2288B847002D005C /* ProgressiveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressiveButton.swift; sourceTree = "<group>"; };
 		9D694D8F2288B995002D005C /* UIColor+adjustsBrightness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+adjustsBrightness.swift"; sourceTree = "<group>"; };
 		9D694D912288D246002D005C /* HeatMapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatMapItem.swift; sourceTree = "<group>"; };
+		9D694D93228B4A46002D005C /* StoreCreateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCreateController.swift; sourceTree = "<group>"; };
+		9D694D95228B4E33002D005C /* SingleImageViewPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewPicker.swift; sourceTree = "<group>"; };
+		9D694D97228B4E8D002D005C /* WYButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYButton.swift; sourceTree = "<group>"; };
+		9D694D99228B4EFD002D005C /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		9D694D9B228B57D9002D005C /* ProductCreateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCreateController.swift; sourceTree = "<group>"; };
+		9D694D9E228B6D2B002D005C /* CameraRemoteDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRemoteDelegate.swift; sourceTree = "<group>"; };
+		9D694DA1228B6D59002D005C /* CameraRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRemoteDataSource.swift; sourceTree = "<group>"; };
+		9D694DA3228B6DF6002D005C /* CameraItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraItemCell.swift; sourceTree = "<group>"; };
+		9D694DA5228B6ECE002D005C /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D9751052242B75300896BDA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +162,8 @@
 				9D694D8B2288A128002D005C /* LoadingDialogExtension.swift */,
 				9D694D8D2288B847002D005C /* ProgressiveButton.swift */,
 				9D694D8F2288B995002D005C /* UIColor+adjustsBrightness.swift */,
+				9D694D95228B4E33002D005C /* SingleImageViewPicker.swift */,
+				9D694D97228B4E8D002D005C /* WYButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -155,6 +175,7 @@
 				9D611C77227224AC0089B3F5 /* CloudFunctions */,
 				9D4E49502260E4F4009F57D5 /* AR */,
 				9D4E49382260B255009F57D5 /* Firestore */,
+				9D694D99228B4EFD002D005C /* AppConfig.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -186,7 +207,7 @@
 				9D4E493B2260B41E009F57D5 /* Point3d.swift */,
 				9D4E493D2260B458009F57D5 /* TrackableObject.swift */,
 				9D4E49432260B63F009F57D5 /* MapModelObject.swift */,
-				9D4E49412260B501009F57D5 /* CameraRef.swift */,
+				9D4E49412260B501009F57D5 /* Camera.swift */,
 				9D611C8D227C64970089B3F5 /* Product.swift */,
 				9D4285792284418500C96EE9 /* Store.swift */,
 				9D694D912288D246002D005C /* HeatMapItem.swift */,
@@ -206,6 +227,7 @@
 		9D4E494C2260E4B1009F57D5 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				9D694D9D228B61A2002D005C /* Cameras */,
 				9D694D8822889403002D005C /* Generic */,
 				9D4E494F2260E4E9009F57D5 /* Profile */,
 				9D4E494E2260E4C6009F57D5 /* Products */,
@@ -223,6 +245,8 @@
 				9D4285812284519C00C96EE9 /* StoreItemCell.swift */,
 				9D4285872287244F00C96EE9 /* StorePickerController.swift */,
 				9D694D8622889130002D005C /* StoreRow.swift */,
+				9D694D93228B4A46002D005C /* StoreCreateController.swift */,
+				9D694DA5228B6ECE002D005C /* StoreViewController.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -235,6 +259,7 @@
 				9D611C86227C5FA50089B3F5 /* ProductRemoteDataSource.swift */,
 				9D611C89227C5FF30089B3F5 /* ProductRemoteDelegate.swift */,
 				9D611C8B227C621A0089B3F5 /* ProductItemCell.swift */,
+				9D694D9B228B57D9002D005C /* ProductCreateController.swift */,
 			);
 			path = Products;
 			sourceTree = "<group>";
@@ -281,6 +306,16 @@
 				9D694D8922889416002D005C /* FlexibleNavigationController.swift */,
 			);
 			path = Generic;
+			sourceTree = "<group>";
+		};
+		9D694D9D228B61A2002D005C /* Cameras */ = {
+			isa = PBXGroup;
+			children = (
+				9D694D9E228B6D2B002D005C /* CameraRemoteDelegate.swift */,
+				9D694DA1228B6D59002D005C /* CameraRemoteDataSource.swift */,
+				9D694DA3228B6DF6002D005C /* CameraItemCell.swift */,
+			);
+			path = Cameras;
 			sourceTree = "<group>";
 		};
 		9D6DEF9C2263700400C6B5A8 /* AR */ = {
@@ -494,10 +529,15 @@
 				9D611C7922722A740089B3F5 /* API.swift in Sources */,
 				9D42857C22844F3E00C96EE9 /* StoresRemoteDelegate.swift in Sources */,
 				9D4E49442260B63F009F57D5 /* MapModelObject.swift in Sources */,
+				9D694DA6228B6ECE002D005C /* StoreViewController.swift in Sources */,
 				9D611C87227C5FA50089B3F5 /* ProductRemoteDataSource.swift in Sources */,
 				9D694D8A22889416002D005C /* FlexibleNavigationController.swift in Sources */,
 				9D694D922288D246002D005C /* HeatMapItem.swift in Sources */,
+				9D694D96228B4E33002D005C /* SingleImageViewPicker.swift in Sources */,
+				9D694D9A228B4EFD002D005C /* AppConfig.swift in Sources */,
 				9D611C76227221120089B3F5 /* CalibrationService.swift in Sources */,
+				9D694D94228B4A46002D005C /* StoreCreateController.swift in Sources */,
+				9D694DA2228B6D59002D005C /* CameraRemoteDataSource.swift in Sources */,
 				9D4E493E2260B458009F57D5 /* TrackableObject.swift in Sources */,
 				9D611C8C227C621A0089B3F5 /* ProductItemCell.swift in Sources */,
 				9D42858622871B7100C96EE9 /* ProductsViewController.swift in Sources */,
@@ -505,11 +545,14 @@
 				9D4E49472260D223009F57D5 /* LoginViewController.swift in Sources */,
 				9D1AB42F2258C0AF00D41F4F /* TaskManager.swift in Sources */,
 				9D4285882287244F00C96EE9 /* StorePickerController.swift in Sources */,
-				9D4E49422260B501009F57D5 /* CameraRef.swift in Sources */,
+				9D4E49422260B501009F57D5 /* Camera.swift in Sources */,
 				9D9751062242B75300896BDA /* ViewController.swift in Sources */,
+				9D694D9F228B6D2B002D005C /* CameraRemoteDelegate.swift in Sources */,
 				9D3A1106224FF59D00CD11AE /* RoomMapController.swift in Sources */,
 				9D1AB435225A94D800D41F4F /* PaddingLabel.swift in Sources */,
+				9D694DA4228B6DF6002D005C /* CameraItemCell.swift in Sources */,
 				9D611C7E2272475B0089B3F5 /* ConnectController.swift in Sources */,
+				9D694D98228B4E8D002D005C /* WYButton.swift in Sources */,
 				9D4E493C2260B41E009F57D5 /* Point3d.swift in Sources */,
 				9D4285822284519C00C96EE9 /* StoreItemCell.swift in Sources */,
 				9D694D8722889130002D005C /* StoreRow.swift in Sources */,
@@ -530,6 +573,7 @@
 				9D4E49402260B4B5009F57D5 /* Window.swift in Sources */,
 				9D42857A2284418500C96EE9 /* Store.swift in Sources */,
 				9D4285802284517E00C96EE9 /* CardView.swift in Sources */,
+				9D694D9C228B57D9002D005C /* ProductCreateController.swift in Sources */,
 				9D611C8E227C64970089B3F5 /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

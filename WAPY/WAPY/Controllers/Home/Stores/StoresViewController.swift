@@ -37,5 +37,29 @@ public class StoresViewController: UIViewController {
         tableView.delegate = remoteDelegate
         tableView.dataSource = remoteDataSource
         tableView.remote.load()
+
+        title = "Stores"
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                                            target: self,
+                                                            action: #selector(didSelectAdd(_:)))
+
+        remoteDelegate.didSelectItem = { [unowned self] item in
+            let controller = StoreViewController()
+            controller.store = item
+
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+
+    @objc func didSelectAdd(_ sender: UIBarButtonItem) {
+        let controller = StoreCreateController()
+
+        // set delegate
+
+        let nav = UINavigationController(rootViewController: controller)
+
+        present(nav, animated: true, completion: nil)
     }
 }

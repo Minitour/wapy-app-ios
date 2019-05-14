@@ -42,6 +42,24 @@ open class ProductsViewController: UIViewController{
         remoteDelegate.didSelectItem = { [unowned self] product in
             self.didSelectItem(product)
         }
+
+        title = "Products"
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                                            target: self,
+                                                            action: #selector(didSelectAdd(_:)))
+        
+    }
+
+    @objc func didSelectAdd(_ sender: UIBarButtonItem) {
+        let controller = ProductCreateController()
+
+        // set delegate
+
+        let nav = UINavigationController(rootViewController: controller)
+
+        present(nav, animated: true, completion: nil)
     }
 
     /// called when user clicks one of the products in the table view.

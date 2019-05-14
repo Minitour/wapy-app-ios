@@ -18,21 +18,12 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-//        let window = Window(start: Point3d(x: 0.0, y: 0.0, z: 0.0), end: Point3d(x: 0.0, y: 0.0, z: 0.0))
-//        let box = Box(euler: Point3d(x: 0.0, y: 0.0, z: 0.0))
-//        var objects = [TrackableObject]()
-//        objects.append(TrackableObject(id: "first object", r: 0.2, position: Point3d(x: 0.0, y: 0.0, z: 0.0)))
-//        objects.append(TrackableObject(id: "second object", r: 0.3, position: Point3d(x: 0.0, y: 0.0, z: 0.0)))
-//        let mmo = MapModelObject(window: window, camera: box, objects: objects)
-//        let camera = CameraRef(mmo: mmo, owner_uid: "some owner id", version: "1.3.2", ipv6: "some mac address")
 
         setupInterface()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
 
         if !didSetupViews {
             //showARController()
@@ -70,8 +61,8 @@ class ViewController: UIViewController {
     }
 
     func normalLoad() {
-        tabBar.setViewController(ProductsViewController(), atIndex: 0)
-        tabBar.setViewController(StoresViewController(), atIndex: 1)
+        tabBar.setViewController(UINavigationController(rootViewController: ProductsViewController()), atIndex: 0)
+        tabBar.setViewController(UINavigationController(rootViewController: StoresViewController()), atIndex: 1)
         //tabBar.setViewController(UIViewController(), atIndex: 2)
 
         tabBar.setAction(atIndex: 2) { [unowned self] in

@@ -1,5 +1,5 @@
 //
-//  CameraRef.swift
+//  Camera.swift
 //  WAPY
 //
 //  Created by Antonio Zaitoun on 12/04/2019.
@@ -8,19 +8,27 @@
 
 import Foundation
 
-struct CameraRef: Codable{
+public struct Camera: Codable{
+
+    var name: String?
+
+    var id: String?
+
+    var image: String?
+
+    var heatmap: [HeatMapItem]?
 
     /// The mmo object.
-    var mmo: MapModelObject
+    var mmo: MapModelObject?
 
     /// The owner uid.
-    var owner_uid: String
+    var owner_uid: String?
 
     /// The version the box is currently running.
-    var version: String
+    var version: String?
 
     /// The MAC address of the box.
-    var ipv6: String
+    var ipv6: String?
 }
 
 extension Encodable {
