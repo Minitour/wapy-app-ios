@@ -64,7 +64,17 @@ public final class StoreRow: OptionsRow<PushSelectorCell<Store>>, PresenterRowTy
     }
 }
 
-public class StorePickerViewControllerSub: StoresViewController, TypedRowControllerType {
+public class StorePickerViewControllerSub: StoreSelectionController, TypedRowControllerType, StoreSelectionControllerDelegate {
+
+    public func didSelectStore(_ controller: StoreSelectionController, store: Store) {
+        self.row.value = store
+        self.onDismissCallback?(self)
+    }
+
+    public func didCancelSelection(_ controller: StoreSelectionController) {
+        self.onDismissCallback?(self)
+    }
+
     public typealias RowValue = Store
     public var row: RowOf<Store>!
 
@@ -81,9 +91,6 @@ public class StorePickerViewControllerSub: StoresViewController, TypedRowControl
     }
 
     func setup(){
-        self.remoteDelegate.didSelectItem = { [unowned self] store in
-            self.row.value = store
-            self.onDismissCallback?(self)
-        }
+        self.delegate = self
     }
 }

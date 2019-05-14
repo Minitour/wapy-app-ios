@@ -26,7 +26,6 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
 
         if !didSetupViews {
-            //showARController()
             handleAuth()
         }
     }
@@ -101,7 +100,6 @@ class ViewController: UIViewController {
     func showCalibrationController() {
         let controller = ConnectController()
         let navController = FlexibleNavigationController(rootViewController: controller)
-
 
 
         self.present(navController, animated: true, completion: nil)

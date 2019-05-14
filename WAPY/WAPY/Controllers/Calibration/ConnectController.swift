@@ -41,8 +41,6 @@ public class ConnectController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.setNavigationBarHidden(true, animated: false)
-
         updateLabel(text: "Scanning...")
 
         service.onBluetoothAvailable = { service in
@@ -50,49 +48,66 @@ public class ConnectController: UIViewController {
             try? service.scan()
         }
 
-        service.didDiscover = { [unowned self] service in
+        service.didDiscover = { [weak self] service in
             // did discover peripheral.
+            guard let `self` = self else { return }
             self.updateLabel(text: "Connecting...")
             try? service.connect()
 
         }
 
-        service.didConnect = {[unowned self] service in
+        service.didConnect = {[weak self] service in
+            guard let `self` = self else { return }
             // did sucessfully connect to the device.
             self.updateLabel(text: "Sending autherization token...")
-            API.shared.generateToken { (token, err) in
-                guard let token = token else {
-                    print(err)
-                    return
-                }
-
-                service.updateToken(token) {[unowned self]  (service) in
-                    self.updateLabel(text: "Scanning WiFi...")
-
-                    // finished updating token, get available wifis.
-                    service.getAvailableWifi { [unowned self] jsonData in
-                        let json = try? JSONSerialization.jsonObject(with: jsonData.data(using: .utf8)!, options: [])
-                        guard let object = json as? [String: Any]  else { return }
-                        guard let networks = object["networks"] as? [Any] else { return }
-
-                        let jsonDecoder = JSONDecoder()
-                        for network in networks {
-                            guard let networkDict = network as? [String: Any] else { continue }
-
-                            let networkObj = try? jsonDecoder.decode(Network.self, from: networkDict.jsonStringRepresentation!.data(using: .utf8)!)
-                            if let networkObj = networkObj {
-                                self.networks.append(networkObj)
-                            }
-                        }
-                        self.next()
-                    }
-                }
-            }
+            self.generateToken(service: service)
         }
 
         // scan if bluetooth is already available.
         if service.isBluetoothAvailable {
             try? service.scan()
+        }
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+    }
+
+
+    func generateToken(service: CalibrationService) {
+        API.shared.generateToken { (token, err) in
+            guard let token = token else {
+                if let error = err { print(error) }
+                return
+            }
+            self.updateToken(token: token, serivce: service)
+        }
+    }
+
+    func updateToken(token: String, serivce: CalibrationService) {
+        service.updateToken(token) {[weak self]  (service) in
+            guard let `self` = self else { return }
+            self.updateLabel(text: "Scanning WiFi...")
+            self.getAvailableWifi(service: service)
+        }
+    }
+
+    func getAvailableWifi(service: CalibrationService) {
+        // finished updating token, get available wifis.
+        service.getAvailableWifi { [weak self] jsonData in
+            guard let `self` = self else { return }
+            let json = try? JSONSerialization.jsonObject(with: jsonData.data(using: .utf8)!, options: [])
+            guard let object = json as? [String: Any]  else { return }
+            guard let networks = object["networks"] as? [Any] else { return }
+
+            let jsonDecoder = JSONDecoder()
+            for network in networks {
+                guard let networkDict = network as? [String: Any] else { continue }
+
+                let networkObj = try? jsonDecoder.decode(Network.self, from: networkDict.jsonStringRepresentation!.data(using: .utf8)!)
+                if let networkObj = networkObj {
+                    self.networks.append(networkObj)
+                }
+            }
+            self.next()
         }
     }
 
@@ -102,6 +117,11 @@ public class ConnectController: UIViewController {
             selectNetworkController.networks = self.networks
             self.navigationController?.pushViewController(selectNetworkController, animated: true)
         }
+    }
+
+    @objc func cancel() {
+        service.disconnect()
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

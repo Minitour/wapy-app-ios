@@ -25,8 +25,8 @@ public class StoreSelectionController: StoresViewController{
         super.viewDidLoad()
 
 
-        self.remoteDelegate.didSelectItem = { [unowned self] product in
-            self.delegate?.didSelectStore(self, store: product)
+        self.remoteDelegate.didSelectItem = { [unowned self] store in
+            self.delegate?.didSelectStore(self, store: store)
         }
 
         navigationItem.rightBarButtonItem

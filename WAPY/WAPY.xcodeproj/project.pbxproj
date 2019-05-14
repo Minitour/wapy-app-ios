@@ -23,7 +23,7 @@
 		9D4285822284519C00C96EE9 /* StoreItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4285812284519C00C96EE9 /* StoreItemCell.swift */; };
 		9D4285842284792000C96EE9 /* ProfilePictureRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4285832284792000C96EE9 /* ProfilePictureRow.swift */; };
 		9D42858622871B7100C96EE9 /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D42858522871B7100C96EE9 /* ProductsViewController.swift */; };
-		9D4285882287244F00C96EE9 /* StorePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4285872287244F00C96EE9 /* StorePickerController.swift */; };
+		9D4285882287244F00C96EE9 /* StoreSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4285872287244F00C96EE9 /* StoreSelectionController.swift */; };
 		9D42858A228724FD00C96EE9 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D428589228724FD00C96EE9 /* Network.swift */; };
 		9D4E49362260AC02009F57D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D4E49352260AC02009F57D5 /* GoogleService-Info.plist */; };
 		9D4E493A2260B282009F57D5 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4E49392260B282009F57D5 /* Box.swift */; };
@@ -84,7 +84,7 @@
 		9D4285812284519C00C96EE9 /* StoreItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItemCell.swift; sourceTree = "<group>"; };
 		9D4285832284792000C96EE9 /* ProfilePictureRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureRow.swift; sourceTree = "<group>"; };
 		9D42858522871B7100C96EE9 /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
-		9D4285872287244F00C96EE9 /* StorePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePickerController.swift; sourceTree = "<group>"; };
+		9D4285872287244F00C96EE9 /* StoreSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSelectionController.swift; sourceTree = "<group>"; };
 		9D428589228724FD00C96EE9 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		9D4E49352260AC02009F57D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9D4E49392260B282009F57D5 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
@@ -243,7 +243,7 @@
 				9D42857B22844F3E00C96EE9 /* StoresRemoteDelegate.swift */,
 				9D42857D22844F4900C96EE9 /* StoresRemoteDataSource.swift */,
 				9D4285812284519C00C96EE9 /* StoreItemCell.swift */,
-				9D4285872287244F00C96EE9 /* StorePickerController.swift */,
+				9D4285872287244F00C96EE9 /* StoreSelectionController.swift */,
 				9D694D8622889130002D005C /* StoreRow.swift */,
 				9D694D93228B4A46002D005C /* StoreCreateController.swift */,
 				9D694DA5228B6ECE002D005C /* StoreViewController.swift */,
@@ -285,8 +285,8 @@
 			isa = PBXGroup;
 			children = (
 				9D611C75227221120089B3F5 /* CalibrationService.swift */,
-				9D611C7B227247400089B3F5 /* SelectNetworkController.swift */,
 				9D611C7D2272475B0089B3F5 /* ConnectController.swift */,
+				9D611C7B227247400089B3F5 /* SelectNetworkController.swift */,
 				9D428573227CA4A800C96EE9 /* CreateBoxController.swift */,
 			);
 			path = Calibration;
@@ -544,7 +544,7 @@
 				9D611C8A227C5FF30089B3F5 /* ProductRemoteDelegate.swift in Sources */,
 				9D4E49472260D223009F57D5 /* LoginViewController.swift in Sources */,
 				9D1AB42F2258C0AF00D41F4F /* TaskManager.swift in Sources */,
-				9D4285882287244F00C96EE9 /* StorePickerController.swift in Sources */,
+				9D4285882287244F00C96EE9 /* StoreSelectionController.swift in Sources */,
 				9D4E49422260B501009F57D5 /* Camera.swift in Sources */,
 				9D9751062242B75300896BDA /* ViewController.swift in Sources */,
 				9D694D9F228B6D2B002D005C /* CameraRemoteDelegate.swift in Sources */,

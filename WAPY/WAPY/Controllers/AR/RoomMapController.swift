@@ -45,6 +45,14 @@ public class RoomMapController: UIViewController {
         return true
     }
 
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
+    public override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
+
     var taskManager: TaskManager = TaskManager()
 
     /// The AR Config
@@ -74,6 +82,9 @@ public class RoomMapController: UIViewController {
     let progressBarHeight: CGFloat = 40.0
 
     // MARK: - Views
+
+
+    lazy var fadeOverlay: UIView = UIView()
 
     /// The main scene view
     var sceneView: ARSCNView!
@@ -293,11 +304,23 @@ public class RoomMapController: UIViewController {
         dialog.show(in: self)
     }
 
+    var didLoadOnce: Bool = false
+    func didInitialLoad() {
+        guard !didLoadOnce else { return }
+        didLoadOnce = true
 
+        UIView.animate(withDuration: 0.3, animations: {
+            self.fadeOverlay.backgroundColor = .clear
+        }) { (completion) in
+            self.fadeOverlay.removeFromSuperview()
+        }
+    }
 
     public override func loadView() {
         super.loadView()
         // init views
+        self.view.backgroundColor = .black
+
         sceneView = ARSCNView()
         resetButton = GlassButton()
         infoButton = GlassButton()
@@ -308,12 +331,14 @@ public class RoomMapController: UIViewController {
 
 
         self.view.addSubview(sceneView)
+        self.view.addSubview(fadeOverlay)
         self.view.addSubview(resetButton)
         self.view.addSubview(infoButton)
         self.view.addSubview(progressBar)
         self.view.addSubview(nextButton)
         self.view.addSubview(messageLabel)
         self.view.addSubview(secondaryMessageLabel)
+
 
 
 
@@ -325,7 +350,7 @@ public class RoomMapController: UIViewController {
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         secondaryMessageLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        fadeOverlay.translatesAutoresizingMaskIntoConstraints = false
 
         // auto layout
         NSLayoutConstraint.activate([
@@ -364,7 +389,13 @@ public class RoomMapController: UIViewController {
             messageLabel.bottomAnchor.constraint(equalTo: nextButton.topAnchor,constant: -padding),
 
             secondaryMessageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: -padding),
-            secondaryMessageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            secondaryMessageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+
+            // scene view
+            fadeOverlay.topAnchor.constraint(equalTo: view.topAnchor),
+            fadeOverlay.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            fadeOverlay.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            fadeOverlay.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
         // more customizations
@@ -412,6 +443,8 @@ public class RoomMapController: UIViewController {
         secondaryMessageLabel.transform = CGAffineTransform(rotationAngle: .pi / 2)
         secondaryMessageLabel.isHidden = true
 
+        fadeOverlay.backgroundColor = .black
+
     }
 
     public override func viewDidLoad() {
@@ -437,14 +470,26 @@ public class RoomMapController: UIViewController {
         }
     }
 
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    public override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         sceneView.session.run(sessionConfig)
+
     }
 
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         sceneView.session.pause()
+
     }
 
     @objc func didSelectReset(_ sender: UIButton) {
@@ -826,6 +871,9 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
         case .normal:
             // all good
             print("All Good")
+            DispatchQueue.main.async {
+                self.didInitialLoad()
+            }
             break
         }
     }

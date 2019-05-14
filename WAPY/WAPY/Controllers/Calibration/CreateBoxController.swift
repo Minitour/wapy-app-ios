@@ -66,49 +66,53 @@ public class CreateBoxController: FormViewController {
         controller.taskManager.addTask(task3)
         controller.taskManager.addTask(task4)
 
-        present(controller, animated: true, completion: nil)
+        //present(controller, animated: true, completion: nil)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
 extension CreateBoxController: RoomMapControllerDelegate {
     public func didFinishCalibration(_ controller: RoomMapController, products: [TrackableObject], cameraObject: Box, capturedImage: UIImage?, heatMapElements: [HeatMapItem]?) {
 
-        controller.dismiss(animated: true) {
-            self.mmo = MapModelObject(camera: cameraObject, objects: products)
-            let name = (self.form.rowBy(tag: "name_row") as? TextRow)?.value
-            let store = (self.form.rowBy(tag: "store_row") as? StoreRow)?.value
-            // upload data to firebase
+        self.navigationController?.popViewController(animated: true)
+        self.mmo = MapModelObject(camera: cameraObject, objects: products)
+        let name = (self.form.rowBy(tag: "name_row") as? TextRow)?.value
+        let store = (self.form.rowBy(tag: "store_row") as? StoreRow)?.value
+        // upload data to firebase
 
 
-            guard let image = capturedImage else { return }
+        guard let image = capturedImage else { return }
+        self.uploadImage(image, name: name, store: store, heatMapElements: heatMapElements)
+    }
 
-            // upload image then
-            API.shared.upload(image: image) { (url, err) in
+    func uploadImage(_ image: UIImage, name: String?, store: Store?, heatMapElements: [HeatMapItem]?) {
+        // upload image then
+        API.shared.upload(image: image) { (url, err) in
+            self.createCamera(url: url,
+                              name: name,
+                              store: store,
+                              heatMapElements: heatMapElements)
+        }
+    }
 
-                // create camera
-                API.shared.createCamera(name: name, storeId: store?.id,
-                                        version: "0.0.1",
-                                        mmo: self.mmo,
-                                        heatMapItems: heatMapElements,
-                                        imageUrl: url?.absoluteString) { id, error in
-                                            // send notify using bluetooth
-                                            if let id = id {
-                                                print("got the id \(id)")
-                                                self.service.updateCameraId(id) { service in
+    func createCamera(url: URL?, name: String?, store: Store?, heatMapElements: [HeatMapItem]?) {
+        // create camera
+        API.shared.createCamera(name: name, storeId: store?.id, version: "0.0.1",
+                                mmo: self.mmo,heatMapItems: heatMapElements,imageUrl: url?.absoluteString) { id, error in
+                                    // send notify using bluetooth
+                                    if let id = id {
+                                        print("got the id \(id)")
+                                        self.service.updateCameraId(id) { service in
 
-                                                    // dismiss the navigation controller.
-                                                    self.dismiss(animated: true) {
-                                                        //do some table reloading stuff
-                                                    }
-                                                }
-                                            } else {
-                                                // TODO: show error
-                                                print(error)
+                                            // dismiss the navigation controller.
+                                            self.dismiss(animated: true) {
+                                                //do some table reloading stuff
                                             }
-
-                }
-            }
-
+                                        }
+                                    } else {
+                                        // TODO: show error
+                                        if let error = error { print(error) }
+                                    }
 
         }
     }

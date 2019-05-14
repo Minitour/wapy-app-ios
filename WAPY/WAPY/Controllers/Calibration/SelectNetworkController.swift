@@ -19,6 +19,8 @@ public class SelectNetworkController: UIViewController {
     public override func loadView() {
         super.loadView()
 
+        self.navigationItem.hidesBackButton = true
+        
         tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -40,8 +42,8 @@ public class SelectNetworkController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        let navItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didSelectRefresh(_:)))
-        self.navigationItem.rightBarButtonItem = navItem
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didSelectRefresh(_:)))
     }
 
     @objc func didSelectRefresh(_ sender: UIBarButtonItem) {
@@ -75,6 +77,7 @@ public class SelectNetworkController: UIViewController {
         // show a dialog to connect
         let dialog = AZDialogViewController(title: "Connect to WiFI", message: "What is the password for \(network.ssid!)?")
         let textField = UITextField()
+        textField.borderStyle = .roundedRect
         dialog.buttonInit = GLOBAL_BUTTON_INIT
         dialog.buttonStyle = GLOBAL_STYLE
         textField.isSecureTextEntry = true
@@ -109,11 +112,14 @@ public class SelectNetworkController: UIViewController {
         dialog.contentOffset = -60.0
 
         dialog.addAction(connect)
-        dialog.cancelEnabled = true
-        dialog.cancelButtonStyle = {_,_ in true }
         dialog.show(in: self) { (dialog) in
             textField.becomeFirstResponder()
         }
+    }
+
+    @objc func cancel() {
+        service.disconnect()
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
