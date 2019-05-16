@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import AZDialogView
 
 
 public class ConnectController: UIViewController {
@@ -16,6 +16,12 @@ public class ConnectController: UIViewController {
     lazy var service = CalibrationService.shared
 
     var networks: [Network] = []
+
+    /// The current store object.
+    var store: Store?
+
+    /// The current camera object
+    var camera: Camera?
 
     var infoLabel: UILabel!
 
@@ -43,12 +49,12 @@ public class ConnectController: UIViewController {
 
         updateLabel(text: "Scanning...")
 
-        service.onBluetoothAvailable = { service in
+        service.onBluetoothAvailable = { service, err in
             // bluetooth became available.
             try? service.scan()
         }
 
-        service.didDiscover = { [weak self] service in
+        service.didDiscover = { [weak self] service, err in
             // did discover peripheral.
             guard let `self` = self else { return }
             self.updateLabel(text: "Connecting...")
@@ -56,11 +62,13 @@ public class ConnectController: UIViewController {
 
         }
 
-        service.didConnect = {[weak self] service in
+        service.didConnect = {[weak self] service, err in
             guard let `self` = self else { return }
             // did sucessfully connect to the device.
-            self.updateLabel(text: "Sending autherization token...")
-            self.generateToken(service: service)
+            self.updateLabel(text: "Fetching Information...")
+            DispatchQueue.main.async {
+                self.getInfo(service: service)
+            }
         }
 
         // scan if bluetooth is already available.
@@ -68,37 +76,105 @@ public class ConnectController: UIViewController {
             try? service.scan()
         }
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        navigationItem.leftBarButtonItem
+            = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
     }
 
 
+    /// Get the info data.
+    ///
+    /// - Parameter service: The calibartion service.
+    func getInfo(service: CalibrationService) {
+        service.getBoxInfo { [weak self](json) in
+            guard let `self` = self else { return }
+
+            guard let info = try? JSONDecoder().decode(CameraInfo.self, from: json.data(using: .utf8)!) else {
+                //TODO: show error
+                print("failed to parse info json")
+                return
+            }
+
+            // trying to scan for a particular camera
+            if info.calibrated, info.authenticated {
+
+                guard let camera = self.camera,
+                    info.id == camera.id else {
+                    // disconnect if possible
+                    service.disconnect()
+
+                    self.showInvalidBoxDialog(name: info.name ?? "Unknown")
+                    return
+                }
+
+                // we want to request an update.
+                if info.isConnected {
+                    // go directly to update controller because box already has wifi.
+                    self.goToUpdateController()
+                } else {
+                    // go to wifi controller
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                        self.getAvailableWifi(service: service)
+                    }
+                }
+            } else {
+                // user not authenticated
+                self.generateToken(service: service)
+            }
+        }
+    }
+
+
+    /// Callend to generate a token
+    ///
+    /// - Parameter service: The bluetooth service
     func generateToken(service: CalibrationService) {
+        self.updateLabel(text: "Generating Token...")
         API.shared.generateToken { (token, err) in
             guard let token = token else {
                 if let error = err { print(error) }
                 return
             }
+
+            self.updateLabel(text: "Updating Token...")
             self.updateToken(token: token, serivce: service)
         }
     }
 
+
+    /// Called when it's time to update the token.
+    ///
+    /// - Parameters:
+    ///   - token: The generated sign in token.
+    ///   - serivce: The bluetooth service.
     func updateToken(token: String, serivce: CalibrationService) {
-        service.updateToken(token) {[weak self]  (service) in
+        service.updateToken(token) {[weak self]  service, err in
             guard let `self` = self else { return }
             self.updateLabel(text: "Scanning WiFi...")
             self.getAvailableWifi(service: service)
         }
     }
 
+
+    /// Called when it's time to scan the wifi.
+    ///
+    /// - Parameter service: The bluetooth service.
     func getAvailableWifi(service: CalibrationService) {
         // finished updating token, get available wifis.
         service.getAvailableWifi { [weak self] jsonData in
             guard let `self` = self else { return }
+
+            // parse json data
             let json = try? JSONSerialization.jsonObject(with: jsonData.data(using: .utf8)!, options: [])
+
+            // get json as dicitionary
             guard let object = json as? [String: Any]  else { return }
+
+            // get networks
             guard let networks = object["networks"] as? [Any] else { return }
 
             let jsonDecoder = JSONDecoder()
+
+            // for each network in networks -> decode and put into self.networks
             for network in networks {
                 guard let networkDict = network as? [String: Any] else { continue }
 
@@ -107,21 +183,62 @@ public class ConnectController: UIViewController {
                     self.networks.append(networkObj)
                 }
             }
-            self.next()
+
+            // continue to wifi selection
+            self.goToSelectWifiController()
         }
     }
 
-    func next() {
+    /// Launches the wifi controller
+    func goToSelectWifiController() {
         DispatchQueue.main.async {
             let selectNetworkController = SelectNetworkController()
+            selectNetworkController.camera = self.camera
+            selectNetworkController.store = self.store
             selectNetworkController.networks = self.networks
             self.navigationController?.pushViewController(selectNetworkController, animated: true)
+        }
+    }
+
+    /// Launches the update/create controller
+    func goToUpdateController() {
+        DispatchQueue.main.async {
+            let controller = CreateBoxController()
+            controller.camera = self.camera
+            controller.store = self.store
+            controller.navigationItem.hidesBackButton = true
+            self.navigationController?.pushViewController(controller, animated: true)
         }
     }
 
     @objc func cancel() {
         service.disconnect()
         self.dismiss(animated: true, completion: nil)
+    }
+
+    func showInvalidBoxDialog(name: String) {
+        let dialog = AZDialogViewController(title: "Error",
+                                            message: "Attempting to connect to box \"\(name)\" which is already configured. If you own this box, go to your store, find it and select it from there in order to modify it.")
+        dialog.buttonInit = GLOBAL_BUTTON_INIT
+        dialog.buttonStyle = GLOBAL_STYLE
+        dialog.dismissWithOutsideTouch = false
+        dialog.dismissDirection = .none
+        let tryAgain = AZDialogAction(title: "Scan Again") {[unowned self] dialog in
+            dialog.dismiss(animated: true) {
+                try? self.service.scan()
+            }
+        }
+
+        let action = AZDialogAction(title: "Close") {[unowned self] dialog in
+            dialog.dismiss(animated: false) {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+
+        dialog.addAction(tryAgain)
+        dialog.addAction(action)
+        dialog.show(in: self)
+
     }
 }
 

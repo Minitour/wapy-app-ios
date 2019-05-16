@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in API.getCamera(id:response:):API.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "result?.value">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "RoomMapController.handleTap(_:):RoomMapController.swift">
       </ContextState>
       <ContextState

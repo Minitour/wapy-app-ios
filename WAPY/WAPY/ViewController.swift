@@ -24,7 +24,6 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         if !didSetupViews {
             handleAuth()
         }
@@ -65,10 +64,11 @@ class ViewController: UIViewController {
         //tabBar.setViewController(UIViewController(), atIndex: 2)
 
         tabBar.setAction(atIndex: 2) { [unowned self] in
-            let controller = ConnectController()
-            let navController = UINavigationController(rootViewController: controller)
-
-            self.present(navController, animated: true, completion: nil)
+            self.showARController()
+//            let controller = ConnectController()
+//            let navController = UINavigationController(rootViewController: controller)
+//
+//            self.present(navController, animated: true, completion: nil)
         }
 
         didSetupViews = true
@@ -94,6 +94,8 @@ class ViewController: UIViewController {
         controller.taskManager.addTask(task3)
         controller.taskManager.addTask(task5)
 
+        controller.delegate = self
+
         present(controller, animated: true, completion: nil)
     }
 
@@ -106,3 +108,38 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: RoomMapControllerDelegate {
+    func didFinishCalibration(_ controller: RoomMapController,
+                              products: [TrackableObject],
+                              cameraObject: Box,
+                              capturedImage: UIImage?,
+                              heatMapElements: [HeatMapItem]?) {
+
+        controller.dismiss(animated: true, completion: nil)
+
+        let mmo = MapModelObject(camera: cameraObject, objects: products)
+
+        var data = [String: Any]()
+
+        data["storeId"] = "fakeStoreId"
+        data["version"] = "0.0.1"
+        data["name"] = "fakeName"
+        data["mmo"] = mmo.dictionary
+        data["image"] = "fakeImageUrl"
+        if let heatMapItems = heatMapElements {
+            var heatMapData = [[String:Any]]()
+            for item in heatMapItems {
+                guard let item = item.dictionary else { continue }
+                heatMapData.append(item)
+            }
+            data["heatmap"] = heatMapData
+        }
+
+        data["id"] = "fakeCameraId"
+
+        if let json = data.jsonStringRepresentation {
+            print(json)
+        }
+        
+    }
+}

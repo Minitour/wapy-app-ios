@@ -22,6 +22,7 @@ enum WapyCharacteristic: String {
     case cameraId = "3367142e91d445128ac6e64bb57ae9c8"
     case read = "0aadbf253f94452d82c9ce3f045ee51f"
     case write = "805b0d5b00d9427c84517441c22b46ca"
+    case updateRequest = "336165350c8f4ef9b3588893fb87c859"
     case unknown = ""
 }
 
@@ -43,7 +44,7 @@ extension CBPeripheral {
     }
 }
 
-public typealias CalibrationServiceAction = (CalibrationService) -> Void
+public typealias CalibrationServiceAction = (CalibrationService,Error?) -> Void
 
 /**
  # How to add a new characteristic:
@@ -100,13 +101,15 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
     /// unused - remove
     fileprivate var write: CBCharacteristic!
 
+    fileprivate var updateRequest: CBCharacteristic!
+
     /// The current characteristic we are reading from or writing to.
     fileprivate var activeCharacteristic: CBCharacteristic?
 
     open fileprivate(set) var isBluetoothAvailable: Bool = false {
         didSet{
             if isBluetoothAvailable {
-                onBluetoothAvailable?(self)
+                onBluetoothAvailable?(self,nil)
             }
         }
     }
@@ -184,7 +187,16 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
         activeCharacteristic = cameraId
 
         let str = "{\"camera_id\":\"\(id)\"}"
-        wapyPeripheral.write(str, to: cameraId)
+        wapyPeripheral?.write(str, to: cameraId)
+    }
+
+    open func requestCameraUpdate(secret: String, completion: CalibrationServiceAction? = nil) {
+        writeCompletion = completion
+        activeCharacteristic = updateRequest
+
+        let str = "{\"secret_key\":\"\(secret)\"}"
+        wapyPeripheral?.write(str, to: updateRequest)
+
     }
 
     open func updateToken(_ tokenValue: String, completion: CalibrationServiceAction? = nil){
@@ -192,15 +204,16 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
         activeCharacteristic = token
 
         let str = "{\"token\":\"\(tokenValue)\"}"
-        wapyPeripheral.write(str, to: token)
+        wapyPeripheral?.write(str, to: token)
     }
 
-    open func updateNetwork(bssid: String, password: String?, completion: CalibrationServiceAction? = nil) {
+    open func updateNetwork(bssid: String, password: String?, secret: String? = nil, completion: CalibrationServiceAction? = nil) {
         writeCompletion = completion
         activeCharacteristic = ssid
         let passwordValue = password == nil ? "null" : "\"\(password!)\""
-        let str = "{\"bssid\":\"\(bssid)\",\"password\":\(passwordValue)}"
-        wapyPeripheral.write(str, to: ssid)
+        let secretValue = secret == nil ? "null" : "\"\(secret!)\""
+        let str = "{\"bssid\":\"\(bssid)\",\"password\":\(passwordValue), \"secret\": \(secretValue)}"
+        wapyPeripheral?.write(str, to: ssid)
     }
 
     /// Call to scan for peripherals
@@ -218,6 +231,7 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
 
     /// Call to end connection.
     open func disconnect() {
+        guard wapyPeripheral != nil else { return }
         centralManager.cancelPeripheralConnection(wapyPeripheral)
     }
 
@@ -227,6 +241,9 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
     ///
     /// - Parameter offset: The new offset to set.
     fileprivate func updateReadOffset(_ offset: Int) {
+        if offset == 0 {
+            print()
+        }
         self.wapyPeripheral.write("{\"offset\":\(offset)}", to: read)
     }
 
@@ -245,14 +262,17 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
             peripheral.delegate = self
             self.wapyPeripheral = peripheral
             central.stopScan()
-            didDiscover?(self)
+            didDiscover?(self,nil)
         }
     }
 
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         peripheral.discoverServices(nil)
         maxLength = peripheral.maximumWriteValueLength(for: .withResponse)
-        didConnect?(self)
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5){
+            self.didConnect?(self,nil)
+        }
     }
 
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -299,15 +319,15 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
     }
 
     public func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        guard error == nil else { print(error!.localizedDescription); return }
 
         // check if we just wrote data to either the `read` or `write` CBCharacteristic. In that case we need to call for action continuation.
         switch characteristic.wapyCharacteristic {
         case .read:
+            guard error == nil else { print(error!.localizedDescription); return }
             // continue reading
             peripheral.read(from: activeCharacteristic)
         default:
-            writeCompletion?(self)
+            writeCompletion?(self,error)
             writeCompletion = nil
             break
         }
@@ -340,6 +360,8 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
                 self.ssid = characteristic
             case .cameraId:
                 self.cameraId = characteristic
+            case .updateRequest:
+                self.updateRequest = characteristic
             }
         }
     }

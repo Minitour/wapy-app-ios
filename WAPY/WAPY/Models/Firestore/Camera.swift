@@ -29,6 +29,8 @@ public struct Camera: Codable{
 
     /// The MAC address of the box.
     var ipv6: String?
+
+    var secret: String?
 }
 
 extension Encodable {

@@ -59,6 +59,7 @@
 		9D694DA2228B6D59002D005C /* CameraRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694DA1228B6D59002D005C /* CameraRemoteDataSource.swift */; };
 		9D694DA4228B6DF6002D005C /* CameraItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694DA3228B6DF6002D005C /* CameraItemCell.swift */; };
 		9D694DA6228B6ECE002D005C /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694DA5228B6ECE002D005C /* StoreViewController.swift */; };
+		9D694DA8228C9DA7002D005C /* CameraInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D694DA7228C9DA7002D005C /* CameraInfo.swift */; };
 		9D9751042242B75300896BDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751032242B75300896BDA /* AppDelegate.swift */; };
 		9D9751062242B75300896BDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9751052242B75300896BDA /* ViewController.swift */; };
 		9D9751092242B75300896BDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D9751072242B75300896BDA /* Main.storyboard */; };
@@ -120,6 +121,7 @@
 		9D694DA1228B6D59002D005C /* CameraRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRemoteDataSource.swift; sourceTree = "<group>"; };
 		9D694DA3228B6DF6002D005C /* CameraItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraItemCell.swift; sourceTree = "<group>"; };
 		9D694DA5228B6ECE002D005C /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
+		9D694DA7228C9DA7002D005C /* CameraInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInfo.swift; sourceTree = "<group>"; };
 		9D9751002242B75300896BDA /* WAPY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WAPY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9751032242B75300896BDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D9751052242B75300896BDA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				9D428589228724FD00C96EE9 /* Network.swift */,
+				9D694DA7228C9DA7002D005C /* CameraInfo.swift */,
 			);
 			path = BLE;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				9D1AB4312258E99000D41F4F /* SystemButton.swift in Sources */,
 				9D611C7922722A740089B3F5 /* API.swift in Sources */,
 				9D42857C22844F3E00C96EE9 /* StoresRemoteDelegate.swift in Sources */,
+				9D694DA8228C9DA7002D005C /* CameraInfo.swift in Sources */,
 				9D4E49442260B63F009F57D5 /* MapModelObject.swift in Sources */,
 				9D694DA6228B6ECE002D005C /* StoreViewController.swift in Sources */,
 				9D611C87227C5FA50089B3F5 /* ProductRemoteDataSource.swift in Sources */,

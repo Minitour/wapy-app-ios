@@ -19,7 +19,8 @@ public typealias CreateStoreResponse = (String?, Error?) -> Void
 public typealias GetProductsResponse = ([Product], Error?) -> Void
 public typealias CreateProductResponse = (String?, Error?) -> Void
 public typealias GetCamerasResponse = ([Camera], Error?) -> Void
-
+public typealias GetCameraResponse = (Camera?, Error?) -> Void
+public typealias UpdateCameraResponse = (Bool, Error?) -> Void
 public typealias UploadResponse = (URL?, Error?) -> Void
 
 open class API {
@@ -95,13 +96,62 @@ open class API {
     }
 
 
-    open func updateCamera() {
+    open func updateCamera(cameraId: String,
+                           name: String?,
+                           storeId: String?,
+                           version: String,
+                           mmo: MapModelObject?,
+                           heatMapItems: [HeatMapItem]?,
+                           imageUrl: String?,
+                           response: @escaping UpdateCameraResponse) {
+        var data = [String: Any]()
+        data["cameraId"] = cameraId
+        if let storeId = storeId { data["storeId"] = storeId }
+        data["version"] = version
+        data["name"] = name
 
+        if let mmoDict = mmo?.dictionary {
+            data["mmo"] = mmoDict
+        }
+
+        if let heatMapItems = heatMapItems {
+            var heatMapData = [[String:Any]]()
+            for item in heatMapItems {
+                guard let item = item.dictionary else { continue }
+                heatMapData.append(item)
+            }
+            data["heatmap"] = heatMapData
+        }
+
+        if let imageUrl = imageUrl {
+            data["image"] = imageUrl
+        }
+
+        functions.httpsCallable("updateCamera").call(data) { (result, error) in
+
+
+            if let error = error {
+                response(false, error)
+                return
+            }
+
+            let statusCode = result?.value["status"] as? Int ?? 0
+            if statusCode != 200 {
+                print(result?.value["message"] ?? "Unknown error")
+            }
+            response(statusCode == 200 ,nil)
+        }
     }
 
-    open func getCamera(id: String) {
+    open func getCamera(id: String,response: @escaping GetCameraResponse) {
         functions.httpsCallable("getCamera").call(["cameraId" : id]) { (result, error) in
-            //TODO: complete handl
+            guard let jsonStr = (result?.value["data"] as? [String: Any])?.jsonStringRepresentation else {
+                response(nil,error)
+                return
+            }
+            print(jsonStr)
+            let camera = try? JSONDecoder().decode(Camera.self, from: jsonStr.data(using: .utf8)!)
+            response(camera,error)
         }
     }
 
