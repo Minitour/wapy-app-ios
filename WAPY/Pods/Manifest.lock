@@ -74,6 +74,7 @@ PODS:
     - FirebaseCore (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
   - FlexibleSteppedProgressBar (0.5.0)
+  - Gestalt (2.0.0)
   - GoogleAppMeasurement (5.8.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
@@ -138,6 +139,7 @@ DEPENDENCIES:
   - Firebase/Functions
   - Firebase/Storage
   - FlexibleSteppedProgressBar (from `https://github.com/Minitour/FlexibleSteppedProgressBar.git`, branch `master`)
+  - Gestalt (~> 2.0.0)
   - ImageRow
   - Kingfisher
   - PKHUD (~> 5.0)
@@ -159,6 +161,7 @@ SPEC REPOS:
     - FirebaseFunctions
     - FirebaseInstanceID
     - FirebaseStorage
+    - Gestalt
     - GoogleAppMeasurement
     - GoogleUtilities
     - "gRPC-C++"
@@ -198,6 +201,7 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: a122b0c258720cf250551bb2bedf48c699f80d90
   FirebaseStorage: 6162ef4322502b818d9de0ec552f5226d283de43
   FlexibleSteppedProgressBar: 04f3108109bbcd42c3c4ab02b79b41a7335e77aa
+  Gestalt: 6b1c871de9fc923fadabc3c2973ed2d3b2ecd1e5
   GoogleAppMeasurement: ffe513e90551844a739e7bcbb1d2aca1c28a4338
   GoogleUtilities: 04fce34bcd5620c1ee76fb79172105c74a4df335
   "gRPC-C++": e76441995900ac90e9bd98644ab4733f12521edf
@@ -210,6 +214,6 @@ SPEC CHECKSUMS:
   PKHUD: 4e6162c4c39ac367c6934e9855c6b4762ee16256
   Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
 
-PODFILE CHECKSUM: 3c12e970ef16faf7adac1119ff9d0ae5b1ab2a43
+PODFILE CHECKSUM: b855b378d85544ecc0b2161df621646e012eab51
 
 COCOAPODS: 1.6.1

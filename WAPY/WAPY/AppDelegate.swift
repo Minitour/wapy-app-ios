@@ -9,6 +9,11 @@
 import UIKit
 import Firebase
 
+let COLOR_PRIMARY: UIColor = #colorLiteral(red: 0.1607843137, green: 0.6862745098, blue: 0.6823529412, alpha: 1)
+let COLOR_PRIMARY_DARK: UIColor = #colorLiteral(red: 0.1486031037, green: 0.6340878365, blue: 0.630934118, alpha: 1)
+let COLOR_ACCENT: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -18,6 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        let sharedApp = UIApplication.shared
+
+        // Set tint color
+        sharedApp.delegate?.window??.tintColor = COLOR_PRIMARY
         return true
     }
 

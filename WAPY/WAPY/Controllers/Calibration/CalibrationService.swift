@@ -258,7 +258,9 @@ open class CalibrationService: NSObject, CBCentralManagerDelegate, CBPeripheralD
     // MARK:- Central Manager Delegate
 
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        if peripheral.identifier.uuidString == "B8E4A73D-947D-BF41-4CAC-98C71BFC1FB5" {
+        print(peripheral.identifier.uuidString)
+        print(peripheral)
+        if peripheral.name == "WAPY BOX" {
             peripheral.delegate = self
             self.wapyPeripheral = peripheral
             central.stopScan()

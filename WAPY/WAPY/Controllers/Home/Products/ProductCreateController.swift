@@ -61,6 +61,8 @@ public class ProductCreateController: FormViewController {
     }
 
     func didSelectNext() {
+
+
         dialog.show(in: self)
 
         guard let name = ( form.rowBy(tag: "product_name") as? NameRow )?.value, !name.isEmpty else {
@@ -89,11 +91,14 @@ public class ProductCreateController: FormViewController {
 
     private func createProduct(url: String) {
 
-        guard let name = ( form.rowBy(tag: "product_name") as? NameRow )?.value else { return }
+        guard let name = ( form.rowBy(tag: "product_name") as? NameRow )?.value else {
+            print("name not provided")
+            return
+        }
 
-        guard let description = ( form.rowBy(tag: "product_description") as? TextAreaRow )?.value else { return }
+        let description = ( form.rowBy(tag: "product_description") as? TextAreaRow )?.value
 
-        API.shared.createProduct(name: name, image: url, description: description) { (id, err) in
+        API.shared.createProduct(name: name, image: url, description: description ?? "") { (id, err) in
 
             if let id = id {
                 // make delegate call?

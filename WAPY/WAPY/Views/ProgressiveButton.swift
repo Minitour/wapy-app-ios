@@ -34,7 +34,7 @@ public class ProgressiveButton: UIButton {
     open var errorTitle: String? = "Error"
 
     @IBInspectable
-    open var color: UIColor = #colorLiteral(red: 0.1607843137, green: 0.6862745098, blue: 0.6823529412, alpha: 1) {
+    open var color: UIColor = COLOR_ACCENT{
         didSet {
             refreshStatus()
         }

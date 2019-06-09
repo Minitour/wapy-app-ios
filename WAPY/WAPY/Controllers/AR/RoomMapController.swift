@@ -12,6 +12,7 @@ import VideoToolbox
 import FlexibleSteppedProgressBar
 import PKHUD
 import AZDialogView
+import Kingfisher
 
 
 public protocol RoomMapControllerDelegate: class {
@@ -81,6 +82,8 @@ public class RoomMapController: UIViewController {
 
     let progressBarHeight: CGFloat = 40.0
 
+    let modelName = "box" //"painted_box2"
+
     // MARK: - Views
 
 
@@ -109,10 +112,20 @@ public class RoomMapController: UIViewController {
     // MARK: - State
 
     /// The current step. Variable is changed from background threads.
+    /// Step 0: plane detection
+    /// Step 1: camera detection
+    /// Step 2: product marking
+    /// Step 3: heatmap snapshot capture
     var currentStep: Int = 0 {
         didSet{
             // did step change
+
+            if currentStep == 1 {
+                self.toggleTorch(on: true)
+            }
+
             if currentStep == 2 {
+                self.toggleTorch(on: false)
                 DispatchQueue.main.async {
                    self.nextButton.isEnabled = false
                    self.nextButton.isHidden = false
@@ -124,6 +137,28 @@ public class RoomMapController: UIViewController {
                     self.nextButton.isHidden = true
                 }
             }
+        }
+    }
+
+    func toggleTorch(on: Bool) {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {return}
+
+        if device.hasTorch {
+            do {
+                try device.lockForConfiguration()
+
+                if on == true {
+                    device.torchMode = .on // set on
+                } else {
+                    device.torchMode = .off // set off
+                }
+
+                device.unlockForConfiguration()
+            } catch {
+                print("Torch could not be used")
+            }
+        } else {
+            print("Torch is not available")
         }
     }
 
@@ -198,6 +233,8 @@ public class RoomMapController: UIViewController {
 
     /// A variable which prevents the tracking function from being activated.
     var trackDeviceForFrameState: Bool = true
+
+    var normalizedDataModel: ([TrackableObject], Box)?
 
     var thumbnailFrameState: CameraFacingCheckResult = .error {
         didSet {
@@ -305,6 +342,7 @@ public class RoomMapController: UIViewController {
     }
 
     var didLoadOnce: Bool = false
+
     func didInitialLoad() {
         guard !didLoadOnce else { return }
         didLoadOnce = true
@@ -502,8 +540,14 @@ public class RoomMapController: UIViewController {
         // TODO: show help dialog
     }
 
+
+
     @objc func didSelectNext(_ sender: UIButton) {
+
         if currentStep == 2 {
+            // at this point we have clicked next after marking at least two products.
+            normalizedDataModel = normalizedData(cameraCenter: refNode!.worldPosition, euler: refNode!.eulerAngles)
+
             onDataChanged()
             return
         }
@@ -511,11 +555,9 @@ public class RoomMapController: UIViewController {
         if currentStep == 3 {
             // we are in the last phase and the user clicks the next button:
 
-            let result = normalizedData(cameraCenter: refNode!.worldPosition, euler: refNode!.eulerAngles)
+            guard let result = normalizedDataModel else { return }
             let objects = result.0
             let box = result.1
-
-
 
             delegate?.didFinishCalibration(self, products: objects,
                                            cameraObject: box,
@@ -554,18 +596,24 @@ public class RoomMapController: UIViewController {
             if currentStep == 2 {
 
                 let location = sender.location(in: sceneView)
-                let hitResults = sceneView.hitTest(location, options: [:])
-
-                var nodeName: String?
+                let hitResults = sceneView.hitTest(location, options: [SCNHitTestOption.searchMode : 1])
+                var selectedNode: SCNHitTestResult?
 
                 if hitResults.count > 0 {
                     // retrieved the first clicked object
-                    let tappedPiece = hitResults[0].node
-                    nodeName = tappedPiece.name
+                    for hitResult in hitResults {
+
+                        // init node name with the first product node.
+                        if let name = hitResult.node.name, name.contains("product_node") {
+                            selectedNode = hitResult
+                            break
+                        }
+                    }
                 }
 
                 // if not product node, start marking a new node.
-                if nodeName == nil {
+                if selectedNode == nil {
+                    print(hitResults.count)
                     startLocation = cameraPosition
 
                     var translation = matrix_identity_float4x4
@@ -578,13 +626,13 @@ public class RoomMapController: UIViewController {
                 }
 
                 // if a product node
-                if let name = nodeName, name.contains("product_node") {
+                if let selectedNode = selectedNode, let name = selectedNode.node.name{
                     // product node tapped:
                     guard let obj = trackedProducts[name] else { return }
                     print(obj.dictionary!)
 
                     // open action dialog
-                    manageNode(name: name, trackable: obj, node: hitResults[0].node)
+                    manageNode(name: name, trackable: obj, node: selectedNode.node)
                 }
             }
         }
@@ -714,13 +762,17 @@ public class RoomMapController: UIViewController {
         self.nextButton.isEnabled = self.trackedProducts.count > 1
     }
 
+    var currentSelectedProductNode: SCNNode?
+
     /// called when a node is tapped
     func manageNode(name: String, trackable: TrackableObject, node: SCNNode) {
-        node.geometry?.firstMaterial?.emission.contents = UIColor.yellow
-
-        //TODO: design dialog
+        currentSelectedProductNode = node
+        currentSelectedProductNode?.geometry?.firstMaterial?.emission.contents = UIColor.yellow
 
         let dialog = AZDialogViewController(title: "Edit Product")
+        dialog.buttonStyle = GLOBAL_STYLE
+        dialog.buttonInit = GLOBAL_BUTTON_INIT
+        dialog.dismissDirection = .none
         dialog.blurBackground = false
 
         dialog.addAction(AZDialogAction(title: "Select Product") { [unowned self] dialog in
@@ -735,6 +787,12 @@ public class RoomMapController: UIViewController {
             node.parent?.removeFromParentNode()
             dialog.dismiss()
         })
+
+        dialog.addAction(AZDialogAction(title: "Cancel") {[unowned self] dialog in
+            dialog.dismiss()
+            self.currentSelectedProductNode?.geometry?.firstMaterial?.emission.contents = UIColor.black
+        })
+
         dialog.show(in: self)
     }
 
@@ -820,7 +878,7 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
 
         if let objectAnchor = anchor as? ARObjectAnchor {
 
-            guard let name = objectAnchor.referenceObject.name, name == "box" else { return }
+            guard let name = objectAnchor.referenceObject.name, name == modelName else { return }
             print("detected box")
 
             // create geometry
@@ -829,7 +887,7 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
 
             // apply transparent material
             let material = SCNMaterial()
-            material.transparency = 0.5
+            material.transparency = 0.0
             cube.firstMaterial = material
 
             // add child node
@@ -902,8 +960,6 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
                 objectVisable = visable
             }
         }
-
-
     }
 
 
@@ -1045,6 +1101,7 @@ extension RoomMapController: ARSCNViewDelegate, ARSessionDelegate {
         pyramidGeo.firstMaterial?.isDoubleSided = true
 
         let pyramidNode = SCNNode(geometry: pyramidGeo)
+        pyramidNode.name = "fov_node"
         let highlightNode = SCNNode(geometry: pyramidHighLight)
 
 
@@ -1127,8 +1184,29 @@ extension RoomMapController: ProductSelectionControllerDelegate {
 
         trackableObject.id = id
 
+        if let urlStr = product.image,let url = URL(string: urlStr){
+            KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil) { result in
+                switch result {
+                case .success(let value):
+                    let productImageMaterial = SCNMaterial()
+                    productImageMaterial.lightingModel = .constant
+                    productImageMaterial.metalness.contents = 0.3
+                    productImageMaterial.roughness.contents = 1.0
+                    productImageMaterial.diffuse.contents = value.image
+                    productImageMaterial.transparency = 0.9
+                    productImageMaterial.isDoubleSided = true
+                    self.currentSelectedProductNode?.geometry?.firstMaterial = productImageMaterial
+
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            }
+        }
+
+        
         currentSelectedProductId = nil
-        controller.dismiss(animated: true, completion: nil)
+
+        controller.dismiss(animated: true)
     }
 
     public func didCancelSelection(_ controller: ProductSelectionController) {

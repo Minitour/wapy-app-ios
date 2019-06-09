@@ -12,6 +12,11 @@
       </ContextState>
       <ContextState
          contextName = "RoomMapController.handleTap(_:):RoomMapController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "hitResults[1].node.name">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "RoomMapController.normalizedData(cameraCenter:euler:):RoomMapController.swift">

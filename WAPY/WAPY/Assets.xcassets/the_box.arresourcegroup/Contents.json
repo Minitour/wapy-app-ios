@@ -8,7 +8,10 @@
       "filename" : "box.arobject"
     },
     {
-      "filename" : "box2.arobject"
+      "filename" : "painted_box.arobject"
+    },
+    {
+      "filename" : "painted_box2.arobject"
     }
   ]
 }

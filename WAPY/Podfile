@@ -19,4 +19,5 @@ target 'WAPY' do
   pod 'Eureka'
   pod 'ImageRow'
   pod 'Kingfisher'
+  pod 'Gestalt', '~> 2.0.0'
 end

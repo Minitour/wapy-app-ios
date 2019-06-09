@@ -40,6 +40,14 @@ public class ProductRemoteDataSource: AZRemoteTableDataSource {
             cell.productImage.kf.setImage(with: url)
         }
 
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMMM d,yyyy"
+
+        if let date = product.createdAt {
+            cell.productDateLabel.text = "Created At \(dateFormatterPrint.string(from: date))"
+        }
+
+
         return cell
     }
 }

@@ -230,11 +230,18 @@ open class API {
             guard let data = result?.data as? [String : Any] else { return }
             guard let stores = data["data"] as? Array<Dictionary<String,Any>> else { return }
 
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
             var resArr = [Product]()
             for store in stores {
+
+                //let date = dateFormatter.date(from: store["created_at"] as? String ?? "")
+                let createdAt = store["created_at"] as? Dictionary<String,Any>
+                let date = Date(seconds: createdAt?["_seconds"] as? Int )
                 let pro = Product(id: store["id"] as? String,
                                   name: store["name"] as? String,
-                                  image: store["image"] as? String)
+                                  image: store["image"] as? String,
+                                  createdAt: date)
                 resArr.append(pro)
             }
             response(resArr,nil)
@@ -267,5 +274,16 @@ open class API {
 extension HTTPSCallableResult {
     var value: [String: Any] {
         return data as? [String: Any] ?? [:]
+    }
+}
+
+extension Date {
+    var millisecondsSince1970:Int {
+        return Int((self.timeIntervalSince1970 * 1000.0).rounded())
+    }
+
+    init?(seconds:Int?) {
+        guard let seconds = seconds else { return nil}
+        self = Date(timeIntervalSince1970: TimeInterval(seconds))
     }
 }

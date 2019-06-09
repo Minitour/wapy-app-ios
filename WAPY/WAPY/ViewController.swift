@@ -48,8 +48,8 @@ class ViewController: UIViewController {
         tabBar = .insert(into: self, withTabIcons: [#imageLiteral(resourceName: "baseline_style_black_24pt"),#imageLiteral(resourceName: "baseline_store_black_24pt"),#imageLiteral(resourceName: "baseline_account_circle_black_24pt")])
 
         tabBar.defaultColor = .lightGray
-        tabBar.selectedColor = #colorLiteral(red: 0.1607843137, green: 0.6862745098, blue: 0.6823529412, alpha: 1)
-        tabBar.selectionIndicatorColor = #colorLiteral(red: 0.1607843137, green: 0.6862745098, blue: 0.6823529412, alpha: 1)
+        tabBar.selectedColor = COLOR_PRIMARY
+        tabBar.selectionIndicatorColor = COLOR_PRIMARY
         tabBar.selectionIndicatorHeight = 2.0
         tabBar.setTitle("Products", atIndex: 0)
         tabBar.setTitle("Stores", atIndex: 1)

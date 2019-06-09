@@ -12,10 +12,12 @@ public class Product {
     var id: String?
     var name: String?
     var image: String?
+    var createdAt: Date?
 
-    init(id: String?, name: String?, image: String?) {
+    init(id: String?, name: String?, image: String?,createdAt: Date?) {
         self.id = id
         self.name = name
         self.image = image
+        self.createdAt = createdAt
     }
 }
