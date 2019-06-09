@@ -58,6 +58,7 @@ public class StoreViewController: UIViewController {
     ///
     @objc func didSelectAdd(_ sender: UIBarButtonItem) {
         let controller = ConnectController()
+        controller.store = self.store
         let navController = FlexibleNavigationController(rootViewController: controller)
         self.present(navController, animated: true, completion: nil)
     }

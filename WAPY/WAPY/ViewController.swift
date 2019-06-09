@@ -61,15 +61,7 @@ class ViewController: UIViewController {
     func normalLoad() {
         tabBar.setViewController(UINavigationController(rootViewController: ProductsViewController()), atIndex: 0)
         tabBar.setViewController(UINavigationController(rootViewController: StoresViewController()), atIndex: 1)
-        //tabBar.setViewController(UIViewController(), atIndex: 2)
-
-        tabBar.setAction(atIndex: 2) { [unowned self] in
-            self.showARController()
-//            let controller = ConnectController()
-//            let navController = UINavigationController(rootViewController: controller)
-//
-//            self.present(navController, animated: true, completion: nil)
-        }
+        tabBar.setViewController(UINavigationController(rootViewController: ProfileViewController()), atIndex: 2)
 
         didSetupViews = true
     }

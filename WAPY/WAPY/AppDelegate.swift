@@ -25,6 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         let sharedApp = UIApplication.shared
 
+        if let user = Auth.auth().currentUser {
+            user.reload { (err) in
+                print(err)
+            }
+        }
+
+
+
         // Set tint color
         sharedApp.delegate?.window??.tintColor = COLOR_PRIMARY
         return true

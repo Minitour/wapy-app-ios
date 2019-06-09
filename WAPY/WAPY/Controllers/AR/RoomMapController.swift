@@ -82,7 +82,7 @@ public class RoomMapController: UIViewController {
 
     let progressBarHeight: CGFloat = 40.0
 
-    let modelName = "box" //"painted_box2"
+    let modelName = "painted_box2"
 
     // MARK: - Views
 
