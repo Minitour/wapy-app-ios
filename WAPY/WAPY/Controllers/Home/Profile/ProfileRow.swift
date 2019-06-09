@@ -33,7 +33,7 @@ public class ProfileViewCell: Cell<Bool>, CellType {
             profileImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8.0),
             profileImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8.0),
             profileImageView.widthAnchor.constraint(equalTo: profileImageView.heightAnchor),
-            profileTitleLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 8.0),
+            profileTitleLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16.0),
             profileTitleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor,constant: -8.0),
             profileTitleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
         ])
@@ -43,6 +43,8 @@ public class ProfileViewCell: Cell<Bool>, CellType {
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.masksToBounds = true
         profileImageView.layer.cornerRadius = 42.0
+
+        profileTitleLabel.font = UIFont.boldSystemFont(ofSize: 22.0)
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -61,7 +61,12 @@ class ViewController: UIViewController {
     func normalLoad() {
         tabBar.setViewController(UINavigationController(rootViewController: ProductsViewController()), atIndex: 0)
         tabBar.setViewController(UINavigationController(rootViewController: StoresViewController()), atIndex: 1)
-        tabBar.setViewController(UINavigationController(rootViewController: ProfileViewController()), atIndex: 2)
+
+        let profileViewController = ProfileViewController()
+        profileViewController.logoutClosure = { [unowned self] in
+            self.logout()
+        }
+        tabBar.setViewController(UINavigationController(rootViewController: profileViewController), atIndex: 2)
 
         didSetupViews = true
     }
@@ -97,6 +102,11 @@ class ViewController: UIViewController {
 
 
         self.present(navController, animated: true, completion: nil)
+    }
+
+    func logout() {
+        try? Auth.auth().signOut()
+        handleAuth()
     }
 }
 
